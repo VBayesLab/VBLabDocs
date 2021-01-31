@@ -24,10 +24,10 @@ VBLab provides statistical models that can be used with the supported VB techniq
 - VBLab provides some statistical models that can be used to quickly implement the Variational Bayes (VB) techniques supported. 
 - These models are designed as Matlab class objects with predefined attributes and methods. 
 - Available VBLab models: 
-    - [DeepGLM]({% link Model-DeepGLM.md %}): Bayesian Deep Generalized Linear model
+    - [DeepGLM]({{site.baseurl}}{% link Model-DeepGLM.md %}): Bayesian Deep Generalized Linear model
         - DeepGLM models [(Tran et al., 2020)](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747) are flexible versions of generalized linear models incorporating basis functions formed by Deep Feedforward Neural Networks (DFNN). 
-    - [LogisticRegression]({% link Model-Logistic-Regression.md %}): Bayesian Logistic Regression model
-    - [RECH]({% link Model-RECH.md %}): Recurrent Conditional Heteroskedasticity model
+    - [LogisticRegression]({{site.baseurl}}{% link Model-Logistic-Regression.md %}): Bayesian Logistic Regression model
+    - [RECH]({{site.baseurl}}{% link Model-RECH.md %}): Recurrent Conditional Heteroskedasticity model
         - The RECH models are proposed by [Nguyen et al. (2020)](https://arxiv.org/abs/2010.13061)
 
 

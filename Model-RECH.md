@@ -12,7 +12,7 @@ block_color: GhostWhite
 Create a RECH model object 
 {: .fs-6 .fw-300 }
 
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -143,7 +143,7 @@ The RECH object properties include information about model-specific information,
 |`ModelName`    |string (r)| Name of the model, which is <samp>'RECH'</samp>|
 |`VarName`      |cell array (r) | Model parameter names. Stored in a cell array of strings|
 |`NumParams`    |integer (+) | Number of model parameters|
-|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]({% link VB-NAGVAC.md %}) and [VAFC]({% link VB-VAFC.md %}) techniques|
+|`Post` *       |struct  | Information about the fittedd method used to estimate model paramters <br> &bull; <samp>RECH</samp> models can only be fitted by [MGVB]({{site.baseurl}}{% link VB-MGVB.md %}) technique|
 |`Coefficients` * |Cell array| &bull; Estimated Mean of weights of Deep Neuron Network <br> &bull; Used to doing point estimation for new test data|
 |`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
 |`LogLikelihood` * |double (r)| Loglikelihood of the fitted model. |
@@ -160,11 +160,11 @@ Notation:
 ### Object Functions
 Use the object functions to fit the model, predict responses, and to visualize the prediction.
 
-|[<span style="font-family:monospace">vbayesFit</span>]({% link Model-Predict.md %})| Fit a deepGLM model|
-|[<span style="font-family:monospace">vbayesInit</span>]({% link Model-Plot.md %})| Initialization method of model parameters|
-|[<span style="font-family:monospace">vbayesPredict</span>]({% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesSimulate</span>]({% link Model-Plot.md %})| Simulate data from a RECH process |
+|[<span style="font-family:monospace">vbayesFit</span>]({{site.baseurl}}{% link Model-Predict.md %})| Fit a deepGLM model|
+|[<span style="font-family:monospace">vbayesInit</span>]({{site.baseurl}}{% link Model-Plot.md %})| Initialization method of model parameters|
+|[<span style="font-family:monospace">vbayesPredict</span>]({{site.baseurl}}{% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesSimulate</span>]({{site.baseurl}}{% link Model-Plot.md %})| Simulate data from a RECH process |
 
 </div>
 
@@ -176,9 +176,9 @@ Use the object functions to fit the model, predict responses, and to visualize t
 
 ## <span style="font-weight:bold;font-size:20px">Fit a RECH model to stock index data</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #logistic-binary}
-Fit a RECH model to the SP500 index data using [MGVB]({% link VB-MGVB.md %})
+Fit a RECH model to the SP500 index data using [MGVB]({{site.baseurl}}{% link VB-MGVB.md %})
 
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
+Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the SP500 weekly return data
@@ -198,7 +198,7 @@ rech_model = RECH('SRN-GARCH',...
                   'Prior', prior);
 ```
 {%endraw%}
-Run MGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({% link Utilities-Read-Data.md%}) function to split `sp500` to in-sample and out-of-sample data. 
+Run MGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function to split `sp500` to in-sample and out-of-sample data. 
 ```matlab
 % Train/Test split
 [sp500_in, sp500_out] = trainTestSplit(sp500,0.2,...
@@ -213,7 +213,7 @@ Run MGVB to obtain VB approximation of the posterior distribution of model param
                   'GradientMax',100,...
                   'WindowSize',30);
 ```
-Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({% link Model-Fit.md %}) method of `mdl` with the same training setting
+Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({{site.baseurl}}{% link Model-Fit.md %}) method of `mdl` with the same training setting
 ```m
 Estmdl = vbayesFit(mdl,sp500_in,...
                    'FitMethod','MGVB',...
@@ -246,4 +246,4 @@ Given the fitted RECH model `Estmdl`, we can make one-step-ahead forecast given 
 
 ## See Also
 {: #see-also}
-[LogisticRegression ]({% link Model-Logistic-Regression.md %}) $\mid$ [DeepGLM]({% link Model-DeepGLM.md %}) $\mid$ [Custom model]({% link Model-Custom.md%}) $\mid$ [MGVB]({%link VB-MGVB.md%})
+[LogisticRegression ]({{site.baseurl}}{% link Model-Logistic-Regression.md %}) $\mid$ [DeepGLM]({{site.baseurl}}{% link Model-DeepGLM.md %}) $\mid$ [Custom model]({{site.baseurl}}{% link Model-Custom.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})

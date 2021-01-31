@@ -3,7 +3,7 @@ layout: default
 title: LogisticRegression Class
 parent: Models API Reference
 nav_order: 2
-permalink: /model/logistics/
+permalink: /VBLabDocs/model/logistics/
 block_color: GhostWhite
 ---
 

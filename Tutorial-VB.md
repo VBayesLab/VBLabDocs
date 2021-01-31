@@ -16,7 +16,7 @@ This tutorial gives a quick introduction to Variational Bayes (VB), also called 
 
 Denote:
 - $y$ $\rightarrow$ data
-- $p(y\|\theta)$ $\rightarrow$ likelihood function based on a postulated model
+- $p(y|\theta)$ $\rightarrow$ likelihood function based on a postulated model
 - $\theta\in\Theta$ $\rightarrow$ vector of model parameters to be estimated.
 - $p(\theta)$ $\rightarrow$ prior. 
 - Notation $a:=b$ means $a$ is defined by $b$. 
@@ -40,14 +40,14 @@ belonging to some tractable family of distributions $\mathcal Q$ such as Gaussia
 
 The best VB approximation $q^\*\in\mathcal{Q}$ is found by minimizing the Kullback-Leibler (KL) divergence *from* $q(\theta)$ *to* $p(\theta\|y)$ 
 
-$$\tag{1}\label{1} q^*=\arg\min_{q\in\mathcal Q} { \text{KL}(q\|p(\cdot\|y)):=\int q(\theta)\log\frac{q(\theta)}{p(\theta\|y)}d\theta }. $$
+$$\tag{1}\label{1} q^*=\arg\min_{q\in\mathcal Q} { \text{KL}(q||p(\cdot|y)):=\int q(\theta)\log\frac{q(\theta)}{p(\theta|y)}d\theta }. $$
 
 Then, Bayesian inference is performed with the intractable posterior $p(\theta|y)$ replaced by the tractable VB approximation $q^\*(\theta)$.
 It is easy to see that
 $$\text{KL}(q||p(\cdot|y)) = -\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta+\log p(y),$$
 thus minimizing  KL is equivalent to maximizing the lower bound on $\log p(y)$
 
-$$\text{LB}(q):=\int q(\theta)\log\frac{p(\theta)p(y\|\theta)}{q(\theta)}d\theta=E_{q}\Big(\log\frac{p(\theta)p(y\|\theta)}{q(\theta)}\Big).$$
+$$\text{LB}(q):=\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta=E_{q}\Big(\log\frac{p(\theta)p(y|\theta)}{q(\theta)}\Big).$$
 
 Without any constraint on $\mathcal Q$, the solution to $\eqref{1}$ is $q^*(\theta)=p(\theta|y)$; of course this solution is useless as it is itself intractable.
 Depending on the constraint imposed on the class $\mathcal Q$, VB algorithms can be categorized into two classes: 

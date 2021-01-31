@@ -51,8 +51,8 @@ $$\text{LB}(q):=\int q(\theta)\log\frac{p(\theta)p(y\|\theta)}{q(\theta)}d\theta
 
 Without any constraint on $\mathcal Q$, the solution to $\eqref{1}$ is $q^*(\theta)=p(\theta|y)$; of course this solution is useless as it is itself intractable.
 Depending on the constraint imposed on the class $\mathcal Q$, VB algorithms can be categorized into two classes: 
-- [Mean Field VB (MFVB)]({% link Tutorial-MFVB.md %})
-- [Fixed Form VB (FFVB)]({% link Tutorial-FFVB.md %})
+- [Mean Field VB (MFVB)]({{site.baseurl}}{% link Tutorial-MFVB.md %})
+- [Fixed Form VB (FFVB)]({{site.baseurl}}{% link Tutorial-FFVB.md %})
 
 which can be read completely separately depending on the reader's interest.
 
@@ -60,4 +60,4 @@ which can be read completely separately depending on the reader's interest.
 
 ---
 
-**Next:** [Mean Field VB (MFVB)]({% link Tutorial-MFVB.md %})
+**Next:** [Mean Field VB (MFVB)]({{site.baseurl}}{% link Tutorial-MFVB.md %})

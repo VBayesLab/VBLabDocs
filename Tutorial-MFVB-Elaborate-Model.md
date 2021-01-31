@@ -45,15 +45,15 @@ Introducing auxiliary variables makes MFVB tractable, but this might come at the
 
 More precisely, consider the standard Bayesian model
 
-$$y \mid \theta\sim p(y \mid \theta),\;\;\quad\quad \theta\sim p(\theta)\tag{10}\label{eq:ChaperMFVB:model 1}.$$
+$$y |\theta\sim p(y |\theta),\;\;\quad\quad \theta\sim p(\theta)\tag{10}\label{eq:ChaperMFVB:model 1}.$$
 
 Suppose that there exists an auxiliary variable $\eta$ such that
 
-$$\tag{11}p(y \mid \theta) = \int p(y \mid \theta,\eta) p(\eta \mid \theta)\d\eta,$$
+$$\tag{11}p(y|\theta) = \int p(y|\theta,\eta) p(\eta |\theta)\d\eta,$$
 
 then model \eqref{eq:ChaperMFVB:model 1} can be equivalently represented as
 
-$$\tag{12}\label{eq:ChaperMFVB:model 2}y \mid \theta,\eta\sim p(y \mid \theta,\eta),\;\;\quad\quad \eta \mid \theta\sim p(\eta \mid \theta),\;\;\quad\quad
+$$\tag{12}\label{eq:ChaperMFVB:model 2}y\|\theta,\eta\sim p(y\|\theta,\eta),\;\;\quad\quad \eta\|\theta\sim p(\eta|\theta),\;\;\quad\quad
 \theta\sim p(\theta).$$
 
 The model \eqref{eq:ChaperMFVB:model 1} is said to be elaborate if it can be presented as 

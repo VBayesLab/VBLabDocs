@@ -7,7 +7,7 @@ permalink: /model/vbayesPredict/
 block_color: GhostWhite
 ---
 
-# **DeepGLM**
+# <samp>vbayesPredict</samp> method
 {: .fs-8 }
 
 Create a DeepGLM model object 
@@ -20,11 +20,11 @@ Create a DeepGLM model object
 ## Syntax
 
 ```matlab
-mdl = DeepGLM(Network,Name,Value)
+Pred = vbayesPredict(Mdl,Name,Value)
 ```
 ---
 ## Description
-`mdl = DeepGLM(Network,Name,Value)` returns [DeepGLM model object](#deepglm-object) `mdl` given neural network structure `Network`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify the activation function or distribution of the output. 
+`Pred = vbayesPredict(Mdl,Name,Value)` returns [DeepGLM model object](#deepglm-object) `mdl` given neural network structure `Network`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify the activation function or distribution of the output. 
 
 đsdsd
 

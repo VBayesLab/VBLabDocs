@@ -136,10 +136,10 @@ Notation:
 ### Object Functions
 Use the object functions to fit the model, predict responses, and to visualize the prediction.
 
-|[<span style="font-family:monospace">vbayesFit</span>]({% link Model-Predict.md %})| Fit a deepGLM model|
-|[<span style="font-family:monospace">vbayesInit</span>]({% link Model-Plot.md %})| Initialization method of model parameters|
-|[<span style="font-family:monospace">vbayesPredict</span>]({% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesFit</span>]({{site.baseurl}}{% link Model-Predict.md %})| Fit a deepGLM model|
+|[<span style="font-family:monospace">vbayesInit</span>]({{site.baseurl}}{% link Model-Plot.md %})| Initialization method of model parameters|
+|[<span style="font-family:monospace">vbayesPredict</span>]({{site.baseurl}}{% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
 
 </div>
 
@@ -171,7 +171,7 @@ network = [n_features,5,5]
 % Define a deepGLM model object
 Mdl = DeepGLM(network);
 ```
-Run VAFC to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({% link Utilities-Read-Data.md%}) function to split `marketing` to training and test data. 
+Run VAFC to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function to split `marketing` to training and test data. 
 ```matlab
 % Train/Test split
 [marketing_train, markerting_test] = trainTestSplit(marketing,0.2);
@@ -182,7 +182,7 @@ EstMdl = VAFC(Mdl,marketing_train,...
               'Validation',0.15,...      % Use 15% number of observations fpr validation    
               'Loss','PPS');             % Use PPS as the predictive metric
 ```
-Alternatively, we can also run VAFC by calling the [<span style="font-family:monospace">vbayesFit()</span>]({% link Model-Fit.md %}) method of `mdl` with the same training setting
+Alternatively, we can also run VAFC by calling the [<span style="font-family:monospace">vbayesFit()</span>]({{site.baseurl}}{% link Model-Fit.md %}) method of `mdl` with the same training setting
 ```m
 Estmdl = vbayesFit(Mdl,marketing_train,...
                    'FitMethod','VAFC',...
@@ -208,7 +208,7 @@ Given the fitted DeepGLM model `EstMdl`, we can make prediction with new data. S
 {: #deepglm-binary}
 Fit a DeepGLM model to [GermanCredit](/VBLabDocs/datasets/#german-credit) data using [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}). 
 
-Load the GermanCredit data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. Use the same arguments as in the previous example.  
+Load the GermanCredit data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. Use the same arguments as in the previous example.  
 ```matlab
 % Load the DirectMarketing dataset
 credit = readdata('GermanCredit',...

@@ -7,7 +7,6 @@ has_children: true
 permalink: /tutorial/
 ---
 <!--- Define custom latex syntax -->
-<!--- Define custom latex syntax -->
 # **What is Variational Bayes?**
 {: .fs-8}
 

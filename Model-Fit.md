@@ -10,7 +10,7 @@ block_color: GhostWhite
 Fit a VBLab supported model 
 {: .fs-6 .fw-300 }
 
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -103,7 +103,7 @@ The DeepGLM object properties include information about model-specific informati
 |`Network`      |Array | Neural network structure of DeepGLM models|
 |`Distribution` |string | Neural network structure of DeepGLM models|
 |`Activation`   |string | Neural network structure of DeepGLM models|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters <br> &bull; Currently, users can only use [NAGVAC]({% link VB-NAGVAC.md %}) method to fit a <samp>DeepGLM</samp> model|
+|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters <br> &bull; Currently, users can only use [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) method to fit a <samp>DeepGLM</samp> model|
 |`Coefficients` * |Cell array| &bull; Estimated Mean of weights of Deep Neuron Network <br> &bull; Used to doing point estimation for new test data|
 |`Shrinkage` *    |Array| &bull; Array storing estimated values of group Lasso coefficients|
 |`PPS` *          |Array| &bull; Array storing PPS values measured on validation data in each iteration during training phase|

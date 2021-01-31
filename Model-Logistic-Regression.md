@@ -11,7 +11,7 @@ block_color: GhostWhite
 Create Logistic Regression model object 
 {: .fs-6 .fw-300 }
 
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -112,7 +112,7 @@ The LogisticRegression object properties include information about model-specifi
 |`ModelName`    |string (r)| Name of the model, which is <samp>'LogisticRegression'</samp>|
 |`NumParams`    |integer (+) | Number of model parameters|
 |`Cutoff`       |float | Cut-off probabitlity|
-|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]({% link VB-NAGVAC.md %}) and [VAFC]({% link VB-VAFC.md %}) techniques|
+|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]{{site.baseurl}}({% link VB-NAGVAC.md %}) and [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) techniques|
 |`Coefficient` * |cell array (r)| &bull; Estimated Mean of model parameters <br> &bull; Used to doing point estimation for new test data|
 |`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
 |`LogLikelihood` * |double (r)| Loglikelihood of the fitted model. |
@@ -130,10 +130,10 @@ Notation:
 ### Object Functions
 Use the object functions to fit the model, predict responses, and to visualize the prediction.
 
-|[<span style="font-family:monospace">vbayesFit</span>]({% link Model-Predict.md %})| Fit a deepGLM model|
-|[<span style="font-family:monospace">vbayesInit</span>]({% link Model-Plot.md %})| Initialization method of model parameters|
-|[<span style="font-family:monospace">vbayesPredict</span>]({% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesFit</span>]({{site.baseurl}}{% link Model-Predict.md %})| Fit a deepGLM model|
+|[<span style="font-family:monospace">vbayesInit</span>]({{site.baseurl}}{% link Model-Plot.md %})| Initialization method of model parameters|
+|[<span style="font-family:monospace">vbayesPredict</span>]({{site.baseurl}}{% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
+|[<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
 
 </div>
 
@@ -145,9 +145,9 @@ Use the object functions to fit the model, predict responses, and to visualize t
 
 ## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #logistic-binary}
-Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({% link VB-CGVB.md %})
+Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({{site.baseurl}}{% link VB-CGVB.md %})
 
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
+Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the LabourForce dataset
@@ -163,7 +163,7 @@ n_features = size(marketing,2)-1;
 Mdl = LogisticRegression(n_features,...
                          'Prior',{'Normal',[0,10]});
 ```
-Run CGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({% link Utilities-Read-Data.md%}) function to split `labour` to training and test data. 
+Run CGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function to split `labour` to training and test data. 
 ```matlab
 % Train/Test split
 [labour_train, labour_test] = trainTestSplit(labour,0.2);
@@ -173,7 +173,7 @@ Estmdl = CGVB(Mdl,labour_train,...
               'Validation',0.15,...      % Use 15% number of observations fpr validation    
               'Loss','PPS');             % Use PPS as the predictive metric
 ```
-Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({% link Model-Fit.md %}) method of `mdl` with the same training setting
+Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({{site.baseurl}}{% link Model-Fit.md %}) method of `mdl` with the same training setting
 ```m
 Estmdl = vbayesFit(mdl,labour_train,...
                    'FitMethod','CGVB',...
@@ -200,4 +200,4 @@ Given the fitted LogisticRegression model `Estmdl`, we can make prediction with 
 
 ## See Also
 {: #see-also}
-[DeepGLM]({% link Model-DeepGLM.md %}) $\mid$ [rech ]({% link Model-RECH.md %}) $\mid$ [Custom model]({% link Model-Custom.md%}) $\mid$ [CGVB]({%link VB-CGVB.md%})
+[DeepGLM]({{site.baseurl}}{% link Model-DeepGLM.md %}) $\mid$ [rech]({{site.baseurl}}{% link Model-RECH.md %}) $\mid$ [Custom model]({{site.baseurl}}{% link Model-Custom.md%}) $\mid$ [CGVB]({{site.baseurl}}{%link VB-CGVB.md%})

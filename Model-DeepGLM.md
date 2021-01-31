@@ -117,7 +117,7 @@ The DeepGLM object properties include information about model-specific informati
 |`Network`      |array | Neural network structure of DeepGLM models|
 |`Distribution` |string | Neural network structure of DeepGLM models|
 |`Activation`   |string | Neural network structure of DeepGLM models|
-|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]({% link VB-NAGVAC.md %}) and [VAFC]({% link VB-VAFC.md %}) techniques|
+|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) and [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) techniques|
 |`Coefficient` * |cell array| &bull; Estimated Mean of weights of Deep Neural Network <br> &bull; Used to doing point estimation for new test data|
 |`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
 |`Shrinkage` *    |array| Array storing estimated values of group Lasso coefficients|
@@ -151,9 +151,9 @@ Use the object functions to fit the model, predict responses, and to visualize t
 
 ## <span style="font-weight:bold;font-size:20px">Fit a DeepGLM model for continuous response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #deepglm-continuous}
-Fit a DeepGLM model to [DirectMarketing](/VBLabDocs/datasets/#direct-marketing) data using [VAFC]({%link VB-VAFC.md%})
+Fit a DeepGLM model to [DirectMarketing](/VBLabDocs/datasets/#direct-marketing) data using [VAFC]({{site.baseurl}}{%link VB-VAFC.md%})
 
-Load the DirectMarketing data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
+Load the DirectMarketing data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the DirectMarketing dataset

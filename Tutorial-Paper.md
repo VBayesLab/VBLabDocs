@@ -23,4 +23,4 @@ the former in this tutorial as we are solely interested in approximating the
 posterior distributions for Bayesian inference.
 
 ---
-**Next:** [Variational Bayes Introduction]({% link Tutorial-VB.md %})
+**Next:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md %})

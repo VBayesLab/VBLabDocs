@@ -10,10 +10,10 @@ block_color: GhostWhite
 # **CGVB**
 {: .fs-8 }
 
-Fit VBLab supported or custom models using the [CGVB algorithm]({% link Tutorial-FFVB-CGVB.md%})
+Fit VBLab supported or custom models using the CGVB algorithm
 {: .fs-6 .fw-300 }
 
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB-CGVB.md%}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -42,8 +42,8 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 #### Data type: VBLab model object | function handler
 <br>
 The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+- [VBLab model object](/VBLabDocs/model#vblab-model).
+- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -459,7 +459,7 @@ Given the fitted LogisticRegression model `Estmdl`, we can make prediction with 
 
 ## See Also
 {: #see-also}
-[VAFC]({%link VB-VAFC.md%}) $\mid$ [NAGVAC]({%link VB-NAGVAC.md%}) $\mid$ [MGVB]({%link VB-MGVB.md%})
+[VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})
 
 |Properties|Data type |Description{: .text-center}|
 |:-------------|:------------------|:------|

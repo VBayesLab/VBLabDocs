@@ -12,7 +12,7 @@ permalink: /tutorial/mfvb
 This tutorial gives a quick introduction to Mean Field Variational Bayes. 
 {: .fs-6 .fw-300 }
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%})
 
 ---
 <!--- Define custom latex syntax -->

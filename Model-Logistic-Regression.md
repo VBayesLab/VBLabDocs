@@ -112,7 +112,7 @@ The LogisticRegression object properties include information about model-specifi
 |`ModelName`    |string (r)| Name of the model, which is <samp>'LogisticRegression'</samp>|
 |`NumParams`    |integer (+) | Number of model parameters|
 |`Cutoff`       |float | Cut-off probabitlity|
-|`Post` *       |struct  | &bull; Information about the fittedd method used to estimate model paramters <br> &bull; The <samp>DeepGLM</samp> model can only be fitted by [NAGVAC]{{site.baseurl}}({% link VB-NAGVAC.md %}) and [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) techniques|
+|`Post` *       |struct  | Information about the fittedd method used to estimate model paramters|
 |`Coefficient` * |cell array (r)| &bull; Estimated Mean of model parameters <br> &bull; Used to doing point estimation for new test data|
 |`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
 |`LogLikelihood` * |double (r)| Loglikelihood of the fitted model. |

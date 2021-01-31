@@ -53,7 +53,7 @@ $$\tag{11}p(y|\theta) = \int p(y|\theta,\eta) p(\eta |\theta)\d\eta,$$
 
 then model \eqref{eq:ChaperMFVB:model 1} can be equivalently represented as
 
-$$\tag{12}\label{eq:ChaperMFVB:model 2}y\|\theta,\eta\sim p(y\|\theta,\eta),\;\;\quad\quad \eta\|\theta\sim p(\eta|\theta),\;\;\quad\quad
+$$\tag{12}\label{eq:ChaperMFVB:model 2}y|\theta,\eta\sim p(y|\theta,\eta),\;\;\quad\quad \eta|\theta\sim p(\eta|\theta),\;\;\quad\quad
 \theta\sim p(\theta).$$
 
 The model \eqref{eq:ChaperMFVB:model 1} is said to be elaborate if it can be presented as 
@@ -73,7 +73,7 @@ The least absolute shrinkage and selection operator (Lasso) method solves this p
 
 $$
 \tag{13}\label{eq:ChapterMFVB:lasso}
-\underset{\beta}{\mbox{min}} ~ \left \{ (y-X\beta)'(y-X\beta) + \wt\lambda \sum_{j=1}^p \mid \beta_j \mid \right \},
+\underset{\beta}{\mbox{min}} ~ \left \{ (y-X\beta)'(y-X\beta) + \wt\lambda \sum_{j=1}^p | \beta_j | \right \},
 $$
 
 where $\wt\lambda >0$ is the tuning parameter controlling the amount of regularization. 
@@ -134,7 +134,7 @@ where $\wt\tau_j:= 1/\tau_j$ follows an inverse-Gaussian with location and scale
 $$\mu_{\wt\tau_j} = \Big(\frac{\E_q(\lambda^2)}{\E_q\big(\beta_j^2/\sigma^2\big)}\Big)^{1/2},\;\;\;\;\lambda_{\wt\tau_j} = \E_q(\lambda^2).$$
 
 The optimal distribution for $\sigma^2$ is inverse Gamma with the parameters
-$$\alpha_{\sigma^2}=\frac12(n+p),\;\;\;\;\beta_{\sigma^2}=\frac12\E_q\|y-X\beta\|^2+\frac12\sum_{j=1}^p\E_q\big(\frac{\beta_j^2}{\tau_j}\big).$$
+$$\alpha_{\sigma^2}=\frac12(n+p),\;\;\;\;\beta_{\sigma^2}=\frac12\E_q|y-X\beta|^2+\frac12\sum_{j=1}^p\E_q\big(\frac{\beta_j^2}{\tau_j}\big).$$
 
 Finally, the optimal variatinoal distribution for $\lambda^2$ is Gamma with
 $$\alpha_{\lambda^2}= r+1,\;\;\;\; \beta_{\lambda^2} = \delta+\frac12\sum_j\E_q(\tau_j).$$

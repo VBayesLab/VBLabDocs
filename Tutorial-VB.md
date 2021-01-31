@@ -3,6 +3,7 @@ layout: default
 title: Variational Bayes
 parent: VB Tutorials
 nav_order: 1
+usemathjax: true
 permalink: /tutorial/vb
 ---
 

@@ -33,7 +33,7 @@ Key features:
 
 1. Read the [VB tutorial paper](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes) for the theoretical explanation of the VB methods supported by the VBLab package. See also [shorter version of the VB tutorial]({% link Tutorial-Paper.md %}) on this site.
 2. Run [examples](https://github.com/VBayesLab/Tutorial-on-VB) showing how to use various VB methods to fit different VBLab and user-defined models. See detail explanation of the examples in the the [VB tutorial paper](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes) or in the [Example]({% link Example.md%}) section on this site.
-3. Check API reference for [supported VB techniques]({{site.baseurl}}{% link Variational-Bayes.md%}), [statistical models]({% link Model.md%}) and [how to define custom models]({% link Model-Custom.md%}) for users' applications.  
+3. Check API reference for [supported VB techniques]({{site.baseurl}}{% link Variational-Bayes.md%}), [statistical models]({{site.baseurl}}{% link Model.md%}) and [how to define custom models]({{site.baseurl}}{% link Model-Custom.md%}) for users' applications.  
 
 ---
 

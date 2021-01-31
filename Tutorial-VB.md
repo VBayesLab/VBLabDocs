@@ -16,7 +16,7 @@ This tutorial gives a quick introduction to Variational Bayes (VB), also called 
 
 Denote:
 - $y$ $\rightarrow$ data
-- $p(y|\theta)$ $\rightarrow$ likelihood function based on a postulated model
+- $p(y \mid \theta)$ $\rightarrow$ likelihood function based on a postulated model
 - $\theta\in\Theta$ $\rightarrow$ vector of model parameters to be estimated.
 - $p(\theta)$ $\rightarrow$ prior. 
 - Notation $a:=b$ means $a$ is defined by $b$. 

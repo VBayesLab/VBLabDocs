@@ -12,7 +12,7 @@ permalink: tutorial/mfvb/example2-1
 
 This tutorial gives a quick introduction to Mean Field Variational Bayes. 
 
-**See:** [Mean Field Variational Bayes]({% link Tutorial-MFVB.md%})
+**See:** [Mean Field Variational Bayes]({{site.baseurl}}{% link Tutorial-MFVB.md%})
 
 ---
 <!--- Define custom latex syntax -->
@@ -37,7 +37,7 @@ $\def\t{\theta}
 
 **Quesion:** Derive the MFVB procedure for approximating the posterior 
 $$p(\mu,\s^2\mid y)\propto p(\mu)p(\s^2)p( y\mid \mu,\s^2).$$
-We can view $\mu$ and $\sigma^2$ respectively as $\theta_1$ and $\theta_2$ in [Algorithm 1](/VBLabDocs/tutorial/mfvb/#algorithm-1).
+We can view $\mu$ and $\sigma^2$ respectively as $\theta_1$ and $\theta_2$ in [Algorithm 1](/VBLabDocs/tutorial/mfvb#algorithm-1).
 
 </div>
 

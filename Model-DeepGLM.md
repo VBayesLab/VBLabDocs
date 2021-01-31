@@ -11,7 +11,7 @@ block_color: GhostWhite
 Create DeepGLM model object 
 {: .fs-6 .fw-300 }
 
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -206,7 +206,7 @@ Given the fitted DeepGLM model `EstMdl`, we can make prediction with new data. S
 
 ## <span style="font-weight:bold;font-size:20px">Fit a DeepGLM model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #deepglm-binary}
-Fit a DeepGLM model to [GermanCredit](/VBLabDocs/datasets/#german-credit) data using [NAGVAC]({%link VB-NAGVAC.md%}). 
+Fit a DeepGLM model to [GermanCredit](/VBLabDocs/datasets/#german-credit) data using [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}). 
 
 Load the GermanCredit data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. Use the same arguments as in the previous example.  
 ```matlab
@@ -249,4 +249,4 @@ Make prediction with the test data. Given the true labels, we can compute the mi
 
 ## See Also
 {: #see-also}
-[LogisticRegression]({% link Model-Logistic-Regression.md %}) $\mid$ [RECH]({% link Model-RECH.md %}) $\mid$ [Custom model]({% link Model-Custom.md%}) $\mid$ [NAGVAC]({% link VB-NAGVAC.md %}) $\mid$ [VAFC]({%link VB-VAFC.md%})
+[LogisticRegression]({{site.baseurl}}{% link Model-Logistic-Regression.md %}) $\mid$ [RECH]({{site.baseurl}}{% link Model-RECH.md %}) $\mid$ [Custom model]({{site.baseurl}}{% link Model-Custom.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) $\mid$ [VAFC]({{site.baseurl}}{%link VB-VAFC.md%})

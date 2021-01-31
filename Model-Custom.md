@@ -9,8 +9,8 @@ permalink: /model/custom/
 # **VBLab Custom Model**
 {: .fs-8}
 
-VBLab provides several ways for custom-built models that work with VB algorithm classes such as [CGVB]({% link VB-CGVB.md %}),
-[VAFC]({% link VB-VAFC.md %}), [MGVB]({% link VB-MGVB.md%}) and [NAGVAC]({% link VB-NAGVAC.md %}).
+VBLab provides several ways for custom-built models that work with VB algorithm classes such as [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}).
 
 ---
 

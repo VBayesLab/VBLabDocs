@@ -45,7 +45,7 @@ where $\E_{-\t_1}[\log p(y,\t)]:=\E_{q_2(\t_2)}[\log p(y,\t)]=\int q_2(\t_2)\log
 The funny-looking notation $\E_{-\t_1}(\cdot)$, meaning we take the expectation with respect to everything except $\theta_1$, turns out to be very convenient when we deal with the general MFVB procedure later.
 Hence,
 
-$$\begin{eqnarray}
+$$\begin{eqnarray}\tag{3}{MFVB-3}
 \LB(q_1,q_2)&=&\int q_1(\t_1)\log\frac{\exp\big(\E_{-\t_1}[\log p(y,\t)]\big)}{q_1(\t_1)}d\t_1+C(q_2)\notag\\
 &=&\int q_1(\t_1)\log\frac{\wt q_1(\theta_1)}{q_1(\t_1)}d\t_1+C(q_2)+\log\wt C(q_2)\notag\\
 &=&-\KL(q_1\|\wt q_1)+C(q_2)+\log\wt C(q_2),
@@ -57,36 +57,33 @@ with $\wt C(q_2):=\int \exp(\E_{-\t_1}[\log p(y,\t)])d\t_1$ also independent of 
 
 We therefore have that
 
-$$\tag{2}\label{MFVB-1}
-\LB(q_1,q_2)=-\KL(q_1\|\wt q_1)+\text{ constant independent of $q_1$}.
-$$
+$$\tag{4}\label{MFVB-4}
+\LB(q_1,q_2)=-\KL(q_1\|\wt q_1)+\text{ constant independent of $q_1$}.$$
 
 Similarly,
 
-$$\tag{3}\label{MFVB-2}
-\LB(q_1,q_2)=-\KL(q_2\|\wt q_2)+\text{ constant independent of $q_2$},
-$$
+$$\tag{5}\label{MFVB-5}
+\LB(q_1,q_2)=-\KL(q_2\|\wt q_2)+\text{ constant independent of $q_2$},$$
 
 where $\wt q_2(\t_2)\propto \exp(\E_{-\t_2}[\log p(y,\t)])$ with $\E_{-\t_2}[\log p(y,\t)]:=\int q_1(\t_1)\log p(y,\t) d\t_1$.
 
-The expressions in \eqref{MFVB-1}-\eqref{MFVB-2} suggest a coordinate ascent optimization procedure for maximizing the lower bound: given $q_2$, we minimize $\KL(q_1\|\wt q_1)$ to find $q_1$, and given $q_1$ we minimize $\KL(q_2\|\wt q_2)$ to find $q_2$.
+The expressions in \eqref{MFVB-4}-\eqref{MFVB-5} suggest a coordinate ascent optimization procedure for maximizing the lower bound: given $q_2$, we minimize $\KL(q_1\|\wt q_1)$ to find $q_1$, and given $q_1$ we minimize $\KL(q_2\|\wt q_2)$ to find $q_2$.
 
 The hope is that solving the optimization problems
 
-$$\tag{4}\label{MFVB-3}
-\min_{q_1}\big\{\KL(q_1\|\wt q_1)\big\}\;\;\;\text{ and }\;\;\;\min_{q_2}\big\{\KL(q_2\|\wt q_2)\big\}
-$$
+$$\tag{6}\label{MFVB-6}
+\min_{q_1}\big\{\KL(q_1\|\wt q_1)\big\}\;\;\;\text{ and }\;\;\;\min_{q_2}\big\{\KL(q_2\|\wt q_2)\big\}$$
 
 is easier than minimizing the original KL divergence between $q(\theta_1,\theta_2)$ and $p(\theta_1,\theta_2\|y)$.
 
-If $\wt q_1$ and $\wt q_2$ are tractable and standard distributions (distribution that is well-understood and widely used, such as Gaussian, Gamma, etc.), then of course the solution to \eqref{MFVB-3} is 
+If $\wt q_1$ and $\wt q_2$ are tractable and standard distributions (distribution that is well-understood and widely used, such as Gaussian, Gamma, etc.), then of course the solution to \eqref{MFVB-6} is 
 $q_1=\wt q_1$ and $q_2=\wt q_2$.
 
 The most useful scenario is the case of [*conjugate prior*](https://en.wikipedia.org/wiki/Conjugate_prior): the prior $p(\t_1)$ belongs to a parametric density family $\F_1$, then
 $\wt q_1(\t_1)$ also belongs to $\F_1$. Similarly,  the prior $p(\t_2)$ belongs to a parametric density family $\F_2$, then
 $\wt q_2(\t_2)$ also belongs to $\F_2$.
 
-Then the solutions to $\eqref{MFVB-3}$ are
+Then the solutions to $\eqref{MFVB-6}$ are
 $$q_1(\theta_1)=\wt q_1(\t_1)\in\F_1\;\;\;\text{ and }\;\;\;q_2(\theta_2)=\wt q_2(\t_2)\in\F_2,$$
 and in order to identify $q_1$ and $q_2$ it's only necessary to compute their parameters.
 
@@ -101,16 +98,13 @@ which suggests the following coordinate ascent-type algorithm for maximizing the
 - **Step 1:** Initialize the parameter of $q_1(\t_1)$
 - **Step 2:** Given $q_1(\t_1)$, update the parameter of $q_2(\t_2)$ using
 
-$$
-\tag{5}\label{eq:optimal VB 1}
-q_2(\t_2)\propto \exp\big(\E_{-\t_2}[\log p(y,\t)]\big)=\exp\Big(\int q_1(\t_1)\log p(y,\t_1,\t_2)d\t_1\Big)
-$$
+$$\tag{7}\label{MFVB-7}
+q_2(\t_2)\propto \exp\big(\E_{-\t_2}[\log p(y,\t)]\big)=\exp\Big(\int q_1(\t_1)\log p(y,\t_1,\t_2)d\t_1\Big)$$
 
 - **Step 3:** Given $q_2(\t_2)$, update the parameter of $q_1(\t_1)$ using 
 
-$$\tag{6}\label{eq:optimal VB 2}
-q_1(\t_1)\propto \exp\big(\E_{-\t_1}[\log p(y,\t)]\big)=\exp\Big(\int q_2(\t_2)\log p(y,\t_1,\t_2)d\t_2\Big).
-$$
+$$\tag{8}\label{MFVB-8}
+q_1(\t_1)\propto \exp\big(\E_{-\t_1}[\log p(y,\t)]\big)=\exp\Big(\int q_2(\t_2)\log p(y,\t_1,\t_2)d\t_2\Big).$$
 
 - **Step 4:** Repeat Steps 2 and 3 until the stopping condition is met.
 

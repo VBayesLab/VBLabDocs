@@ -48,7 +48,7 @@ It is easy to see that
 $$\text{KL}(q||p(\cdot|y)) = -\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta+\log p(y),$$
 thus minimizing  KL is equivalent to maximizing the lower bound on $\log p(y)$
 
-$$\text{LB}(q):=\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta=E_{q}\Big(\log\frac{p(\theta)p(y|\theta)}{q(\theta)}\Big).$$
+$$\tag{2}\text{LB}(q):=\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta=E_{q}\Big(\log\frac{p(\theta)p(y|\theta)}{q(\theta)}\Big).$$
 
 Without any constraint on $\mathcal Q$, the solution to $\eqref{1}$ is $q^*(\theta)=p(\theta|y)$; of course this solution is useless as it is itself intractable.
 Depending on the constraint imposed on the class $\mathcal Q$, VB algorithms can be categorized into two classes: 

@@ -34,7 +34,7 @@ $\def\t{\theta}
 <!-- End -->
 One of the difficulties in using MFVB is that the optimal variational distributions in \eqref{eq:optimal VB} sometimes do not admit a standard form.
 
-In [Example 2.1]({% link Tutorial-MFVB-Example-2-1.md %}), for example, if the data $y_i$ does not follow a normal distribution but a Student's $t$ distribution $t_\nu(\mu,\sigma^2)$,
+In [Example 2.1](/VBLabDocs/tutorial/example#example2-1), for example, if the data $y_i$ does not follow a normal distribution but a Student's $t$ distribution $t_\nu(\mu,\sigma^2)$,
 then it can be seen that the optimal variational distribution $q(\mu)$ does not have the form of a Gaussian distribution or any standard probability distribution.
 
 In some situations, however, by introducing auxiliary variables, we can equivalently represent the model by augmenting the parameter space such that MFVB is applicable.

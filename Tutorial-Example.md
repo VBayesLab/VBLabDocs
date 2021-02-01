@@ -44,7 +44,7 @@ We can view $\mu$ and $\sigma^2$ respectively as $\theta_1$ and $\theta_2$ in [A
 
 **Solution**
 
-From \eqref{eq:optimal VB 1}, the optimal VB posterior for $\s^2$ is
+From [(7)](/VBLabDocs/tutorial/mfvb/#mjx-eqn-MFVB-7), the optimal VB posterior for $\s^2$ is
 
 $$\begin{eqnarray}
 q(\s^2)&\propto&\exp\left(\E_{-\s^2}[\log p( y,\mu,\s^2)]\right)=\exp\left(\E_{q(\mu)}[\log p( y,\mu,\s^2)]\right)\\
@@ -56,7 +56,7 @@ In the above derivation, we have ignored all the constants independent of $\sigm
 It follows that $q(\s^2)$ is inverse-Gamma with parameters
 $$\a_q=\a_0+\frac n2,\;\;\;\;\b_q=\b_0+\frac12\E_{q(\mu)}\left[\sum(y_i-\mu)^2\right].$$
 Computation of the expecation $\E_{q(\mu)}(\cdot)$ becomes clear shortly after $q(\mu)$ is identified.
-From $\eqref{eq:optimal VB 2}$, the optimal VB posterior for $\mu$ is
+From [(8)](/VBLabDocs/tutorial/mfvb/#mjx-eqn-MFVB-8), the optimal VB posterior for $\mu$ is
 
 $$\begin{eqnarray}
 q(\mu)&\propto&\exp\left(\E_{q(\s^2)}[\log p(y,\mu,\s^2)]\right)\\
@@ -108,24 +108,16 @@ We can stop the iterative scheme when the change of the $\ell_2$-norm of the vec
 We can also initialize $\a_q,\b_q$ and then update the variational parameters recursively in the order of $\mu_q$, $\s_q^2$, $\a_q$ and $\b_q$. 
 
 However, it's often a better idea to initialize $\mu_q,\s_q^2$ as it is easier to guess the values related to location parameters than the scale parameters.
-Figure \ref{fig:MFVB} plots the posterior densities estimated by the MFVB algorithm derived above, and by Gibbs sampling.  
+Figure 1 plots the posterior densities estimated by the MFVB algorithm derived above, and by Gibbs sampling.  
 
-\begin{figure}[h]
-\centering
-%\includegraphics[width=1\textwidth,height=.4\textheight]{figMFVB_Gibbs.eps}
-\includegraphics[width=1\columnwidth]{figMFVB_Gibbs.pdf}
-\caption{Example \ref{exa:Example 1}: Posterior density for $\mu$ and $\sigma^2$ estimated by MFVB and Gibbs sampling. The CPU time
-taken by VB was 0.006 seconds, by the Gibbs sampling scheme was 1.81 seconds. VB was about 300
-times faster.} 
-\label{fig:MFVB}
-\end{figure}
+<img src="/VBLabDocs/assets/images/Example2-1.JPG" class="center"/>
 
 It is straightforward to extend the MFVB procedure in [Algorithm 1](/VBLabDocs//tutorial/mfvb/#algorithm-1) to the general case where $\theta$ is divided into $k$ blocks $\t=(\t_1^\top,\t_2^\top,...,\t_k^\top)^\top$,
 and where we want to approximate the posterior  $p(\t_1,\t_2,...,\t_k|y)$ by $q(\t)=q_1(\t_1)q_2(\t_2)...q_k(\t_k)$.
 
 The optimal $q_j(\t_j)$ that maximizes $\LB(q)$, when $q_1,...,q_{j-1},q_{j+1},...,q_{k}$ are fixed, is
 
-$$\tag{9}\label{eq:optimal VB}
+$$\tag{9}\label{MFVB-9}
 q_j(\t_j)\propto \exp\big(\E_{-\t_j}[\log p(y,\t)]\big),\;\;\;j=1,...,k.
 $$
 

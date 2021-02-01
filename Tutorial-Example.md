@@ -248,3 +248,4 @@ together with seven covariates such as number of children under 6 years old, age
 Figure 6 plots the VB approximation for each coefficient $\theta_i$ together with the lower bound estimates over the iterations.
 
 <img src="/VBLabDocs/assets/images/Example3-4.JPG" class="center"/>
+

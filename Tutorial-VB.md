@@ -42,6 +42,7 @@ The best VB approximation $q^\*\in\mathcal{Q}$ is found by minimizing the Kullba
 
 $$\tag{1}\label{1} q^*=\arg\min_{q\in\mathcal Q} { \text{KL}(q||p(\cdot|y)):=\int q(\theta)\log\frac{q(\theta)}{p(\theta|y)}d\theta }. $$
 
+
 Then, Bayesian inference is performed with the intractable posterior $p(\theta|y)$ replaced by the tractable VB approximation $q^\*(\theta)$.
 It is easy to see that
 $$\text{KL}(q||p(\cdot|y)) = -\int q(\theta)\log\frac{p(\theta)p(y|\theta)}{q(\theta)}d\theta+\log p(y),$$

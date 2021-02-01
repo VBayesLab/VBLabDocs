@@ -31,7 +31,7 @@ $$q(\t)=q_1(\t_1)q_2(\t_2),$$
 
 i.e., we ignore the posterior dependence between $\theta_1$, $\theta_2$ and attempt to approximate $p(\t_1,\t_2\|y)$ by $q(\t)=q_1(\t_1)q_2(\t_2)$. This is the only assumption/restriction we put on the class $\mathcal Q$.
 
-The lower bound in $\eqref{1}$ is 
+The lower bound in [(1)](/VBLabDocs/tutorial/vb#mjx-eqn-1) is 
 
 $$\begin{eqnarray}
 \LB(q_1,q_2)&=&\int q_1(\t_1)q_2(\t_2)\log\frac{p(\t,y)}{q_1(\t_1)q_2(\t_2)}d\t_1d\t_2\\

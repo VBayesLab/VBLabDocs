@@ -14,6 +14,7 @@ Examples to illustrate the VB algorithms discussed in the tutorial paper. The ex
 - [Example 3.1: Fixed From VB with control variates for Bayesian Linear Regression](#example3-1)
 - [Example 3.2: Fixed From VB with control variates and natural gradient for Bayesian Linear Regression](#example3-2)
 - [Example 3.3: Hybrid Fixed From VB for Bayesian Linear Regression](#example3-3)
+- [Example 3.4: Cholesky GVB for Bayesian Logistic Regression](#example3-4)
 
 ---
 ## Example 2.1: Mean Field Variational Bayes for Bayesian Linear Regression
@@ -41,8 +42,6 @@ Derive the MFVB procedure for approximating the posterior $$p(\mu,\s^2\mid y)\pr
 We can view $\mu$ and $\sigma^2$ respectively as $\theta_1$ and $\theta_2$ in [Algorithm 1](/VBLabDocs/tutorial/mfvb#algorithm-1).
 
 </div>
-
-**Solution**
 
 From [(7)](/VBLabDocs/tutorial/mfvb/#mjx-eqn-MFVB-7), the optimal VB posterior for $\s^2$ is
 
@@ -211,18 +210,41 @@ with
 
 $$h_\lambda(\theta)=\log p(\mu,\sigma^2)+\log p(y|\mu,\sigma^2)-\log \wt q_\lambda(\mu)-\log p(\sigma^2|y,\mu).$$
 
-Algorithm \ref{algorithm 2} or Algorithm \ref{algorithm 3} now can be applied.
+Algorithm [Algorithm 4](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-4) or [Algorithm 5](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-5) now can be applied.
 
-Figure \ref{fig:ChapterFFVB_FFVB:Example4_1_3} shows the estimated results.
+Figure 5 shows the estimated results.
 As shown, this ``hybrid'' VB approximation is highly accurate in terms of both marginal density estimate and the joint density estimate.
-%The hybrid VB method is discussed in detail in Section \ref{sec:ChapterFFVB:hybrid FFVB}.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=1\textwidth,height=.4\textheight]{ChapterMFVB_Example4_1_3.eps}
-\caption{Example \ref{exa:ChapterFFVB:example_hybrid}: First row: Posterior densities for $\mu$ and $\sigma^2$ estimated by Gibbs sampling and 
-the hybrid VB method in \eqref{eq:ChapterFFVB:hybrid VB}. Second row: The joint samples and contour plot 
-for the estimated joint posterior. In the bottom-right corner plot, the dashed lines are contours estimated based on the Gibbs samples,
-and the solid lines estimated based on the samples generated from \eqref{eq:ChapterFFVB:hybrid VB}.}
-\label{fig:ChapterFFVB_FFVB:Example4_1_3}
-\end{figure}
+<img src="/VBLabDocs/assets/images/Example3-3.JPG" class="center"/>
+
+---
+
+## Example 3.4: Cholesky GVB for Bayesian Logistic Regression
+{: #example3-4}
+<div class="code-example" markdown="1" style="background-color:GhostWhite;padding:10px;">
+Consider a Bayesian logistic regression problem with design matrix $X=[x_1,...,x_n]^\top$ and vector of binary responses $y$.
+The log-likelihood is
+
+$$\log p(y|X,\theta)=y^\top X\theta-\sum_{i=1}^n\log\big(1+\exp(x_i^\top\theta)\big)$$
+
+with $\theta$ the vector of $d$ coefficients. Suppose that a normal prior $\N(0,\sigma_0^2I)$ is used for $\theta$.
+
+</div>
+
+To implement the Cholesky GVB method, all we need is the function 
+
+$$\tag{27}\label{eqn:h_function_ex4}h(\theta)=\log p(\theta)+\log p(y|X,\theta)=-\frac{d}{2}\log(2\pi)-\frac{d}{2}\log(\sigma_0^2)-\frac{\theta^\top\theta}{2\sigma_0^2}+y^\top X\theta-\sum_{i=1}^n\log\big(1+\exp(x_i^\top\theta)\big),$$
+
+and its gradient
+
+$$\tag{28}\label{eqn:grad_h_function_ex4_1}\nabla_\theta h(\theta)=-\frac{1}{\sigma_0^2}\theta+X^\top\big(y-\pi(\theta)\big)$$
+
+with
+
+$$\tag{29}\label{eqn:grad_h_function_ex4_2}\pi(\theta)=\Big(\frac{1}{1+\exp(-x_1^\top\theta)},\cdots,\frac{1}{1+\exp(-x_n^\top\theta)}\Big)^\top.$$
+
+The [Labour Force Participation dataset](/VBLabDocs/datasets/#labour-force) contains information of $753$ women with one binary variable indicating whether or not they are currently in the labour force
+together with seven covariates such as number of children under 6 years old, age, education level, etc.
+Figure 6 plots the VB approximation for each coefficient $\theta_i$ together with the lower bound estimates over the iterations.
+
+<img src="/VBLabDocs/assets/images/Example3-4.JPG" class="center"/>

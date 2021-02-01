@@ -13,7 +13,7 @@ permalink: /tutorial/ffvb
 This tutorial gives a quick introduction to Mean Field Variational Bayes. 
 {: .fs-6 .fw-300 }
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%})
 
 ---
 ## FFVB
@@ -29,6 +29,7 @@ $\def\t{\theta}
 \def\b{\beta}
 \def\l{\lambda}
 \def\V{\mathbb{V}}
+\def\cov{\text{cov}}
 \newcommand{\eps}{\epsilon}
 \newcommand{\wh}{\widehat}
 \newcommand{\wt}{\widetilde}$
@@ -37,9 +38,12 @@ FFVB assumes a fixed parametric form for the VB approximation density $q$, i.e. 
 For example, $q_\l$ is a Gaussian distribution with mean $\mu$ and covariance matrix $\Sigma$.
 
 FFVB finds the best $q_\lambda$ in the class $\mathcal{Q}$ by optimizing the lower bound
+
 $$\tag{15}\label{eq: LB}
 \LB(\lambda):= \LB(q_\lambda) =\E_{q_\lambda}\left[\log\frac{p(\theta)p(y|\theta)}{q_\lambda(\theta)}\right]=\E_{q_\lambda}\big[h_\lambda(\theta)\big],$$
+
 with 
+
 $$h_\lambda(\t):=\log\big(\frac{p(\t) p(y \mid \t)}{q_\lambda(\theta)}\big).$$
 
 Later we also use $h(\theta)$, without the subscript, to denote the model-specific function $\log\;\big(p(\t) p(y|\t)\big)$.
@@ -66,7 +70,7 @@ Unbiased estimate of the gradient of the target function is theoretically requir
 ### Algorithm 3: Basic FFVB algorithm
 {: #algorithm-3}
 
-- Initialize $\l^{(0)}$ and stop the following iteration if the [stopping criterion](#algorithm-1) is met.
+- Initialize $\l^{(0)}$ and stop the following iteration if the [stopping criterion](#stopping-criterion) is met.
 - For $t=0,1,...$
     - Generate $\theta_s\sim q_{\lambda^{(t)}}(\theta)$, $s=1,...,S$
 	- Compute the unbiased estimate of the LB gradient
@@ -86,7 +90,7 @@ Much of the rest of this section focuses on presenting and explaining those refi
 ---
 
 ## Stopping criterion
-{: #algorithm-1}
+{: #stopping-criterion}
 
 Let us first discuss on the stopping rule. An easy-to-implement stopping rule is to terminate the updating
 procedure if the change between $\lambda^{(t+1)}$ and $\lambda^{(t)}$, e.g. in terms of the Euclidean distance, is less than some threshold $\epsilon$.
@@ -166,44 +170,48 @@ $$\tag{18}\label{eq:scalar learning rate}
 \eps_0\frac{\tau}{t},&t>\tau
 \end{cases} $$
 
-for some small {\it fixed learning rate} $\eps_0$ (e.g. 0.1 or 0.01) and some threshold $\tau$ (e.g., 1000).  
+for some small *fixed learning rate* $\eps_0$ (e.g. 0.1 or 0.01) and some threshold $\tau$ (e.g., 1000).  
 In the first $\tau$ iterations, the training procedure explores the learning space with a fixed learning rate $\eps_0$,
 then this exploration is settled down by reducing the step size after $\tau$ iterations.
-%\subsubsection*{ADADELTA:}
-%\subsubsection*{ADAM:}
-%\begin{example}\label{ex: }	
-%\end{example}
-\subsubsection{Natural gradient}
+
+### Natural gradient
+{: #natural-gradient}
+
 Natural gradient can be considered as an adaptive learning method that exploits the geometry of the $\lambda$ space.
 The ordinary gradient $\nabla_\l{\LB}(\l)$ does not adequately capture the geometry of the approximating family $\mathcal Q$ of $q_\l(\t)$.
-A small Euclidean distance between $\l$ and $\l'$ does not necessarily mean a small \KL{} divergence between $q_\l(\t)$ and $q_{\l'}(\t)$.
+A small Euclidean distance between $\l$ and $\l'$ does not necessarily mean a small $\KL$ divergence between $q_\l(\t)$ and $q_{\l'}(\t)$.
+
 Statisticians and machine learning researchers have long realized the importance of information geometry on the manifold of a statistical model,
 and that the steepest direction for optimizing the objective function $\LB (\l)$ on the manifold formed by the family $q_\l(\t)$ is directed by the so-called natural gradient 
 which is defined by pre-multiplying the ordinary gradient with the inverse of the Fisher information matrix
-\beqn
-\nabla_{\lambda}\LB (\l)^{\text{nat}} := I_F^{-1}(\l)\nabla_\l\LB(\l),
-\eeqn
+
+$$\nabla_{\lambda}\LB (\l)^{\text{nat}} := I_F^{-1}(\l)\nabla_\l\LB(\l),$$
+
 with  $I_F(\lambda)=\cov_{q_\l}(\nabla_\l\log q_\l(\t))$ the Fisher information matrix about $\lambda$ with respect to the distribution $q_\lambda$. Given an unbiased estimate $\wh{\nabla_\l\text{LB}}(\l)$, the unbiased estimate of the natural gradient is 
-\beq\label{eq:natural gradient}
-\wh{\nabla_{\lambda}\LB}(\l)^{\text{nat}} = I_F^{-1}(\l)\wh{\nabla_\l\LB}(\l).
-\eeq
+
+$$\tag{19}\label{eq:natural gradient}
+\wh{\nabla_{\lambda}\LB}(\l)^{\text{nat}} = I_F^{-1}(\l)\wh{\nabla_\l\LB}(\l).$$
 
 The main difficulty in using the natural gradient is the computation of $I_F(\lambda)$, and the solution of 
 the linear systems required to compute \eqref{eq:natural gradient}. 
 The problem is more severe in high dimensional models because this matrix has a large size.
 An efficient method for computing $I_F(\lambda)^{-1}\wh{\nabla_\l \LB}(\l)$ is using iterative conjugate gradient methods which solve the linear system $I_F(\lambda)x=\wh{\nabla_\lambda \LB} (\l)$ for $x$ using only matrix-vector products involving $I_F(\lambda)$.
+
 In some cases this matrix vector product can be done efficiently both in terms of computational time and memory requirements by exploiting the structure
 of the Fisher matrix $I_F(\lambda)$. 
-See Section \ref{sec: GVB factor} for a special case where the natural gradient is computed efficiently in high dimensional problems.
+See Section [CGVB]({{site.baseurl}}{% link Tutorial-FFVB-CGVB.md %}) for a special case where the natural gradient is computed efficiently in high dimensional problems.
 
-As mentioned before, the gradient momentum method is often useful in stochastic optimization that 
-helps accelerate and stabilize the optimization procedure.
+As mentioned before, the gradient momentum method is often useful in stochastic optimization that helps accelerate and stabilize the optimization procedure.
 The momentum update rule with the natural gradient is 
-\bean
+
+{%raw%}
+$$\begin{eqnarray}
 \overline{{\nabla_\l{\LB}}} &=& \alpha_\text{m} \overline{{\nabla_\l{\LB}}}+(1-\alpha_\text{m})\wh{\nabla_{\lambda}\LB}(\l^{(t)})^{\text{nat}},\\
 \l^{(t+1)}&=&\l^{(t)}+\a_t \overline{{\nabla_\l{\LB}}},
-\eean
+\end{eqnarray}$$ 
+{%endraw%}
+
 where $\alpha_\text{m}\in[0,1]$ is the momentum weight; $\alpha_m$ around 0.6-0.9 is a typical choice. 
-The use of the moving average gradient $\overline{{\nabla_\l{\LB}}}$ also helps remove some of the noise
-inherent in the estimated gradients of the lower bound.
-Note that the momentum method is already embedded in the moving-average-based adaptive learning rate methods in Section \ref{sec: Adaptive learning rate}. 
+
+The use of the moving average gradient {%raw%}$\overline{{\nabla_\l{\LB}}}${%endraw%} also helps remove some of the noise inherent in the estimated gradients of the lower bound.
+Note that the momentum method is already embedded in the moving-average-based adaptive learning rate methods in [Adaptive learning rate](#adaptive-learning) 

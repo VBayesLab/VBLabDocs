@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Example
+title: Tutorial Examples
 parent: VB Tutorials
 nav_order: 4
 permalink: /tutorial/example
@@ -10,11 +10,13 @@ permalink: /tutorial/example
 {: .fs-8 }
 
 Examples to illustrate the VB algorithms discussed in the tutorial paper. The examples are numbered in the same order as presented in the [VB tutorial paper](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes)
-- [Example 2.1: Mean Field Variational Bayes for Linear Regression](#example2-1)
-- [Example 3.1: Fixed From VB with control variates for Logistic Regression](#example3-1)
+- [Example 2.1: Mean Field Variational Bayes for Bayesian Linear Regression](#example2-1)
+- [Example 3.1: Fixed From VB with control variates for Bayesian Linear Regression](#example3-1)
+- [Example 3.2: Fixed From VB with control variates and natural gradient for Bayesian Linear Regression](#example3-2)
+- [Example 3.3: Hybrid Fixed From VB for Bayesian Linear Regression](#example3-3)
 
 ---
-## Example 2.1: Mean Field Variational Bayes for Linear Regression
+## Example 2.1: Mean Field Variational Bayes for Bayesian Linear Regression
 {: #example2-1}
 <!--- Define custom latex syntax -->
 $\def\t{\theta}
@@ -31,13 +33,11 @@ $\def\t{\theta}
 \def\l{\lambda}
 \newcommand{\eps}{\epsilon}$
 <div class="code-example" markdown="1" style="background-color:GhostWhite;padding:20px;">
-**Given:**
 - $ y=(11; 12; 8; 10; 9; 8; 9; 10; 13; 7)$ be observations from $\N(\mu,\s^2)$, the normal distribution with mean $\mu$ and variance $\s^2$. 
 - Suppose that we use the prior $\N(\mu_0,\s_0^2)$ for $\mu$ and $\text{Inverse-Gamma}(\a_0,\b_0)$ for $\s^2$, with hyperparameters $\mu_0=0$, $\s_0=10$, $\a_0=1$ and $\b_0=1$. 
 - Assume the VB factorization $q(\mu,\sigma^2)=q(\mu)q(\sigma^2)$.
 
-**Quesion:** Derive the MFVB procedure for approximating the posterior 
-$$p(\mu,\s^2\mid y)\propto p(\mu)p(\s^2)p( y\mid \mu,\s^2).$$
+Derive the MFVB procedure for approximating the posterior $$p(\mu,\s^2\mid y)\propto p(\mu)p(\s^2)p( y\mid \mu,\s^2).$$
 We can view $\mu$ and $\sigma^2$ respectively as $\theta_1$ and $\theta_2$ in [Algorithm 1](/VBLabDocs/tutorial/mfvb#algorithm-1).
 
 </div>
@@ -129,5 +129,100 @@ A similar procedure to Algorithm [Algorithm 1](/VBLabDocs//tutorial/mfvb/#algori
 
 ---
 
-## Example 3.1: Fixed From VB with control variates
+## Example 3.1: Fixed From VB with control variates for Bayesian Linear Regression
 {: #example3-1}
+<div class="code-example" markdown="1" style="background-color:GhostWhite;padding:20px;">
+With the model and data in [Example 2.1](#example2-1), let's derive a FFVB procedure for approximating the posterior $p(\mu,\s^2 \mid y)\propto p(\mu)p(\s^2)p(y \mid \mu,\s^2)$ using [Algorithm 4](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-4). 
+</div>
+
+Suppose that the VB approximation is $q_\l(\mu,\sigma^2)=q(\mu)q(\sigma^2)$ with $q(\mu)=\N(\mu_\mu,\sigma_\mu^2)$ and $q(\sigma^2)=\text{Inverse-Gamma}(\a_{\sigma^2},\b_{\sigma^2})$.
+This toy example is simply to demonstrate the use of [Algorithm 4](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-4), we do not focus on the approximation accuracy here.
+
+The model parameter is $\theta=(\mu,\sigma^2)^\top$ and the variational parameter $\lambda=(\mu_\mu,\sigma_\mu^2,\a_{\sigma^2},\b_{\sigma^2})^\top$.
+In order to implement [Algorithm 4](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-4), we need $h_\lambda(\theta)=h(\theta)-\log q_\l(\t)$ with 
+
+$$\begin{eqnarray}
+h(\theta)&=&\log \big(p(\mu)p(\sigma^2)p(y\mid \mu,\sigma^2)\big)\\
+&=&-\frac{n+1}{2}\log(2\pi)-\frac12\log(\sigma_0^2)-\frac{(\mu-\mu_0)^2}{2\sigma_0^2}+\alpha_0\log(\beta_0)-\log\Gamma(\a_0)-(\frac{n}{2}+\a_0+1)\log(\s^2)\\
+&&\phantom{cccc}-\frac{\b_0}{\s^2}-\frac{1}{2\s^2}\sum_{i=1}^n(y_i-\mu)^2,\\
+\log q_\l(\t)&=&\a_{\s^2}\log\b_{\s^2}-\log\Gamma(\a_{\s^2})-(\a_{\s^2}+1)\log\s^2-\frac{\b_{\s^2}}{\s^2}-\frac12\log(2\pi)-\frac12\log(\s_{\mu}^2)-\frac{(\mu-\mu_\mu)^2}{2\s_\mu^2},
+\end{eqnarray}$$
+
+and
+
+$$\nabla_\l\log q_\l(\t)=\Big(\frac{\mu-\mu_\mu}{\s_\mu^2},-\frac{1}{2\s_\mu^2}+\frac{(\mu-\mu_\mu)^2}{2\s_\mu^4},\log\b_{\s^2}-\frac{\Gamma'(\a_{\s^2})}{\Gamma(\a_{\s^2})}-\log\s^2,\frac{\a_{\s^2}}{\b_{\s^2}}-\frac{1}{\s^2} \Big)^\top.$$
+
+We are now ready to implement [Algorithm 4](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-4). Figure 3 plots the estimate of the posterior densities together with the lower bound.
+The Variational Bayes estimates appear to be quite close to the Gibbs sampling estimates in this example, with some small discrepancy between them. These estimates can be improved with more advanced variants of FFVB presented later.
+
+<img src="/VBLabDocs/assets/images/Example3-1.JPG" class="center"/>
+
+--- 
+
+## Example 3.2: Fixed From VB with control variates and natural gradient for Bayesian Linear Regression
+{: #example3-2}
+<div class="code-example" markdown="1" style="background-color:GhostWhite;padding:10px;">
+With the model and data in [Example 2.1](#example2-1), let's derive a FFVB procedure for approximating the posterior $p(\mu,\s^2| y)\propto p(\mu)p(\s^2)p( y|\mu,\s^2)$ using [Algorithm 5](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-5). 
+</div>
+
+In order to implement [Algorithm 5](/VBLabDocs/tutorial/ffvb/control-variate#algorithm-5), apart from $h_\l(\t)$ and $\nabla_\l\log q_\l(\t)$ as in [Example 3.1](#example3-1), we need the Fisher information matrix $I_F$. It can be seen that this is a diagonal block matrix with two main blocks
+
+$$\begin{pmatrix}\frac{1}{\s_\mu^2}& 0\\
+0&\frac{1}{2\s_\mu^4} \end{pmatrix},\;\;\;\text{ and }\;\;\;
+\begin{pmatrix}
+\frac{\partial^2\log\Gamma(\a_{\s^2})}{\partial \a_{\s^2}\partial \a_{\s^2}}&-\frac{1}{\b_{\s^2}}\\
+-\frac{1}{\b_{\s^2}} & \frac{\a_{\s^2}}{\b_{\s^2}^2}
+\end{pmatrix}.$$
+
+Figure 4 shows the estimated densities together with the lower bound estimates.  In this example, Algorithm \ref{algorithm 3} appears to produce a very similar approximation as in Algorithm \ref{algorithm 2}.
+
+<img src="/VBLabDocs/assets/images/Example3-2.JPG" class="center"/>
+
+The choice of the variational distribution $q_\l(\mu,\sigma^2)=q(\mu)q(\sigma^2)$ in [Examples 3.1](#example3-1) and [Examples 3.2](#example3-2)
+ignores the posterior dependence between $\mu$ and $\sigma^2$.
+There are several alternatives that can improve this. 
+One of these is to use [Gaussian VB]({{site.baseurl}}{% link Tutorial-FFVB-CGVB.md%}) to approximate the posterior of the transformed parameter $\theta=\big(\mu,\log(\sigma^2)\big)$.
+Another alternative is presented in [Examples 3.3](#example3-3) below.
+
+---
+
+## Example 3.3: Hybrid Fixed From VB for Bayesian Linear Regression
+{: #example3-3}
+<div class="code-example" markdown="1" style="background-color:GhostWhite;padding:10px;">
+Consider again the model and data in [Examples 2.1](#example2-1). It is possible to exploit the structure of this model to develop a better VB approximation.
+Let us derive a FFVB procedure for approximating the posterior $p(\mu,\s^2|y)\propto p(\mu)p(\s^2)p(y|\mu,\s^2)$ using 
+the variational distribution with density of the form
+
+$$\tag{23}\label{eq:ChapterFFVB:hybrid VB}
+q_\lambda(\mu,\sigma^2)=\wt q_\lambda(\mu)p(\sigma^2|y,\mu),\;\;\;\wt q_\lambda(\mu)=\N(\mu_\mu,\sigma_\mu^2).
+$$
+
+</div>
+
+This distribution, as the joint distribution of $\mu$ and $\sigma^2$, doesn't have a standard form, however, it is straightforward to sample from it.
+This variational distribution exploits the standard form of the full conditional $p(\sigma^2|y,\mu)$, which is inverse-Gamma, and takes into account the posterior dependence between $\mu$ and $\sigma^2$.
+ 
+The variational parameter $\lambda$ now only consists of $\mu_\mu$ and $\sigma_\mu^2$.
+Using [(16)](/VBLabDocs/tutorial/ffvb/#mjx-eqn-eq%3Alb_gradient), the gradient of the lower bound is
+
+$$\nabla_\lambda\LB(\lambda)=\E_{q_\lambda(\mu,\sigma^2)}\Big(\nabla_\lambda\log \wt q_\lambda(\mu)\times h_\lambda(\theta)\Big)$$
+
+with 
+
+$$h_\lambda(\theta)=\log p(\mu,\sigma^2)+\log p(y|\mu,\sigma^2)-\log \wt q_\lambda(\mu)-\log p(\sigma^2|y,\mu).$$
+
+Algorithm \ref{algorithm 2} or Algorithm \ref{algorithm 3} now can be applied.
+
+Figure \ref{fig:ChapterFFVB_FFVB:Example4_1_3} shows the estimated results.
+As shown, this ``hybrid'' VB approximation is highly accurate in terms of both marginal density estimate and the joint density estimate.
+%The hybrid VB method is discussed in detail in Section \ref{sec:ChapterFFVB:hybrid FFVB}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth,height=.4\textheight]{ChapterMFVB_Example4_1_3.eps}
+\caption{Example \ref{exa:ChapterFFVB:example_hybrid}: First row: Posterior densities for $\mu$ and $\sigma^2$ estimated by Gibbs sampling and 
+the hybrid VB method in \eqref{eq:ChapterFFVB:hybrid VB}. Second row: The joint samples and contour plot 
+for the estimated joint posterior. In the bottom-right corner plot, the dashed lines are contours estimated based on the Gibbs samples,
+and the solid lines estimated based on the samples generated from \eqref{eq:ChapterFFVB:hybrid VB}.}
+\label{fig:ChapterFFVB_FFVB:Example4_1_3}
+\end{figure}

@@ -16,6 +16,7 @@ This section describes the GVB with factor decomposed covariance (VAFC) techniqu
 
 ---
 ## VAFC
+{: vafc}
 <!--- Define custom latex syntax -->
 $\def\t{\theta}
 \def\LB{\text{LB}}
@@ -42,17 +43,20 @@ GVB with this factor covariance structure is useful in high-dimensional settings
 as the number of variational parameters reduces from $d+d*(d+1)/2$ in the case of full Gaussian to $(f+2)d$ in the case of factor decomposition.
 
 This VB method is first developed in [Ong et. al (2018)](#Ong-2018) who term the method Variational Approximation with Factor Covariance (VAFC)
-and use Algorithm \ref{algorithm 4} for training, as computing the natural gradient in this case is difficult.
+and use [Algorithm 6](/VBLabDocs/tutorial/ffvb/reparameterization-trick#algorithm-6) for training, as computing the natural gradient in this case is difficult.
 
 This section describes the case with one factor, $f=1$, which achieves a great computational speed-up for approximate Bayesian inference in big models such as deep neural networks where $d$ can be very large.
-Also, with $f=1$, Tran et. al (2020) show that it is possible to calculate the natural gradient efficiently   and term their method NAtural gradient Gaussian Variational Approximation with factor Covariance (NAGVAC).
-
+Also, with $f=1$, [Tran et. al (2020)](#Tran-2020) show that it is possible to calculate the natural gradient efficiently and term their method NAtural gradient Gaussian Variational Approximation with factor Covariance (NAGVAC).
 
 With $f=1$, we rewrite the factor decomposition as 
-$$\Sigma=bb^\top+C^2,\quad\;\;C=\text{diag}(c),$$  
+
+$$\Sigma=bb^\top+C^2,\quad\;\;C=\text{diag}(c),$$ 
+
 where $b=(b_1,...,b_d)^\top$ and $c=(c_1,...,c_d)^\top$ are vectors. The variational parameter vector is $\lambda=(\mu^\top,b^\top,c^\top)^\top$.
 Using the reparameterization trick, $\theta\sim\N(\mu,\Sigma)$ can be written as
+
 $$\theta = g(\lambda,\veps)=\mu+\veps_1b+c\circ\veps_2$$
+
 where $\veps=(\veps_1,\veps_2^\top)^\top\sim\N_{d+1}(0,I)$, and $c\circ\veps_2$ denotes the component-wise product of vectors $c$ and $\veps_2$.
 Note that
 $$\nabla_\mu g(\lambda,\veps)=I_d,\;\;\;\;\nabla_b g(\lambda,\veps)=\veps_1I_d,\;\;\;\;\nabla_c g(\lambda,\veps) =\diag(\veps_2),$$
@@ -66,16 +70,24 @@ $$\tag{30}\label{eq: GVB factor grad est}
 \end{pmatrix}.$$  
 
 The gradient of function $h_\lambda(\theta)$ is
+
 $$\nabla_\theta h_\lambda(\theta)=\nabla_\theta h(\theta)-\nabla_\theta\log q_\lambda(\theta)=\nabla_\theta\log\big(p(\theta)p(y|\theta)\big)-\nabla_\theta\log q_\lambda(\theta),$$
+
 where the first term is model-specific and the second term is $\nabla_\theta\log q_\lambda(\theta)=-\Sigma^{-1}(\theta-\mu)$.
 
 To avoid computing directly the inverse $\Sigma^{-1}$ and the matrix-vector multiplication, noting that $\Sigma^{-1}=C^{-2}-\frac{1}{1+b^\top C^{-2}b} C^{-2}bb^\top C^{-2}$, we have
+
 $$\nabla_\theta\log q_\lambda(\theta)=-(\theta-\mu)\circ c^{-2}+\frac{(b\circ c^{-2})^\top(\theta-\mu)}{1+(b\circ c^{-1})^\top (b\circ c^{-1})}(b\circ c^{-2}),$$
+
 with $c^{-1}:=(1/c_1,...,1/c_d)^\top$ and $c^{-2}:=(1/c_1^2,...,1/c_d^2)^\top$.
 To compute lower bound estimates, we need
+
 $$\log q_\lambda(\theta) = -\frac{d}{2}\log(2\pi)-\frac12\log|\Sigma|-\frac12(\theta-\mu)^\top\Sigma^{-1}(\theta-\mu).$$
+
 As $\Sigma=C\big((C^{-1}b)(C^{-1}b)^\top+I\big)C$,
+
 $$|\Sigma| = |C|^2\big(1+(C^{-1}b)^\top(C^{-1}b)\big)=\big(\prod_{i=1}^d{c_i^2}\big)\big(1+\sum_{i=1}^d\frac{b_i^2}{c_i^2}\big).$$
+
 Hence, a computationally efficient version of $\log q_\lambda(\theta)$ is
 
 $$\begin{eqnarray}
@@ -83,14 +95,14 @@ $$\begin{eqnarray}
 &&\phantom{ccc}-\frac12(\theta-\mu)^\top\big((\theta-\mu)\circ c^{-2}\big)+\frac{\big((b\circ c^{-2})^\top(\theta-\mu)\big)^2}{2\big(1+(b\circ c^{-1})^\top(b\circ c^{-1})\big)}.
 \end{eqnarray}$$
 
-Finally, it can be shown that the natural gradient in $\eqref{eq:natural gradient}$ can be approximately computed in closed form 
+Finally, it can be shown that the natural gradient in [(19)](/VBLabDocs/tutorial/ffvb/#mjx-eqn-eq%3Anatural_gradient) can be approximately computed in closed form 
 as in the following algorithm (see [Tran et al. (2020)](#Tran-2020)), whose computational complexity is $O(d)$.
-
+<br>
 <div class="code-example" markdown="1" style="background-color:GhostWhite;padding:20px;">
 
 ### Algorithm 8: Computing the natural gradient
 {: #algorithm-8}
-<br>
+
 **Input:** Vector $b$, $c$ and ordinary gradient of the lower bound $g = (g_1^\top,g_2^\top,g_3^\top)^\top$ with $g_1$ the vector formed by the first $d$ elements of $g$,
 $g_2$ formed by the next $d$ elements, and $g_3$ the last $d$ elements. 
 **Output:** The natural gradient $g^{\text{nat}}=I_F^{-1}g$.
@@ -107,31 +119,33 @@ $$g^{\text{nat}}=\begin{pmatrix}
 ---
 
 ## NAGVAC
+{: #nagvac}
 
-We now describe the NAGVAC algorithm that can be used as a fast VB method for approximate Bayesian inference 
-in high-dimensional applications such as Bayesian deep neural networks.
-In such applications, instead of using the lower bounds for stopping rule,
-one often uses a loss function evaluated on a validation dataset for stopping.
+We now describe the NAGVAC algorithm that can be used as a fast VB method for approximate Bayesian inference in high-dimensional applications such as Bayesian deep neural networks.
+In such applications, instead of using the lower bounds for stopping rule, one often uses a loss function evaluated on a validation dataset for stopping.
 Then, the updating is stopped if the loss function is not decreased after $P$ iterations.
-
+<br>
 <div class="code-example" markdown="1" style="background-color:GhostWhite;padding:20px;">
 
 ### Algorithm 9: NAGVAC
 {: #algorithm-9}
-<br>
-**Input:** Initial $\lambda^{(0)}:=(\mu^{(0)},b^{(0)},c^{(0)})$, number of samples $S$, momentum weight $\a_m$, fixed learning rate $\eps_0$, threshold $\tau$, rolling window size $t_W$ and maximum patience $P$. **Model-specific requirement:** function $h(\theta)$ and $\nabla_\theta h(\theta)$.
 
-- Initialization
+- **Input:** Initial $\lambda^{(0)}:=(\mu^{(0)},b^{(0)},c^{(0)})$, number of samples $S$, momentum weight $\a_m$, fixed learning rate $\eps_0$, threshold $\tau$, rolling window size $t_W$ and maximum patience $P$. **Model-specific requirement:** function $h(\theta)$ and $\nabla_\theta h(\theta)$.
+- **Initialization**
 	- Generate $\varepsilon_{1,s}\sim \N(0,1)$ and $\varepsilon_{2,s}\sim \N_d(0,I_d)$, $s=1,...,S$.
-	- Compute the lower bound gradient estimate $\wh{\nabla}_\l\LB(\l^{(0)})$ as in then compute 
-	- Set momentum gradient $\overline{\nabla_\l\LB}:=\wh{\nabla_{\lambda}\LB} (\l^{(0)})^{\text{nat}}$.
-	- Set $t=0$, $\text{patience}=0$ and $\texttt{stop=false}$.
-- While $\texttt{stop=false}:$
-	- Generate $\varepsilon_{1,s}\sim \N(0,1)$ and $\varepsilon_{2,s}\sim \N_d(0,I_d)$, $s=1,...,S$.	
-	- Compute the lower bound gradient estimate $\wh{\nabla}_\l\LB(\l^{(t)})$, and then compute the natural gradient 
+	- Compute the lower bound gradient estimate $\wh{\nabla_\l\LB}(\l^{(0)})$ as in \eqref{eq: GVB factor grad est}, and then compute the natural gradient $\wh{\nabla_\l\LB}(\l^{(0)})^{\text{nat}}$ using [Algorithm 8](#algorithm-8).
+	- Set momentum gradient {%raw%}$\overline{{\nabla_\l{\LB}}}:=\wh{\nabla_{\lambda}\LB} (\l^{(0)})^{\text{nat}}$.{%endraw%}
+	- Set $t=0$, $\text{patience}=0$ and $\texttt{stop=false}$
+- **While** $\texttt{stop=false}:$
+	- Generate $\varepsilon_{1,s}\sim \N(0,1)$ and $\varepsilon_{2,s}\sim \N_d(0,I_d)$, $s=1,...,S$.	  
+	- Compute the lower bound gradient estimate $\wh{\nabla_\l\LB}(\l^{(1)})$ as in \eqref{eq: GVB factor grad est}, and then compute the natural gradient $\wh{\nabla_\l\LB}(\l^{(1)})^{\text{nat}}$ using [Algorithm 8](#algorithm-8).
 	- Compute the momentum gradient
-	
-    - Compute  and update 
+
+	  {%raw%}$$\overline{{\nabla_\l{\LB}}} = \alpha_\text{m} \overline{{\nabla_\l{\LB}}}+(1-\alpha_\text{m})\wh{\nabla_{\lambda}\LB}(\l^{(t)})^{\text{nat}}$${%endraw%}
+    
+	- Compute $\alpha_t=\min(\epsilon_0,\epsilon_0\frac{\tau}{t})$ and update 
+	  
+	  {%raw%}$$\l^{(t+1)}=\l^{(t)}+\a_t \overline{{\nabla_\l{\LB}}}$${%endraw%}
 	
 	- Compute the validation loss $\text{Loss}(\lambda^{(t)})$. 
         - If $\text{Loss}(\lambda^{(t)})\leq \min\{\text{Loss}(\lambda^{(1)}),...,\text{Loss}(\lambda^{(t-1)})\}$ patience = 0; 

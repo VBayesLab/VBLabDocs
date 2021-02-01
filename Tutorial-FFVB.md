@@ -58,7 +58,7 @@ $$\begin{eqnarray}\tag{16}\label{eq:lb gradient}
 &=&\E_{q_\lambda}\left[\nabla_\lambda \log q_\lambda(\theta)\times\log\frac{p(\theta)p(y \mid \theta)}{q_\lambda(\theta)}\right]\\
 &=&\E_{q_\lambda}\left[\nabla_\lambda \log q_\lambda(\theta)\times h_\lambda(\theta)\right].\end{eqnarray}$$
 
-The gradient in this form is often referred to as *score-function gradient*, another way known as *reparameterization gradient* to compute the gradient of the lower bound is discussed later in \eqref{eq:Reparameterization trick gradient}.
+The gradient in this form is often referred to as *score-function gradient*, another way known as [*reparameterization gradient*]({{site.baseurl}}{% link Tutorial-FFVB-Reparameterization-Trick.md %}) to compute the gradient of the lower bound.
 
 In Monte Carlo simulation, by $\t\sim q_\lambda(\t)$ we mean that we draw a random variable or random vector $\theta$ from the probability distribution with density $q_\l(\t)$. That notation also means $\theta$ is a random variable/vector whose probability density function is $q_\l(\t)$. 
 It follows from $\eqref{eq:lb gradient}$ that, by generating $\t\sim q_\lambda(\t)$,  it is straightforward to obtain an unbiased estimator $\wh{\nabla_\l\text{LB}}(\l)$ of the gradient $\nabla_\l\text{LB}(\l)$, i.e., $\E\big[\wh{\nabla_\l\text{LB}}(\l)\big]=\nabla_\l\text{LB}(\l)$.

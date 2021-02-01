@@ -5,6 +5,7 @@ parent: VB Tutorials
 nav_order: 2
 has_children: true
 permalink: /tutorial/mfvb
+
 ---
 # **Mean Field Variational Bayes (MFVB)**
 {: .fs-8 }

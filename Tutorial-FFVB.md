@@ -74,12 +74,12 @@ Unbiased estimate of the gradient of the target function is theoretically requir
 	- Update 
 	  $$\tag{17}\label{eq:update rule} \l^{(t+1)}=\l^{(t)}+a_t\wh{\nabla_\l\text{LB}}(\l^{(t)}).$$
 
+</div>
 The algorithmic parameter $S$ is referred to as the number of Monte Carlo samples (used to estimate the gradient of the lower bound).
 The sequence of learning rates $\\{a_t\\}$ should satisfy the theoretical requirements $a_t>0$, $\sum_t a_t=\infty$ and $\sum_t a_t^2<\infty$.
 However, this basic VB algorithm hardly works in practice and requires some refinements to make it work.
 Much of the rest of this section focuses on presenting and explaining those refinements.
 
-</div>
 ---
 
 ## Stopping criterion

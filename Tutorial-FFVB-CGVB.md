@@ -15,7 +15,7 @@ usemathjax: true
 This tutorial gives a quick introduction to Mean Field Variational Bayes. 
 {: .fs-6 .fw-300 }
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({% link Tutorial-FFVB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({{site.baseurl}}{% link Tutorial-FFVB.md%})
 
 ---
 ## CGVB 
@@ -120,6 +120,7 @@ From Algorithm \ref{algorithm 4}, we arrive at the following GVB algorithm, refe
 
 </div>
 ---
+
 ## Example: Bayesian logistic regression with CGVB
 Consider a Bayesian logistic regression problem with design matrix $X=[x_1,...,x_n]^\top$ and vector of binary responses $y$.
 The log-likelihood is

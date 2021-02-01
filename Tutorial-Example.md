@@ -11,7 +11,7 @@ permalink: /tutorial/example
 
 Examples to illustrate the VB algorithms discussed in the tutorial paper. The examples are numbered in the same order as presented in the [VB tutorial paper](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes)
 - [Example 2.1: Mean Field Variational Bayes for Linear Regression](#example2-1)
-- [Example 3.1: Mean Field Variational Bayes for Linear Regression](#example3-1)
+- [Example 3.1: Fixed From VB with control variates for Logistic Regression](#example3-1)
 
 ---
 ## Example 2.1: Mean Field Variational Bayes for Linear Regression
@@ -122,6 +122,7 @@ q_j(\t_j)\propto \exp\big(\E_{-\t_j}[\log p(y,\t)]\big),\;\;\;j=1,...,k.
 $$
 
 Here $\E_{-\t_j}(\cdot)$ denotes the expectation w.r.t. $q_1$,..., $q_{j-1}$, $q_{j+1}$,..., $q_{k}$, i.e.,
+
 $$\E_{-\t_j}\big[\log p(y,\t)\big]:=\int q_1(\theta_1)...q_{j-1}(\theta_{j-1})q_{j+1}(\theta_{j+1})...q_{k}(\theta_k)\log p(y,\t)d\theta_1....d\theta_{j-1}d\theta_{j+1}...d\theta_k.$$
 
 A similar procedure to Algorithm [Algorithm 1](/VBLabDocs//tutorial/mfvb/#algorithm-1) can be developed, in which we first initialize the parameters in the $k-1$ factors $q_1,...,q_{k-1}$, then update $q_k$ and the other factors recursively.

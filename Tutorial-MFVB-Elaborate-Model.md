@@ -32,7 +32,7 @@ $\def\t{\theta}
 \def\d{d}
 \newcommand{\eps}{\epsilon}$
 <!-- End -->
-One of the difficulties in using MFVB is that the optimal variational distributions in \eqref{eq:optimal VB} sometimes do not admit a standard form.
+One of the difficulties in using MFVB is that the optimal variational distributions in [(9)](/VBLabDocs/tutorial/example#mjx-eqn-MFVB-9) sometimes do not admit a standard form.
 
 In [Example 2.1](/VBLabDocs/tutorial/example#example2-1), for example, if the data $y_i$ does not follow a normal distribution but a Student's $t$ distribution $t_\nu(\mu,\sigma^2)$,
 then it can be seen that the optimal variational distribution $q(\mu)$ does not have the form of a Gaussian distribution or any standard probability distribution.
@@ -40,7 +40,7 @@ then it can be seen that the optimal variational distribution $q(\mu)$ does not 
 In some situations, however, by introducing auxiliary variables, we can equivalently represent the model by augmenting the parameter space such that MFVB is applicable.
 The use of auxiliary variables to facilitate statistical computations is widely used in many areas of statistics.
 
-The term *elaborate model* to refer to a statistical model  in which its prior or its data density can be augmented using auxiliary variables such that the optimal variational distributions  in $\eqref{eq:optimal VB}$ admit a standard form.
+The term *elaborate model* to refer to a statistical model  in which its prior or its data density can be augmented using auxiliary variables such that the optimal variational distributions [(9)](/VBLabDocs/tutorial/example#mjx-eqn-MFVB-9) admit a standard form.
 Introducing auxiliary variables makes MFVB tractable, but this might come at the price of reducing the variational approximation accuracy; however, we won't discuss this issue in any detail in this tutorial.
 
 More precisely, consider the standard Bayesian model
@@ -57,7 +57,7 @@ $$\tag{12}\label{eq:ChaperMFVB:model 2}y|\theta,\eta\sim p(y|\theta,\eta),\;\;\q
 \theta\sim p(\theta).$$
 
 The model \eqref{eq:ChaperMFVB:model 1} is said to be elaborate if it can be presented as 
-the hierarchical model \eqref{eq:ChaperMFVB:model 2} and, under the variational factorization $q(\theta,\eta)=q(\theta)q(\eta)$, the optimal variational distributions $q(\theta)$ and $q(\eta)$ in \eqref{eq:optimal VB} admit a standard form. The idea of elaborate models applies to the prior too, in which one can represent the prior $p(\theta)$ in a hierarchical form using auxiliary variables.
+the hierarchical model \eqref{eq:ChaperMFVB:model 2} and, under the variational factorization $q(\theta,\eta)=q(\theta)q(\eta)$, the optimal variational distributions $q(\theta)$ and $q(\eta)$ in [(9)](/VBLabDocs/tutorial/example#mjx-eqn-MFVB-9) admit a standard form. The idea of elaborate models applies to the prior too, in which one can represent the prior $p(\theta)$ in a hierarchical form using auxiliary variables.
 
 We now demonstrate this idea in the Bayesian Lasso model. Consider the linear regression problem
 
@@ -165,3 +165,5 @@ $$\alpha_{\sigma^2}=\frac12(n+p),\;\;\;\;\beta_{\sigma^2}=\frac12 \mid y-X\mu_{\
 
 </div>
 ---
+
+**Next:** [Fixed Form Variational Bayes (FFVB)]({{site.baseurl}}{% link Tutorial-FFVB.md%})

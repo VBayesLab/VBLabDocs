@@ -183,3 +183,5 @@ and moving average adaptive learning, and [Algorithm 5](#algorithm-5) implements
 </div>
 
 ---
+
+**Next:** [FFVB with reparameterization trick]({{site.baseurl}}{% link Tutorial-FFVB-Reparameterization-Trick.md%})

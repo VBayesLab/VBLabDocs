@@ -5,7 +5,7 @@ parent: VB Tutorials
 nav_order: 2
 has_children: true
 permalink: /tutorial/mfvb
-
+has_toc: false
 ---
 # **Mean Field Variational Bayes (MFVB)**
 {: .fs-8 }
@@ -116,3 +116,7 @@ A stopping rule is to terminate the update if the change in the parameters of th
 In the case the lower bound $\LB(q_1,q_2)$ can be computed, one can stop the algorithm if the increase (or the percentage of the increase) in the lower bound is less than some threshold. 
 
 **Note:** $\LB(q)$ increases after each iteration.
+
+--- 
+
+**Next:** [MFVB for elaborate models]({{site.baseurl}}{% link Tutorial-MFVB-Elaborate-Model.md %})

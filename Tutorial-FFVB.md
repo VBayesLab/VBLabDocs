@@ -5,6 +5,7 @@ parent: VB Tutorials
 nav_order: 3
 has_children: true
 permalink: /tutorial/ffvb
+has_toc: false
 ---
 
 # **Fixed Form Variational Bayes (FFVB)**
@@ -215,3 +216,7 @@ where $\alpha_\text{m}\in[0,1]$ is the momentum weight; $\alpha_m$ around 0.6-0.
 
 The use of the moving average gradient {%raw%}$\overline{{\nabla_\l{\LB}}}${%endraw%} also helps remove some of the noise inherent in the estimated gradients of the lower bound.
 Note that the momentum method is already embedded in the moving-average-based adaptive learning rate methods in [Adaptive learning rate](#adaptive-learning) 
+
+---
+
+**Next:** [FFVB with control variate]({{site.baseurl}}{% link Tutorial-FFVB-Control-Variate.md%})

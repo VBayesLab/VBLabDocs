@@ -15,7 +15,6 @@ style_no: "height: 20px; width:20px;"
 {: .fs-8}
 
 VBLab provides statistical models that can be used with the supported VB techniques. Users can also defined their custom models. 
-{: .fs-6 .fw-300}
 
 ---
 

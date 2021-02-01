@@ -10,10 +10,9 @@ permalink: /tutorial/mfvb/elaborate-models
 # **MFVB: Elaborate Models**
 {: .fs-8 }
 
-This tutorial gives a quick introduction to Mean Field Variational Bayes. 
-{: .fs-6 .fw-300 }
+This tutorial gives a quick introduction to Mean Field Variational Bayes for elaborate models.
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%}), [Mean Field Variational Bayes]({% link Tutorial-MFVB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%}), [Mean Field Variational Bayes]({{site.baseurl}}{% link Tutorial-MFVB.md%})
 
 ---
 <!--- Define custom latex syntax -->
@@ -122,22 +121,29 @@ Note that we use a prior for $\lambda^2$, not $\lambda$, as this leads to a trac
 
 The model parameters include $\beta$, $\tau=(\tau_1,...,\tau_p)^\top$, $\sigma^2$ and $\lambda^2$.
 Let us use the following mean field variational distribution
+
 $$q(\beta,\tau,\sigma^2,\lambda^2)=q(\beta)q(\tau)q(\sigma^2)q(\lambda^2).$$
 
 With this factorization, all the optimal conditional variational distributions admit a standard form.
 The optimal variational distribution for $\beta$ is $\N(\mu_\beta,\Sigma_\beta)$ with
+
 $$\mu_\beta=\big(X^\top X+D_\tau\big)^{-1}X^\top y,\;\;\;\;\Sigma_\beta=\big(X^\top X+D_\tau\big)^{-1}/\E_q(\frac{1}{\sigma^2}),$$
+
 where $D_\tau:=\text{diag}\big(\E_q(1/\tau_1),\cdots,\E_q(1/\tau_p)\big)$. Here $\E_q(\cdot)$ denotes expectation with respect to the variational distribution $q$.
 
 The optimal variational distributions for $\tau_j$ are independent of each other,
 where $\wt\tau_j:= 1/\tau_j$ follows an inverse-Gaussian with location and scale parameters
+
 $$\mu_{\wt\tau_j} = \Big(\frac{\E_q(\lambda^2)}{\E_q\big(\beta_j^2/\sigma^2\big)}\Big)^{1/2},\;\;\;\;\lambda_{\wt\tau_j} = \E_q(\lambda^2).$$
 
 The optimal distribution for $\sigma^2$ is inverse Gamma with the parameters
+
 $$\alpha_{\sigma^2}=\frac12(n+p),\;\;\;\;\beta_{\sigma^2}=\frac12\E_q|y-X\beta|^2+\frac12\sum_{j=1}^p\E_q\big(\frac{\beta_j^2}{\tau_j}\big).$$
 
 Finally, the optimal variatinoal distribution for $\lambda^2$ is Gamma with
+
 $$\alpha_{\lambda^2}= r+1,\;\;\;\; \beta_{\lambda^2} = \delta+\frac12\sum_j\E_q(\tau_j).$$
+
 Using the results regarding to the moments of these standard distributions, we have
 
 $$\begin{aligned}

@@ -11,7 +11,7 @@ permalink: /tutorial/ffvb/reparameterization-trick
 
 This section describes a control variate technique for variance reduction.
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({% link Tutorial-FFVB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({{site.baseurl}}{% link Tutorial-FFVB.md%})
 
 ---
 ## Reparameterization Trick

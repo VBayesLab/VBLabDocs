@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Practical-Recommendation
+title: Example
 parent: VB Tutorials
 nav_order: 4
-permalink: /tutorial/recommendation
+permalink: /tutorial/example
 ---
 
 # **GVB with Cholesky decomposed covariance (CGVB)**

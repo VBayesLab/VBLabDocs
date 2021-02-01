@@ -37,9 +37,7 @@ $\def\t{\theta}
 \def\V{\mathbb{V}}
 \def\cov{\text{cov}}$
 <!-- End -->
-As is typical of stochastic optimization algorithms,
-the performance of Algorithm \ref{algorithm 1} depends greatly on the variance of the noisy gradient.
-Variance reduction for the noisy gradient is a key ingredient in FFVB algorithms.   
+As is typical of stochastic optimization algorithms, the performance of Algorithm \ref{algorithm 1} depends greatly on the variance of the noisy gradient. Variance reduction for the noisy gradient is a key ingredient in FFVB algorithms.   
 
 Let $\t_s\sim q_\l(\t)$, $s=1,...,S$, be $S$ samples from the variational distribution $q_{\l}(\t)$. A naive estimator of the $i$th element of the vector $\nabla_\lambda\text{LB}(\l)$ is
 $$\tag{20}\label{eq: naive KL estimate}\wh{\nabla_{\lambda_i}\LB}(\l)^{\text{naive}}=\frac1S\sum_{s=1}^S\nabla_{\lambda_i}[\log q_\lambda(\t_s)]\times h_\lambda(\t_s),$$

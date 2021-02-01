@@ -10,10 +10,9 @@ permalink: /tutorial/ffvb/vafc
 # **GVB with factor decomposed covariance (VAFC)**
 {: .fs-8 }
 
-This tutorial gives a quick introduction to Mean Field Variational Bayes. 
-{: .fs-6 .fw-300 }
+This section describes the GVB with factor decomposed covariance (VAFC) technique
 
-**See:** [Variational Bayes Introduction]({% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({% link Tutorial-FFVB.md%})
+**See:** [Variational Bayes Introduction]({{site.baseurl}}{% link Tutorial-VB.md%}), [Fixed Form Variational Bayes]({{site.baseurl}}{% link Tutorial-FFVB.md%})
 
 ---
 ## VAFC

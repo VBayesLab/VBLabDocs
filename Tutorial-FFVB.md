@@ -22,16 +22,16 @@ $\def\t{\theta}
 \def\LB{\text{LB}}
 \def\E{\mathbb{E}}
 \def\KL{\text{KL}}
-\newcommand{\wh}{\widehat}
-\newcommand{\wt}{\widetilde}
 \def\F{\cal{F}}
 \def\N{\cal{N}}
 \def\s{\sigma}
 \def\a{\alpha}
 \def\b{\beta}
 \def\l{\lambda}
-\def\d{d}
-\newcommand{\eps}{\epsilon}$
+\def\V{\mathbb{V}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}$
 <!-- End -->
 FFVB assumes a fixed parametric form for the VB approximation density $q$, i.e. $q=q_\l$ belongs to some class of distributions $\mathcal Q$ indexed by a vector $\lambda$ called the *variational parameter*.
 For example, $q_\l$ is a Gaussian distribution with mean $\mu$ and covariance matrix $\Sigma$.
@@ -114,7 +114,7 @@ Typical choice:
 ---
 
 ## Adaptive learning rate and natural gradient
-{: #adaptive-learning}
+{: #adaptive-learning-natural-gradient}
 
 Let's write the update in \eqref{eq:update rule} as
 
@@ -130,32 +130,42 @@ might need a different learning rate that can take into account the scale of tha
 
 It turns out that the basic [Algorithm 3](#algorithm-3) rarely works in practice without a method for selecting the learning rate adaptively.
 
-\subsubsection{Adaptive learning rate}\label{sec: Adaptive learning rate}
+### Adaptive learning rate
+{: #adaptive-learning}
+
 For a coordinate $i$ with a large variance $\V(\wh{\nabla_{\l_i}\text{LB}}(\l^{(t)}))$, its learning rate $a_{t,i}$ should be small, otherwise the new update $\lambda^{(t+1)}_i$ jumps all over the place and destroys everything the process has learned so far.
+
 Denote $g_t:=\wh{\nabla_{\lambda}\LB}(\l^{(t)})$ be the gradient vector at step $t$,
 and $v_t:=(g_t)^2$ (this is a coordinate-wise operator).
 The commonly used adaptive learning rate methods such as ADAM and AdaGrad work by scaling the coordinates of $g_t$ by their corresponding variances.
 These variances are estimated by moving average.
+
 The algorithm below is a basic version of this class of adaptive learning methods: 
-\begin{itemize}
-\item[1)] Initialize $\l^{(0)}$, $g_0$ and $v_0$ and set $\bar g=g_0$, $\bar v=v_0$. Let $\beta_1,\beta_2\in(0,1)$ be adaptive learning weights.
-\item[2)] For $t=0,1,...$, update
-\bean
+
+<div class="code-example" markdown="1" style="background-color:GhostWhite;padding:20px;">
+
+1. Initialize $\l^{(0)}$, $g_0$ and $v_0$ and set $\bar g=g_0$, $\bar v=v_0$. Let $\beta_1,\beta_2\in(0,1)$ be adaptive learning weights.
+2. For $t=0,1,...$, update
+
+$$\begin{eqnarray}
 \bar g &=&\beta_1 \bar g+(1-\beta_1)g_t\\
 \bar v &=&\beta_2 \bar v+(1-\beta_2)v_t\\
 \l^{(t+1)}&=&\l^{(t)}+\a_t \bar g/\sqrt{\bar v},
-\eean
+\end{eqnarray}$$
+
 with $\a_t$ a scalar step size. Here $\bar g/\sqrt{\bar v}$ should be understood component wise.
-\end{itemize}
+</div>
+
 Note that the LB gradients $g_t$ have also been smoothened out using moving average.
 This helps to accelerate the convergence - a method known as the momentum method in the stochastic optimization literature.
 Typical choice of the scalar $\a_t$ is
-\beq\label{eq:scalar learning rate}
+
+$$\tag{18}\label{eq:scalar learning rate}
 \a_t=\min\left(\eps_0,\eps_0\frac{\tau}{t}\right)=\begin{cases}
 \eps_0,&t\leq\tau\\
 \eps_0\frac{\tau}{t},&t>\tau
-\end{cases}
-\eeq
+\end{cases} $$
+
 for some small {\it fixed learning rate} $\eps_0$ (e.g. 0.1 or 0.01) and some threshold $\tau$ (e.g., 1000).  
 In the first $\tau$ iterations, the training procedure explores the learning space with a fixed learning rate $\eps_0$,
 then this exploration is settled down by reducing the step size after $\tau$ iterations.

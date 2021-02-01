@@ -45,7 +45,7 @@ where $\E_{-\t_1}[\log p(y,\t)]:=\E_{q_2(\t_2)}[\log p(y,\t)]=\int q_2(\t_2)\log
 The funny-looking notation $\E_{-\t_1}(\cdot)$, meaning we take the expectation with respect to everything except $\theta_1$, turns out to be very convenient when we deal with the general MFVB procedure later.
 Hence,
 
-$$\begin{eqnarray}\tag{3}{MFVB-3}
+$$\begin{eqnarray}\tag{3}\label{MFVB-3}
 \LB(q_1,q_2)&=&\int q_1(\t_1)\log\frac{\exp\big(\E_{-\t_1}[\log p(y,\t)]\big)}{q_1(\t_1)}d\t_1+C(q_2)\notag\\
 &=&\int q_1(\t_1)\log\frac{\wt q_1(\theta_1)}{q_1(\t_1)}d\t_1+C(q_2)+\log\wt C(q_2)\notag\\
 &=&-\KL(q_1\|\wt q_1)+C(q_2)+\log\wt C(q_2),

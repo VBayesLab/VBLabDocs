@@ -9,7 +9,8 @@ permalink: /example/
 
 # **Code examples**
 
-Our code examples are short (less than 300 lines of code), focused demonstrations of vertical deep learning workflows.
+Our code examples are short, focused demonstrations of how to perform Bayesian Approximation using Variational Bayes techiniques discussed in the [VB tutorial paper](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes).
 
-All of our examples are written as Jupyter notebooks and can be run in one click in Google Colab, a hosted notebook environment that requires no setup and runs in the cloud. Google Colab includes GPU and TPU runtimes.
+We also provide code examples to replicate the experimental results shown in our research papers. 
+
 

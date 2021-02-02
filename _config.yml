@@ -46,12 +46,16 @@ aux_links:
   "VBLab on GitHub":
     - "//github.com/VBayesLab/Tutorial-on-VB"
 
+# Enable or disable heading anchors
+heading_anchors: true
+
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
 
 # Back to top link
 back_to_top: true
 back_to_top_text: "Back to top"
+footer_content: ""
 
 # Exclude from processing.
 # The following items will not be processed, by default.

@@ -9,6 +9,7 @@ img_yes: /VBLabDocs/assets/images/yes.png
 img_no: /VBLabDocs/assets/images/no_2.jpg
 style: "height: 25px; width:25px;"
 style_no: "height: 20px; width:20px;"
+has_toc: false
 ---
 
 # **VBLab Statistical Models**

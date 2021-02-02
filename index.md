@@ -3,7 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: default
-title: VBLab Docs
+title: Home
 nav_order: 1
 description: "Official documentation for the VBLab package"
 permalink: /

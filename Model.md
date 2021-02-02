@@ -51,7 +51,7 @@ Theoretically, the provided VB methods can work with all VBLab supported models.
 | **RECH**                 | <img src="{{page.img_no}}" style="{{page.style_no}}"/> | <img src="{{page.img_no}}" style="{{page.style_no}}"/>   |  <img src="{{page.img_yes}}" style="{{page.style}}"/>     | <img src="{{page.img_no}}" style="{{page.style_no}}"/>   |
 | **Custom Models**               | <img src="{{page.img_yes}}" style="{{page.style}}"/> | <img src="{{page.img_yes}}" style="{{page.style}}"/>  |  <img src="{{page.img_yes}}" style="{{page.style}}"/>  | <img src="{{page.img_yes}}" style="{{page.style}}"/>  |
 
-For example,   
+For example, as the MGVB technique does not require the gradient of the log-likelihood function, it is suitable for the RECH models as deriving the RECH models are highly flexible in terms of model specification. 
 
 ---
 

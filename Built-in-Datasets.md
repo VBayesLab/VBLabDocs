@@ -10,7 +10,6 @@ permalink: /datasets/
 {: .no_toc }
 
 VBLab provides provide a few built-in datasets (already-cleaned, in `*.mat` format) that can be used for debugging a model or creating simple code examples.
-
 <br>
 ## List of datasets
 {: .no_toc .text-delta }
@@ -65,6 +64,12 @@ institution = "University of California, Irvine, School of Information and Compu
 
 ---
 
+## Cencus data
+
+---
+
+---
+
 ## DirectMarketing data
 {: #direct-marketing}
 
@@ -95,6 +100,36 @@ Given is the attribute name, attribute type, values and a brief description.
 |Catalogs| continuous | USD |  Number of catalogs sent  |
 |AmountSpent | continuous | USD |  Amount spent of customer  |
 
+---
+
+## GermanCredit data
+{: #german-credit}
+
+### Information
+{: .no_toc }
+
+This dataset classifies people described by a set of attributes as good or bad credit risks.
+
+For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/statlog+(german+credit+data)). 
+
+### Attribute Information
+{: .no_toc }
+
+Given is the attribute name, attribute type, values and a brief description. 
+
+|Name | Data Type | Values | Description|
+|:----|:-------|:-------|:-------|
+| | ordinal | 1-4 | Status of existing checking account|
+| | integer |  | Duration in month |
+|OwnHome | binary | yes/no |  Credit history |
+|Purpose | categorical | single/married  | Whether customer is married or single |
+|Location | binary | far/close | Location in terms of distance to the nearest brick and mortar store that sells similar products |
+|Salary | continuous | USD | Annual salary of customer |
+|Children | integer | 0–3 | Number of childrens |
+|History | categorical | low/medium/high/NA |  History of previous purchase volume. NA means that this customer has not yet purchased |
+|Catalogs| continuous | USD |  Number of catalogs sent  |
+|AmountSpent | continuous | USD |  Amount spent of customer  |
+
 ### Citation
 {: .no_toc }
 
@@ -110,15 +145,6 @@ title = "{UCI} Machine Learning Repository",
 url = "http://archive.ics.uci.edu/ml",
 institution = "University of California, Irvine, School of Information and Computer Sciences" }
 ```
-### Download 
-{: .no_toc }
-
-The raw data files can be downloaded [here](https://www.kaggle.com/yoghurtpatil/direct-marketing).
-
----
-
-## GermanCredit data
-{: #german-credit}
 
 ---
 
@@ -130,9 +156,21 @@ The raw data files can be downloaded [here](https://www.kaggle.com/yoghurtpatil/
 ## RealizedLibrary
 {: #realized-library}
 
-If you use the realized library in your work, please cite the library as 
+### Citation
+{: .no_toc }
 
 Heber, Gerd, Asger Lunde, Neil Shephard and Kevin Sheppard (2009) "Oxford-Man Institute's realized library", Oxford-Man Institute, University of Oxford
+
+**Or bibtex entry** :
+
+```yaml
+@misc{Heber:2009,
+author = "Heber, Gerd, Asger Lunde, Neil Shephard and Kevin Sheppard",
+year = "2009",
+title = "Oxford-Man Institute’s realized library",
+url = "https://realized.oxford-man.ox.ac.uk/",
+institution = "Oxford-Man Institute, University of Oxford" }
+```
 
 ---
 

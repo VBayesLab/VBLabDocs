@@ -6,7 +6,7 @@ nav_order: 2
 permalink: /example/nagvac-deepglm
 ---
 
-# NAGVAC for DeepGLM - 
+# **NAGVAC for DeepGLM**  
 
 ```m
 % Prepare data

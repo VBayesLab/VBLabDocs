@@ -77,31 +77,26 @@ One instance per line with comma delimited fields. There are 199523 instances in
 
 The data was split into train/test in approximately 2/3, 1/3 proportions.
 
+For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/Census-Income+(KDD)). 
+
 ### Attribute Information
 {: .no_toc }
 
-|Name                    | Data Type   | Values | Description|
-|:-----------------------|:------------|:-------|:-----------|
-|status                  | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
-|duration                | integer     |        | Credit duration in months |
-|credit_history          | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
-|purpose                 | categorical | 0-10   | Purpose for which the credit is needed |
-|savings                 | categorical | 0-5    | Debtor's savings |
-|employment_duration     | ordinal     | 1-5    | Present employment since |
-|installment_rate        | ordinal     | in %   | Credit installments as a percentage of debtor's disposable income |
-|personal_status_sex     | categorical | 1-5    | Combined information on sex and marital status |
-|other_debtors           | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
-|present_residence       | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
-|Property                | ordinal     | 1-4    |  The debtor's most valuable property, i.e. the highest possible code is used |
-|age                     | integer     |        | age in years  |
-|other_installment_plans | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
-|housing                 | categorical | 1-3    | Type of housing the debtor lives in |
-|number_credits          | integer     |        | Number of credits including the current one the debtor has (or had) at this bank |
-|job                     | ordinal     | 1-4    | Quality of debtor's job |
-|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
-|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
-|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
-|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
+|Name           | Data Type   | Values | Description|
+|:--------------|:------------|:-------|:-----------|
+|age            | continuous  | 1-4    | Age |
+|workclass      | categorical |        | Class of worker |
+|fnlwgt         | categorical | 0-4    | Industry code |
+|education      | categorical | 0-10   | Occupation code |
+|marital-status | categorical | 0-5    | Adjusted gross income |
+|occupation     | ordinal     | 1-5    | Education  |
+|relationship   | ordinal     | in %   | Wage per hour |
+|race           | categorical | 1-5    | Enrolled in edu inst last wk |
+|sex            | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
+|capital-gain   | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
+|capital-loss   | ordinal     | 1-4    | The debtor's most valuable property, i.e. the highest possible code is used |
+|hours-per-week | integer     |        | age in years  |
+|native-country | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
 
 ### Citation
 {: .no_toc }

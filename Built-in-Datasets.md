@@ -32,7 +32,7 @@ For more information or to download the dataset, please visit the [dataset websi
 ### Attribute Information
 {: .no_toc }
 
-Given is the attribute name, attribute type, the measurement unit and a brief description.
+Given is the attribute name, attribute type, the measurement unit and a brief description. The dataset has $4177$ rows and $9$ columns.
 
 |Name | Data Type | Measurement Unit | Description|
 |:----|:-------|:-------|:-------|
@@ -66,7 +66,58 @@ institution = "University of California, Irvine, School of Information and Compu
 
 ## Cencus data
 
----
+### Information
+{: .no_toc }
+
+This data set contains weighted census data extracted from the 1994 and 1995 Current Population Surveys conducted by the U.S. Census Bureau. The data contains 41 demographic and employment related variables.
+
+The instance weight indicates the number of people in the population that each record represents due to stratified sampling. To do real analysis and derive conclusions, this field must be used. This attribute should *not* be used in the classifiers.
+
+One instance per line with comma delimited fields. There are 199523 instances in the data file and 99762 in the test file.
+
+The data was split into train/test in approximately 2/3, 1/3 proportions.
+
+### Attribute Information
+{: .no_toc }
+
+|Name                    | Data Type   | Values | Description|
+|:-----------------------|:------------|:-------|:-----------|
+|status                  | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
+|duration                | integer     |        | Credit duration in months |
+|credit_history          | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
+|purpose                 | categorical | 0-10   | Purpose for which the credit is needed |
+|savings                 | categorical | 0-5    | Debtor's savings |
+|employment_duration     | ordinal     | 1-5    | Present employment since |
+|installment_rate        | ordinal     | in %   | Credit installments as a percentage of debtor's disposable income |
+|personal_status_sex     | categorical | 1-5    | Combined information on sex and marital status |
+|other_debtors           | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
+|present_residence       | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
+|Property                | ordinal     | 1-4    |  The debtor's most valuable property, i.e. the highest possible code is used |
+|age                     | integer     |        | age in years  |
+|other_installment_plans | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
+|housing                 | categorical | 1-3    | Type of housing the debtor lives in |
+|number_credits          | integer     |        | Number of credits including the current one the debtor has (or had) at this bank |
+|job                     | ordinal     | 1-4    | Quality of debtor's job |
+|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
+|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
+|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
+|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
+
+### Citation
+{: .no_toc }
+
+Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
+
+**Or bibtex entry** :
+
+```yaml
+@misc{Dua:2019 ,
+author = "Dua, Dheeru and Graff, Casey",
+year = "2017",
+title = "{UCI} Machine Learning Repository",
+url = "http://archive.ics.uci.edu/ml",
+institution = "University of California, Irvine, School of Information and Computer Sciences" }
+```
 
 ---
 
@@ -94,11 +145,11 @@ Given is the attribute name, attribute type, values and a brief description.
 |OwnHome | binary | yes/no |  Whether customer owns home |
 |Married | binary | single/married  | Whether customer is married or single |
 |Location | binary | far/close | Location in terms of distance to the nearest brick and mortar store that sells similar products |
-|Salary | continuous | USD | Annual salary of customer |
+|Salary | continuous | in USD | Annual salary of customer |
 |Children | integer | 0–3 | Number of childrens |
 |History | categorical | low/medium/high/NA |  History of previous purchase volume. NA means that this customer has not yet purchased |
-|Catalogs| continuous | USD |  Number of catalogs sent  |
-|AmountSpent | continuous | USD |  Amount spent of customer  |
+|Catalogs| continuous | in USD |  Number of catalogs sent  |
+|AmountSpent | continuous | in USD |  Amount spent of customer  |
 
 ---
 
@@ -110,40 +161,49 @@ Given is the attribute name, attribute type, values and a brief description.
 
 This dataset classifies people described by a set of attributes as good or bad credit risks.
 
-For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/statlog+(german+credit+data)). 
+For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/South+German+Credit+%28UPDATE%29). 
 
 ### Attribute Information
 {: .no_toc }
 
 Given is the attribute name, attribute type, values and a brief description. 
 
-|Name | Data Type | Values | Description|
-|:----|:-------|:-------|:-------|
-| | ordinal | 1-4 | Status of existing checking account|
-| | integer |  | Duration in month |
-|OwnHome | binary | yes/no |  Credit history |
-|Purpose | categorical | single/married  | Whether customer is married or single |
-|Location | binary | far/close | Location in terms of distance to the nearest brick and mortar store that sells similar products |
-|Salary | continuous | USD | Annual salary of customer |
-|Children | integer | 0–3 | Number of childrens |
-|History | categorical | low/medium/high/NA |  History of previous purchase volume. NA means that this customer has not yet purchased |
-|Catalogs| continuous | USD |  Number of catalogs sent  |
-|AmountSpent | continuous | USD |  Amount spent of customer  |
+|Name                    | Data Type   | Values | Description|
+|:-----------------------|:------------|:-------|:-----------|
+|status                  | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
+|duration                | integer     |        | Credit duration in months |
+|credit_history          | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
+|purpose                 | categorical | 0-10   | Purpose for which the credit is needed |
+|savings                 | categorical | 0-5    | Debtor's savings |
+|employment_duration     | ordinal     | 1-5    | Present employment since |
+|installment_rate        | ordinal     | in %   | Credit installments as a percentage of debtor's disposable income |
+|personal_status_sex     | categorical | 1-5    | Combined information on sex and marital status |
+|other_debtors           | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
+|present_residence       | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
+|Property                | ordinal     | 1-4    |  The debtor's most valuable property, i.e. the highest possible code is used |
+|age                     | integer     |        | age in years  |
+|other_installment_plans | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
+|housing                 | categorical | 1-3    | Type of housing the debtor lives in |
+|number_credits          | integer     |        | Number of credits including the current one the debtor has (or had) at this bank |
+|job                     | ordinal     | 1-4    | Quality of debtor's job |
+|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
+|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
+|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
+|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
 
 ### Citation
 {: .no_toc }
 
-Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
+Grömping, U. (2019). South German Credit Data: Correcting a Widely Used Data Set. Report 4/2019, Reports in Mathematics, Physics and Chemistry, Department II, Beuth University of Applied Sciences Berlin.
 
 **Or bibtex entry** :
 
 ```yaml
-@misc{Dua:2019 ,
-author = "Dua, Dheeru and Graff, Casey",
-year = "2017",
-title = "{UCI} Machine Learning Repository",
-url = "http://archive.ics.uci.edu/ml",
-institution = "University of California, Irvine, School of Information and Computer Sciences" }
+@Techreport{Grömping:2019,
+title = {South German Credit Data: Correcting a Widely Used Data Set.},
+author = {Grömping, U.},
+year = {2019},
+institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
 ```
 
 ---

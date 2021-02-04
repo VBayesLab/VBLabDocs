@@ -214,18 +214,74 @@ institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
 ### Information
 {: .no_toc }
 
-The Oxford-Man Institute's "realised library" contains daily non-parametric measures of how volatility financial assets or indexes were in the past.
+The Oxford-Man Institute's "realised library" contains *daily* non-parametric measures of how volatility financial assets or indexes were in the past.
 
-### Available Assets
+### Available Assets and realized measures of volatility
 {: .no_toc }
 
-|Symbol	| Name	| Earliest Available | Latest Available
+List of available assets:
 
+|Symbol	| Name	                                   | Earliest Available | Latest Available |
+|:------|:-----------------------------------------|:-------------------|:-----------------|
+|AEX	|AEX index	                               |January 03, 2000	|February 02, 2021 |
+|AORD	|All Ordinaries	                           |January 04, 2000	|February 02, 2021 |
+|BFX	|Bell 20 Index	                           |January 03, 2000	|February 02, 2021 |
+|BSESN	|S&P BSE Sensex	                           |January 03, 2000	|February 02, 2021 |
+|BVLG	|PSI All-Share Index	                   |October 15, 2012	|February 02, 2021 |
+|BVSP	|BVSP BOVESPA Index	                       |January 03, 2000	|February 02, 2021 |
+|DJI	|Dow Jones Industrial Average	           |January 03, 2000	|February 02, 2021 |
+|FCHI	|CAC 40	                                   |January 03, 2000	|February 02, 2021 |
+|FTMIB	|FTSE MIB	                               |June 01, 2009	    |February 02, 2021 |
+|FTSE	|FTSE 100	                               |January 04, 2000	|February 02, 2021 |
+|GDAXI	|DAX	                                   |January 03, 2000	|February 02, 2021 |
+|GSPTSE	|S&P/TSX Composite index	               |May 02, 2002	    |February 02, 2021 |
+|HSI	|HANG SENG Index	                       |January 03, 2000	|February 02, 2021 |
+|IBEX	|IBEX 35 Index	                           |January 03, 2000	|February 02, 2021 |
+|IXIC	|Nasdaq 100	                               |January 03, 2000	|February 02, 2021 |
+|KS11	|Korea Composite Stock Price Index (KOSPI) |January 04, 2000	|February 02, 2021 |
+|KSE	|Karachi SE 100 Index	                   |January 03, 2000	|February 02, 2021 |
+|MXX	|IPC Mexico	                               |January 03, 2000	|February 02, 2021 |
+|N225	|Nikkei 225	                               |February 02, 2000   |February 02, 2021 |
+|NSEI	|NIFTY 50	                               |January 03, 2000	|February 02, 2021 |
+|OMXC20	|OMX Copenhagen 20 Index	               |October 03, 2005	|February 02, 2021 |
+|OMXHPI	|OMX Helsinki All Share Index	           |October 03, 2005	|February 02, 2021 |
+|OMXSPI	|OMX Stockholm All Share Index	           |October 03, 2005	|February 02, 2021 |
+|OSEAX	|Oslo Exchange All-share Index	           |September 03, 2001	|February 02, 2021 |
+|RUT	|Russel 2000	                           |January 03, 2000	|February 02, 2021 |
+|SMSI	|Madrid General Index	                   |July 04, 2005	    |February 02, 2021 |
+|SPX	|S&P 500 Index 	                           |January 03, 2000	|February 02, 2021 |
+|SSEC	|Shanghai Composite Index	               |January 04, 2000	|February 02, 2021 |
+|SSMI	|Swiss Stock Market Index	               |January 04, 2000	|February 02, 2021 |
+|STI	|Straits Times Index	                   |January 03, 2000    |February 02, 2021 |
+|STOXX50E	|EURO STOXX 50	                       |January 03, 2000	|February 02, 2021 |
 
+List ealized measures of daily volatility that can be used to access the predictive performance of volatility models. 
 
+|Code	         | Description                                   | 
+|:---------------|:----------------------------------------------|
+|bv	             | Bipower Variation (5-min)                     |
+|bv_ss	         | Bipower Variation (5-min Sub-sampled)         |
+|close_price	 | Closing (Last) Price                          |
+|close_time	     | Closing Time                                  |
+|medrv	         | Median Realized Variance (5-min)              |
+|nobs	         | Number of Observations                        |
+|open_price	     | Opening (First) Price                         | 
+|open_time	     | Opening Time                                  | 
+|open_to_close	 | Open to Close Return                          | 
+|rk_parzen	     | Realized Kernel Variance (Non-Flat Parzen)    |
+|rk_th2	Realized | Kernel Variance (Tukey-Hanning(2))            |
+|rk_twoscale	 | Realized Kernel Variance (Two-Scale/Bartlett) |
+|rsv	         | Realized Semi-variance (5-min)                |
+|rsv_ss	         | Realized Semi-variance (5-min Sub-sampled)    |
+|rv10	         | Realized Variance (10-min)                    |
+|rv10_ss	     | Realized Variance (10-min Sub-sampled)        |
+|rv5	         | Realized Variance (5-min)                     |
+|rv5_ss	         | Realized Variance (5-min Sub-sampled)         |
 
 ### Citation
 {: .no_toc }
+
+Researchers may use this library freely without restrictions so long as they quote in any work which uses it:
 
 Heber, Gerd, Asger Lunde, Neil Shephard and Kevin Sheppard (2009) "Oxford-Man Institute's realized library", Oxford-Man Institute, University of Oxford
 

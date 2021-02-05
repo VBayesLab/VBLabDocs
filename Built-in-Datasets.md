@@ -206,6 +206,28 @@ institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
 ## LabourForce data
 {: #labour-force}
 
+### Information
+
+Mroz, T. (1987) “The sensitivity of an empirical model of married women's hours of work to economic and statistical assumptions”, Econometrica, 55, 765-799.
+
+### Attribute Information
+{: .no_toc }
+
+### Citation
+{: .no_toc }
+
+Grömping, U. (2019). South German Credit Data: Correcting a Widely Used Data Set. Report 4/2019, Reports in Mathematics, Physics and Chemistry, Department II, Beuth University of Applied Sciences Berlin.
+
+**Or bibtex entry** :
+
+```yaml
+@Techreport{Grömping:2019,
+title = {South German Credit Data: Correcting a Widely Used Data Set.},
+author = {Grömping, U.},
+year = {2019},
+institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
+```
+
 ---
 
 ## RealizedLibrary

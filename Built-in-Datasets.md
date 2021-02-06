@@ -207,25 +207,44 @@ institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
 {: #labour-force}
 
 ### Information
+{: .no_toc }
 
-Mroz, T. (1987) “The sensitivity of an empirical model of married women's hours of work to economic and statistical assumptions”, Econometrica, 55, 765-799.
+The dataset has $753$ rows and $9$ column. 
 
 ### Attribute Information
 {: .no_toc }
 
+Given is the attribute name, attribute type, and a brief description. 
+
+|Name                    | Data Type    | Description|
+|:-----------------------|:-------------|:-----------|
+|kidslt6                 | integer      | # kids < 6 years |
+|kidsge6                 | integer      | # kids 6-18 |
+|age                     | integer      | woman's age in years |
+|edu                     | integer      | years of schooling |
+|huswage                 | continuous   | husband's hourly wage |
+|log_faminc              | continuous   | log of family income |
+|inlf                    | binary       | =1 if in labor force |
+
 ### Citation
 {: .no_toc }
 
-Grömping, U. (2019). South German Credit Data: Correcting a Widely Used Data Set. Report 4/2019, Reports in Mathematics, Physics and Chemistry, Department II, Beuth University of Applied Sciences Berlin.
+Mroz, T. (1987) “The sensitivity of an empirical model of married women's hours of work to economic and statistical assumptions”, Econometrica, 55, 765-799.
 
 **Or bibtex entry** :
 
 ```yaml
-@Techreport{Grömping:2019,
-title = {South German Credit Data: Correcting a Widely Used Data Set.},
-author = {Grömping, U.},
-year = {2019},
-institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
+@article{Thomas:1987,
+ author = {Thomas A. Mroz},
+ journal = {Econometrica},
+ number = {4},
+ pages = {765--799},
+ publisher = {[Wiley, Econometric Society]},
+ title = {The Sensitivity of an Empirical Model of Married Women's Hours of Work to Economic and Statistical Assumptions},
+ volume = {55},
+ year = {1987}
+}
+
 ```
 
 ---

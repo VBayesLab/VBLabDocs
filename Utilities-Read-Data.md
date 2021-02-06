@@ -6,13 +6,11 @@ nav_order: 1
 permalink: /utilities/readdata
 ---
 
-# **readdata**
+# <samp>readdata</samp>
 {: .fs-8 }
 
 Fit VBLab supported or custom models using CGVB
 {: .fs-6 .fw-300 }
-
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -204,26 +202,3 @@ Given the fitted LogisticRegression model `Estmdl`, we can make prediction with 
 
 ---
 
-## Reference
-[1] Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). Bayesian deep net GLM and GLMM. *Journal of Computational and Graphical Statistics*, 29(1):97-113. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747)
-
----
-
-## See Also
-{: #see-also}
-[VAFC]({%link VB-VAFC.md%}) $\mid$ [NAGVAC]({%link VB-NAGVAC.md%}) $\mid$ [MGVB]({%link VB-MGVB.md%})
-
-|Properties|Data type |Description{: .text-center}|
-|:-------------|:------------------|:------|
-|`ModelName`    |string (r)| Name of the model, which is <samp>'DeepGLM'</samp>|
-|`NumParams`    |integer (+) | Number of model parameters|
-|`Network`      |Array | Neural network structure of DeepGLM models|
-|`Distribution` |string | Neural network structure of DeepGLM models|
-|`Activation`   |string | Neural network structure of DeepGLM models|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters <br> &bull; Currently, users can only use [NAGVAC]({% link VB-NAGVAC.md %}) and [VAFC]({% link VB-VAFC.md %}) techniques to fit a <samp>DeepGLM</samp> model|
-|`Coefficients` * |cell array| &bull; Estimated Mean of weights of Deep Neuron Network <br> &bull; Used to doing point estimation for new test data|
-|`Shrinkage` *    |array| &bull; Array storing estimated values of group Lasso coefficients|
-|`LogLikelihood` * |double (r)| &bull; Array storing PPS values measured on validation data in each iteration during training phase|
-|`PPS` *          |array| &bull; Array storing PPS values measured on validation data in each iteration during training phase|
-|`MSE` *          |array| &bull; Array storing MSE values measured validation data in each iteration during training phase <br> &bull; Only available if responses follow normal or poisson distribution|
-|`Accuracy` *     |array| &bull; Array storing Classification Rate measured on validation data in each iteration during training phase<br> &bull; Only available if responses are binary variable|

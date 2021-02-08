@@ -1,9 +1,9 @@
 ---
 layout: default
 title: vbayesPlot Method
-parent: Models API Reference
+parent: Utilities Reference
 nav_order: 7
-permalink: /model/vbayesPlot/
+permalink: //utilities/vbayesPlot/
 block_color: GhostWhite
 ---
 

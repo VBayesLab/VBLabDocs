@@ -7,7 +7,7 @@ permalink: /example/nagvac-deepglm
 ---
 
 # **NAGVAC for DeepGLM**  
-This example replicate the results in the application 
+This example replicates the application with the Abalon data discussed in the [DeepGLM paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747) of Tran et al. (2020). 
 
 ---
 
@@ -17,44 +17,49 @@ We model the ages of abalons using a deepGLM model. First, load the [Abalon data
 % Load the LabourForce dataset
 abalon = readData('Abalon',...
                   'Type','Matrix',...  % Format data as a matrix
-                  'Intercept',true);   % Add a column of 1 as intecepts
+                  'Intercept',true,... % Add a column of 1 as intecepts
+                  'Normalized',true);  % Normalize numerial input features 
 ```
-Define a [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) model object. 
+Then, define a [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) model object. 
 ```m
-% Fit deepGLM model using default setting
-% By default, if 'distribution' option is not specified then deepGLMfit
-% will assign the response variables as 'normal'
-nn = [9,5,5];
-mdl = deepGLMfit(X,y,...  
-                 'Network',nn,... 
-                 'Lrate',0.01,...           
-                 'Verbose',1,...             % Display training result each iteration
-                 'BatchSize',5000,...        % Use entire training data as mini-batch
-                 'MaxEpoch',5000,...
-                 'Patience',100,...          % Higher patience values could lead to overfitting
-                 'Seed',NaN,...
-                 'WindowSize',100);
+% Number of input features
+n_features = size(abalon,2)-1;
+% Neural network structure with 2 hidden layers with 5 hidden nodes for each
+network = [n_features,5,5]
+% Define a deepGLM model object
+Mdl = DeepGLM(network);
 ```
+Split `abalon` to training and test data then fit the DeepGLM model `Mdl` to training set using NAGVAC technique. 
+```m
+% Train/Test split
+[abalon_train, abalon_test] = trainTestSplit(abalon,0.15);
+% Run VAFC to obtain VB approximation of the posterior distribution
+EstMdl = NAGVAC(Mdl,abalon_train,...
+                'LearningRate',0.01,...     % Use a small learning rate
+                'MaxPatience',100,...       % Maximum patience
+                'WindowSize',100,...        % Rolling window size to smooth the lowerbound
+                'MaxIter',5000,...          % Maximum number of iterations    
+                'InitMethod','Random',...   % Initialization method
+                'GradientMax',100,...       % Gradient clipping threshold
+                'LBPlot',true);             % Plot the lowerbound when finish
+```
+
+<img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM.jpg" class="center"/>
+
 ```m             
-% Plot training output
+% Plot shrinkage coefficients
 figure
-plot(mdl.out.lbBar,'LineWidth',2)
-title('Lowerbound of Variational Approximation','FontSize',0.5)
-xlabel('Iterations','FontSize',0.2,'FontWeight','bold')
-ylabel('Lowerbound','FontSize',0.2,'FontWeight','bold')
-grid on
+VBayesPlot('Shrinkage',mdl.out.shrinkage,...
+           'Title','Shrinkage Coefficients',...
+           'Xlabel','Iterations',...
+           'LineWidth',2);
+```
+<img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM-Shrinkage.jpg" class="center"/>
 
-%% Plot shrinkage coefficients
-figure
-deepGLMplot('Shrinkage',mdl.out.shrinkage,...
-            'Title','Shrinkage Coefficients',...
-            'Xlabel','Iterations',...
-            'LineWidth',2);
-
-%% Prediction on test data
+```m
 % Make prediction (point estimation) on a test set
-disp('---------- Prediction ----------')
 Pred1 = deepGLMpredict(mdl,X_test);
+
 
 % If ytest is specified (for model evaluation purpose)
 % then we can check PPS and MSE on test set
@@ -83,9 +88,11 @@ mse2 = mean((y_test-y_pred).^2);
 accuracy = (y_test<Pred4.interval(:,2) & y_test>Pred4.interval(:,1));
 disp(['Prediction Interval accuracy: ',num2str(sum(accuracy)/length(accuracy))]);
 
+We can plot the prediction inteveral with true responses. 
 %% Plot prediction interval
 figure
-deepGLMplot('Interval',Pred4,...
+deepGLMplot(
+            'Interval',Pred4,...
             'Title','Prediction Interval of Schooling Test Data',...
             'Xlabel','Observations',...
             'Ylabel','Wage($1000)',...
@@ -102,3 +109,8 @@ deepGLMplot('Interval',Pred4,...
 ```
 
 <img src="/VBLabDocs/assets/images/Example-DeepGLM-Abalon.jpg" class="center"/>
+
+--- 
+
+## Reference
+[1] Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). Bayesian deep net GLM and GLMM. *Journal of Computational and Graphical Statistics*, 29(1):97-113. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747)

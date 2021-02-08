@@ -11,11 +11,11 @@ This example replicate the results in the application
 
 ---
 
-We model the age of abalon using a deepGLM model. First, load the [Abalon dataset](/VBLabDocs/datasets/#abalon) using the <samp>readData()</samp> function. 
+We model the ages of abalons using a deepGLM model. First, load the [Abalon dataset](/VBLabDocs/datasets/#abalon) using the <samp>readData()</samp> function. 
 
 ```m
 % Load the LabourForce dataset
-abalon = readdata('Abalon',...
+abalon = readData('Abalon',...
                   'Type','Matrix',...  % Format data as a matrix
                   'Intercept',true);   % Add a column of 1 as intecepts
 ```

@@ -262,7 +262,7 @@ The Oxford-Man Institute's "realised library" contains *daily* non-parametric me
 For more information or to download the dataset, please visit the [dataset website](https://realized.oxford-man.ox.ac.uk/). 
 
 ### Available Assets and realized measures of volatility
-{: .no_toc }
+{: .no_toc #list-assets}
 
 List of available assets:
 

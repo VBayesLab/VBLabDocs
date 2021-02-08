@@ -182,9 +182,11 @@ Load the LabourForce data using the [<span style="font-family:monospace">readdat
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the SP500 weekly return data
-sp500 = readdata('RealizedLibrary','Index','SP500','Length',1000);
+sp500 = reaDdata('RealizedLibrary',...
+                 'Index','SP500',...
+                 'Length',1000);
 ```
-Create a RECH model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $10$.
+Create a RECH model object and specify priors. 
 
 {%raw%}
 ```m

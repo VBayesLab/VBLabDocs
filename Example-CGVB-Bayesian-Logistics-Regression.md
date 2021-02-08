@@ -9,6 +9,8 @@ permalink: /example/cgvb-logistic-3-4
 # **CGVB for Bayesian Logistic Regression model**
 This example implements the [example 3.4](/VBLabDocs/tutorial/example#example3-4) shown in the VB tutorial paper.  
 
+---
+
 Load the LabourForce data as a matrix. The last column is the response variable.
 
 ```m

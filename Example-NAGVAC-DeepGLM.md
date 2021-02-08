@@ -7,34 +7,95 @@ permalink: /example/nagvac-deepglm
 ---
 
 # **NAGVAC for DeepGLM**  
+This example replicate the results in the application 
+
+---
+
+We model the age of abalon using a deepGLM model. First, load the [Abalon dataset](/VBLabDocs/datasets/#abalon) using the <samp>readData()</samp> function. 
 
 ```m
-% Prepare data
-data = xlsread('../../Data/MROZ.xlsx'); % load the data
-y = data(:,1);
-X = data(:,2:end);
-% X = [ones(size(X,1),1),data(:,2:end)];
-
-% Train a deepglm model
-nn = [2,2,2];
-mdl = deepGLMfit(X,y,... 
-                 'Distribution','binomial',...
+% Load the LabourForce dataset
+abalon = readdata('Abalon',...
+                  'Type','Matrix',...  % Format data as a matrix
+                  'Intercept',true);   % Add a column of 1 as intecepts
+```
+Define a [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) model object. 
+```m
+% Fit deepGLM model using default setting
+% By default, if 'distribution' option is not specified then deepGLMfit
+% will assign the response variables as 'normal'
+nn = [5,5,5];
+mdl = deepGLMfit(X,y,...  
                  'Network',nn,... 
-                 'Lrate',0.001,...           
-                 'Verbose',1,...              % Display training result each iteration
-                 'BatchSize',50,...           % Use entire training data as mini-batch
-                 'MaxEpoch',50,...
-                 'Patience',100,...           % Higher patience values could lead to overfitting
-                 'Seed',100);
-% 
+                 'Lrate',0.01,...           
+                 'Verbose',1,...             % Display training result each iteration
+                 'BatchSize',5000,...        % Use entire training data as mini-batch
+                 'MaxEpoch',5000,...
+                 'Patience',100,...          % Higher patience values could lead to overfitting
+                 'Seed',NaN,...
+                 'WindowSize',100);
              
-% Plot shrinkage coefficients
-% figure
+% Plot training output
+figure
+plot(mdl.out.lbBar,'LineWidth',2)
+title('Lowerbound of Variational Approximation','FontSize',0.5)
+xlabel('Iterations','FontSize',0.2,'FontWeight','bold')
+ylabel('Lowerbound','FontSize',0.2,'FontWeight','bold')
+grid on
+
+%% Plot shrinkage coefficients
+figure
 deepGLMplot('Shrinkage',mdl.out.shrinkage,...
             'Title','Shrinkage Coefficients',...
             'Xlabel','Iterations',...
             'LineWidth',2);
-                
-% Fit GLM model
-[mu_mle,~,stats] = glmfit(X,y,'binomial','constant','off'); 
+
+%% Prediction on test data
+% Make prediction (point estimation) on a test set
+disp('---------- Prediction ----------')
+Pred1 = deepGLMpredict(mdl,X_test);
+
+% If ytest is specified (for model evaluation purpose)
+% then we can check PPS and MSE on test set
+Pred2 = deepGLMpredict(mdl,X_test,'ytest',y_test);
+disp(['PPS on test set using deepGLM is: ',num2str(Pred2.pps)])
+disp(['MSE on test set using deepGLM is: ',num2str(Pred2.mse)])
+
+% You can also perform point and interval estimation for a single test observation
+idx = 100; %randi(length(y_test));     % Pick a random test data observation
+dataTest = X_test(idx,:);
+Pred3 = deepGLMpredict(mdl,dataTest,...
+                       'Interval',1,...
+                       'Nsample',1000);
+disp(['Prediction Interval: [',num2str(Pred3.interval(1)),...
+                                     ';',num2str(Pred3.interval(2)),']',]);
+disp(['True value: ',num2str(y_test(idx))]);
+  
+
+% Estimate prediction interval for entire test data
+Pred4 = deepGLMpredict(mdl,X_test,...
+                      'ytest',y_test,...
+                      'Interval',1,...
+                      'Nsample',1000);                       
+y_pred = mean(Pred4.yhatMatrix)';
+mse2 = mean((y_test-y_pred).^2);
+accuracy = (y_test<Pred4.interval(:,2) & y_test>Pred4.interval(:,1));
+disp(['Prediction Interval accuracy: ',num2str(sum(accuracy)/length(accuracy))]);
+
+%% Plot prediction interval
+figure
+deepGLMplot('Interval',Pred4,...
+            'Title','Prediction Interval of Schooling Test Data',...
+            'Xlabel','Observations',...
+            'Ylabel','Wage($1000)',...
+            'Nsample',60);
+        
+%% Plot prediction interval with true response
+figure
+deepGLMplot('Interval',Pred4,...
+            'ytest',y_test,...
+            'Title','Prediction Interval for Test Data',...
+            'Xlabel','Observations',...
+            'Ylabel','Wage($1000)',...
+            'Nsample',40);
 ```

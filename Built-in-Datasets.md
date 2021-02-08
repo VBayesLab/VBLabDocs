@@ -27,12 +27,14 @@ VBLab provides provide a few built-in datasets (already-cleaned, in `*.mat` form
 
 Predicting the age of abalone from physical measurements. The age of abalone is determined by cutting the shell through the cone, staining it, and counting the number of rings through a microscope -- a boring and time-consuming task. Other measurements, which are easier to obtain, are used to predict the age. Further information, such as weather patterns and location (hence food availability) may be required to solve the problem.
 
+The dataset has $4177$ rows and $9$ columns. The last column is used as the dependent variable. 
+
 For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/Abalone). 
 
 ### Attribute Information
 {: .no_toc }
 
-Given is the attribute name, attribute type, the measurement unit and a brief description. The dataset has $4177$ rows and $9$ columns.
+Given is the attribute name, attribute type, the measurement unit and a brief description. 
 
 |Name | Data Type | Measurement Unit | Description|
 |:----|:-------|:-------|:-------|
@@ -256,6 +258,8 @@ Mroz, T. (1987) “The sensitivity of an empirical model of married women's hour
 {: .no_toc }
 
 The Oxford-Man Institute's "realised library" contains *daily* non-parametric measures of how volatility financial assets or indexes were in the past.
+
+For more information or to download the dataset, please visit the [dataset website](https://realized.oxford-man.ox.ac.uk/). 
 
 ### Available Assets and realized measures of volatility
 {: .no_toc }

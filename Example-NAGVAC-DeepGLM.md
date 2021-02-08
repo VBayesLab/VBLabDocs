@@ -24,7 +24,7 @@ Define a [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) model object.
 % Fit deepGLM model using default setting
 % By default, if 'distribution' option is not specified then deepGLMfit
 % will assign the response variables as 'normal'
-nn = [5,5,5];
+nn = [9,5,5];
 mdl = deepGLMfit(X,y,...  
                  'Network',nn,... 
                  'Lrate',0.01,...           
@@ -34,7 +34,8 @@ mdl = deepGLMfit(X,y,...
                  'Patience',100,...          % Higher patience values could lead to overfitting
                  'Seed',NaN,...
                  'WindowSize',100);
-             
+```
+```m             
 % Plot training output
 figure
 plot(mdl.out.lbBar,'LineWidth',2)
@@ -99,3 +100,5 @@ deepGLMplot('Interval',Pred4,...
             'Ylabel','Wage($1000)',...
             'Nsample',40);
 ```
+
+<img src="/VBLabDocs/assets/images/Example-DeepGLM-Abalon.jpg" class="center"/>

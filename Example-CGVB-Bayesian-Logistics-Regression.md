@@ -58,11 +58,11 @@ Post_MCMC = MCMC(Mdl,...
 
 % Plot density
 fontsize  = 20;
-numparams = LR_model.ParamNum;
+numparams = Mdl.ParamNum;
 
 % Extract variation mean and variance
-mu_vb     = Post_CGVB.Post.mu;
-sigma2_vb = Post_CGVB.Post.sigma2;
+mu_vb     = Estmdl.Post.mu;
+sigma2_vb = Estmdl.Post.sigma2;
 
 % Compute MLE estimation
 X = [ones(size(X,1),1),data(:,2:end)];
@@ -81,8 +81,8 @@ for i = 1:numparams
     legend('MCMC','VB')
 end
 subplot(3,3,9)
-plot(Post_CGVB.Post.LB_smooth,'LineWidth',1.5)
+plot(Estmdl.Post.LB_smooth,'LineWidth',1.5)
 title('Lower bound','FontSize', fontsize)
 ```
-<img src="/VBLabDocs/assets/images/Example3-4.JPG" class="center"/>
+<img src="/VBLabDocs/assets/images/Example3-4-code.JPG" class="center"/>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

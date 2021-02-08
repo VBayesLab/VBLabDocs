@@ -43,9 +43,11 @@ EstMdl = NAGVAC(Mdl,abalon_train,...
                 'GradientMax',100,...       % Gradient clipping threshold
                 'LBPlot',true);             % Plot the lowerbound when finish
 ```
-
+Once the model `Mdl` is fitted, we can see the convergence of the lowerbound, showing that the NAGVAC algorithm works properly. 
 <img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM.jpg" class="center"/>
 
+We can plot the shrinkage coefficients over iterations to explore the significance of the covariates in terms of explaining the
+response $y$, which is the age (in years) of the rings. The following plot shows that the $2^{nd}$ (Sex) and $8^{th}$ (Viscera weight) covariates are less important than the others and can be removed from data.  
 ```m             
 % Plot shrinkage coefficients
 figure
@@ -56,50 +58,49 @@ vbayesPlot('Shrinkage',EstMdl.Post.shrinkage,...
 ```
 <img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM-Shrinkage.jpg" class="center"/>
 
+Given the test input, we can make prediction for the output using [<samp>vbayesPredict</samp>]({{site.baseurl}}{% link Model-Predict.md%}) method of the DeepGLM class object. 
 ```m
 % Make prediction (point estimation) on a test set
 X_test = abalon_test(:,1:end-1);
 y_test = abalon_test(:,end);
 Pred1 = vbayesPredict(EstMdl,X_test);
 ```
-Compute predictive scores if true responses are provided.
+I can compute predictive scores if true responses are provided.
 ```m
 % If y_test is specified (for model evaluation purpose)
 % then we can check PPS and MSE on test set
-Pred2 = vbayesPredict(EstMdl,X_test,'ytest',y_test);
+Pred2 = vbayesPredict(EstMdl,X_test,'Ytest',y_test);
 disp(['PPS on test set using deepGLM is: ',num2str(Pred2.pps)])
 disp(['MSE on test set using deepGLM is: ',num2str(Pred2.mse)])
 ```
+```yml
+PPS on test set using deepGLM is: 1.3042
+MSE on test set using deepGLM is: 4.962
+```
+Or we can make the interval estimation for test observation and compute the accuracy.
 ```m
-% You can also perform point and interval estimation for a single test observation
-idx = 100; %randi(length(y_test));     % Pick a random test data observation
-dataTest = X_test(idx,:);
-Pred3 = deepGLMpredict(mdl,dataTest,...
-                       'Interval',1,...
-                       'Nsample',1000);
-disp(['Prediction Interval: [',num2str(Pred3.interval(1)),';',num2str(Pred3.interval(2)),']',]);
-disp(['True value: ',num2str(y_test(idx))]);
-  
-
 % Estimate prediction interval for entire test data
-Pred4 = vbayesPredict(mdl,X_test,...
-                      'ytest',y_test,...
+Pred3 = vbayesPredict(mdl,X_test,...
+                      'Ytest',y_test,...
                       'Interval',1,...
                       'Nsample',1000);                       
-y_pred = mean(Pred4.yhatMatrix)';
+y_pred = mean(Pred3.yhatMatrix)';
 mse2 = mean((y_test-y_pred).^2);
-accuracy = (y_test<Pred4.interval(:,2) & y_test>Pred4.interval(:,1));
+accuracy = (y_test<Pred3.interval(:,2) & y_test>Pred3.interval(:,1));
 disp(['Prediction Interval accuracy: ',num2str(sum(accuracy)/length(accuracy))]);
 ```
-
+```yml
+Prediction Interval accuracy: 0.76794
+```
+It is also useful to plot the prediction interval together with the true test responses. 
 ```m
 figure
-vbayesPlot('Interval',Pred4,...
-           'ytest',y_test,...
+vbayesPlot('Interval',Pred3,...
+           'Ytest',y_test,...
            'Title','Prediction Interval for Test Data',...
            'Xlabel','Observations',...
            'Ylabel','Age(years)',...
-           'Nsample',40);
+           'Nsample',40);           
 ```
 
 <img src="/VBLabDocs/assets/images/Example-DeepGLM-Abalon.jpg" class="center"/>

@@ -15,9 +15,13 @@ VBLab provides several ways for custom-built models that work with VB algorithm 
 ---
 
 ## Define custom models as Matlab Class Objects
+{: #class-model}
+
 
 ---
 
 ## Define custom models as function handler
 {: #custom-handler}
+
+
 ---

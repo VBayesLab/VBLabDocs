@@ -27,7 +27,7 @@ Mdl = LogisticRegression(n_features);
 Run CGVB to obtain VB approximation of the posterior distribution of model parameters. 
 ```m
 % Run CGVB to obtain VB approximation of the posterior distribution
-Estmdl = CGVB(Mdl,labour_train,...
+Estmdl = CGVB(Mdl,labour,...
               'LearningRate',0.002,...  % Learning rate
               'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
               'MaxPatience',20,...      % For Early stopping
@@ -47,9 +47,11 @@ We can check how close of the variational distribution to the true posterior den
 
 ```m
 % Run MCMC
-Post_MCMC = MCMC(Mdl,...
+Post_MCMC = MCMC(Mdl,labour,...
                  'NumMCMC',50000);    % Number of samples (MCMC iterations)
 ```
+Given the MCMC samples of the posterior density of model paramters, we can compare the true and approximate posterior distribution.
+
 ```m  
 % Compare VB and MCMC
 % Get posterior mean and trace plot for a parameter to check the mixing 
@@ -65,7 +67,8 @@ mu_vb     = Estmdl.Post.mu;
 sigma2_vb = Estmdl.Post.sigma2;
 
 % Compute MLE estimation
-X = [ones(size(X,1),1),data(:,2:end)];
+X = labour(:,1:end-1);
+y = labour(:,end)
 [mu_mle,~,stats] = glmfit(X,y,'binomial','constant','off'); 
 
 figure

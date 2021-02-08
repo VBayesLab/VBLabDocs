@@ -158,7 +158,7 @@ labour = readdata('LabourForce',...
 Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $10$.
 ```matlab
 % Number of input features
-n_features = size(marketing,2)-1;
+n_features = size(labour,2)-1;
 % Define a LogisticRegression model object
 Mdl = LogisticRegression(n_features,...
                          'Prior',{'Normal',[0,10]});

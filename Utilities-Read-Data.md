@@ -1,15 +1,15 @@
 ---
 layout: default
-title: readdata
+title: readData
 parent: Utilities Reference
 nav_order: 1
 permalink: /utilities/readdata
 ---
 
-# <samp>readdata</samp>
+# <samp>readData</samp>
 {: .fs-8 }
 
-Fit VBLab supported or custom models using CGVB
+Load built-in datasets
 {: .fs-6 .fw-300 }
 
 ---
@@ -17,7 +17,7 @@ Fit VBLab supported or custom models using CGVB
 ## Syntax
 
 ```matlab
-PostVB = CGVB(Mdl,data,Name,Value)
+data = readData(DataName,Name,Value)
 ```
 ---
 ## Description

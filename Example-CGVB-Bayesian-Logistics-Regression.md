@@ -43,12 +43,14 @@ The plot of lowerbound shows that the CGVB algorithm converges well.
 
 <img src="/VBLabDocs/assets/images/example3-4-lowerbound.jpg" class="center"/>
 
+We can check how close of the variational distribution to the true posterior densities of model paramters. We run MCMC to obtain samples of model parameters from theirs posterior distribution. 
+
 ```m
 % Run MCMC
 Post_MCMC = MCMC(Mdl,...
-                 'NumMCMC',50000,...
-                 'saveAfter',0);
-  
+                 'NumMCMC',50000);    % Number of samples (MCMC iterations)
+```
+```m  
 % Compare VB and MCMC
 % Get posterior mean and trace plot for a parameter to check the mixing 
 [mcmc_mean,mcmc_std,mcmc_chain] = Post_MCMC.getParamsMean('BurnInRate',0.4,...

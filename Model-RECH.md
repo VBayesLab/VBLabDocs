@@ -228,7 +228,7 @@ Estmdl = vbayesFit(mdl,sp500_in,...
                    'WindowSize',30);       
 ```
 
-Given the fitted RECH model `Estmdl`, we can make one-step-ahead forecast given out-of-sample data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the miss-classification rate (MCR) and PPS as the predictive scores.    
+Given the fitted RECH model `Estmdl`, we can make one-step-ahead forecast given out-of-sample data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the MSE and PPS as the predictive scores.    
 ```matlab
 % Make prediction with new data and compute prediction scores in PPS and MCR
 [Pred,Error] = vbayesPredict(Estmdl,T_out,...

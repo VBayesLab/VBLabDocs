@@ -34,22 +34,41 @@ Mdl = RECH('SRN-GARCH',...
 ```
 {%endraw%}
 
-Split `abalon` to training and test data then fit the DeepGLM model `Mdl` to training set using NAGVAC technique. 
+Split the return series to in-sample data for model fitting and out-of-sample data for forecasting. Then fit the RECH model `Mdl` to in-sample data using MGVB technique. 
 ```m
 % Train/Test split
-[abalon_train, abalon_test] = trainTestSplit(abalon,0.15);
-% Run VAFC to obtain VB approximation of the posterior distribution
-EstMdl = NAGVAC(Mdl,abalon_train,...
-                'LearningRate',0.01,...     % Use a small learning rate
-                'MaxPatience',100,...       % Maximum patience
-                'WindowSize',100,...        % Rolling window size to smooth the lowerbound
-                'MaxIter',5000,...          % Maximum number of iterations    
-                'InitMethod','Random',...   % Initialization method
-                'GradientMax',100,...       % Gradient clipping threshold
-                'LBPlot',true);             % Plot the lowerbound when finish
+[sp500_in, sp500_out] = trainTestSplit(sp500,0.5,...
+                                       'Shuffle',false);
+% Run MGVB to obtain VB approximation of the posterior distribution
+[~,Estmdl] = MGVB(mdl,sp500_in,...
+                  'NumSample',100,...
+                  'LearningRate',0.01,...
+                  'GradWeight',0.4,...
+                  'MaxPatience',50,...
+                  'MaxIter',2500,...
+                  'GradientMax',100,...
+                  'WindowSize',30,...
+                  'LBPlot',false);         % We will plot LB manual together with variational distribution
 ```
-Once the model `Mdl` is fitted, we can see the convergence of the lowerbound, showing that the NAGVAC algorithm works properly. 
-<img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM.jpg" class="center"/>
+Once the model `Mdl` is fitted, we can see the convergence of the lowerbound, showing that the MGVB algorithm works properly.
+```m
+figure
+% Extract variation mean and variance
+mu_vb     = Estmdl.Post.mu;
+sigma2_vb = Estmdl.Post.sigma2;
+param_name = Estmdl.ParamName;
+% Plot the variational distribution of each parameter
+for i=1:length(mu_vb)
+    subplot(3,3,i)
+    vbayesPlot('Density',...
+               'Distribution',{'Normal',[mu_vb(i),sigma2_vb(i)]})
+    grid on
+    title(param_name{i})
+    set(gca,'FontSize',15)
+end
+```
+ 
+<img src="/VBLabDocs/assets/images/Example-RECH-distribution.jpg" class="center"/>
 
 We can plot the shrinkage coefficients over iterations to explore the significance of the covariates in terms of explaining the
 response $y$, which is the age (in years) of the rings. The following plot shows that the $2^{nd}$ (Sex) and $8^{th}$ (Viscera weight) covariates are less important than the others and can be removed from data.  

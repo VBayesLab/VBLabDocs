@@ -18,7 +18,7 @@ Key features:
 - Providing various Fixed From VB (FFVB) methods and works efficiently for high dimensional and complex posterior distributions. 
 - Users are not required to know the technicality behind the VB techniques provided; all they need to do is to supply their statistical models, which can be specified flexibly in various ways.
 
-[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [VBLab on GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [VBLab on GitHub](https://github.com/VBayesLab/VBLab){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

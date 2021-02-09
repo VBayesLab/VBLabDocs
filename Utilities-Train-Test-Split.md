@@ -1,6 +1,6 @@
 ---
 layout: default
-title: traintestsplit
+title: trainTestSplit
 parent: Utilities Reference
 nav_order: 2
 permalink: /utilities/traintestsplit

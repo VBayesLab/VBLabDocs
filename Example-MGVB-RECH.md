@@ -50,7 +50,7 @@ Split the return series to in-sample data for model fitting and out-of-sample da
                   'WindowSize',30,...
                   'LBPlot',false);         % We will plot LB manual together with variational distribution
 ```
-Once the model `Mdl` is fitted, we can see the convergence of the lowerbound, showing that the MGVB algorithm works properly.
+Once the model `Mdl` is fitted, we can manually plot the variational distribution together with the lowerbound. The convergence of the lowerbound shows that the MGVB works properly. 
 ```m
 figure
 % Extract variation mean and variance
@@ -70,64 +70,6 @@ end
  
 <img src="/VBLabDocs/assets/images/Example-RECH-distribution.jpg" class="center"/>
 
-We can plot the shrinkage coefficients over iterations to explore the significance of the covariates in terms of explaining the
-response $y$, which is the age (in years) of the rings. The following plot shows that the $2^{nd}$ (Sex) and $8^{th}$ (Viscera weight) covariates are less important than the others and can be removed from data.  
-```m             
-% Plot shrinkage coefficients
-figure
-vbayesPlot('Shrinkage',EstMdl.Post.shrinkage,...
-           'Title','Shrinkage Coefficients',...
-           'Xlabel','Iterations',...
-           'LineWidth',2);
-```
-<img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM-Shrinkage.jpg" class="center"/>
-
-Given the test input, we can make prediction for the output using [<samp>vbayesPredict</samp>]({{site.baseurl}}{% link Model-Predict.md%}) method of the DeepGLM class object. 
-```m
-% Make prediction (point estimation) on a test set
-X_test = abalon_test(:,1:end-1);
-y_test = abalon_test(:,end);
-Pred1 = vbayesPredict(EstMdl,X_test);
-```
-I can compute predictive scores if true responses are provided.
-```m
-% If y_test is specified (for model evaluation purpose)
-% then we can check PPS and MSE on test set
-Pred2 = vbayesPredict(EstMdl,X_test,'Ytest',y_test);
-disp(['PPS on test set using deepGLM is: ',num2str(Pred2.pps)])
-disp(['MSE on test set using deepGLM is: ',num2str(Pred2.mse)])
-```
-```yml
-PPS on test set using deepGLM is: 1.3042
-MSE on test set using deepGLM is: 4.962
-```
-Or we can make the interval estimation for test observation and compute the accuracy.
-```m
-% Estimate prediction interval for entire test data
-Pred3 = vbayesPredict(mdl,X_test,...
-                      'Ytest',y_test,...
-                      'Interval',1,...
-                      'Nsample',1000);                       
-y_pred = mean(Pred3.yhatMatrix)';
-mse2 = mean((y_test-y_pred).^2);
-accuracy = (y_test<Pred3.interval(:,2) & y_test>Pred3.interval(:,1));
-disp(['Prediction Interval accuracy: ',num2str(sum(accuracy)/length(accuracy))]);
-```
-```yml
-Prediction Interval accuracy: 0.76794
-```
-It is also useful to plot the prediction interval together with the true test responses. 
-```m
-figure
-vbayesPlot('Interval',Pred3,...
-           'Ytest',y_test,...
-           'Title','Prediction Interval for Test Data',...
-           'Xlabel','Observations',...
-           'Ylabel','Age(years)',...
-           'Nsample',40);           
-```
-
-<img src="/VBLabDocs/assets/images/Example-DeepGLM-Abalon.jpg" class="center"/>
 
 --- 
 

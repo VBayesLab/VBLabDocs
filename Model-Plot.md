@@ -1,6 +1,6 @@
 ---
 layout: default
-title: vbayesPlot Method
+title: vbayesPlot
 parent: Utilities Reference
 nav_order: 7
 permalink: //utilities/vbayesPlot/

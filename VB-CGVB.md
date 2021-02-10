@@ -537,56 +537,9 @@ The statistical models containing unknown parameters, specified as:
 --- 
 
 ## Examples
-<!--Continuous response-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
-## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
-{: #logistic-binary}
-Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({% link VB-CGVB.md %})
-
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
-The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
-```matlab
-% Load the LabourForce dataset
-labour = readdata('LabourForce',...
-                  'Type','Matrix',...
-                  'Intercept',true);
-```
-Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $10$.
-```matlab
-% Number of input features
-n_features = size(marketing,2)-1;
-% Define a LogisticRegression model object
-mdl = LogisticRegression(n_features,...
-                         'Prior',{'Normal',[0,10]});
-```
-Run CGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({% link Utilities-Read-Data.md%}) function to split `labour` to training and test data. 
-```matlab
-% Train/Test split
-[labour_train, labour_test] = trainTestSplit(labour,0.2);
-% Run CGVB to obtain VB approximation of the posterior distribution
-[~,Estmdl] = CGVB(mdl,labour_train,...
-                  'LearningRate',0.01,...    % Use a small learning rate
-                  'Validation',0.15,...      % Use 15% number of observations fpr validation    
-                  'Loss','PPS');             % Use PPS as the predictive metric
-```
-Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({% link Model-Fit.md %}) method of `mdl` with the same training setting
-```m
-Estmdl = vbayesFit(mdl,labour_train,...
-                   'FitMethod','CGVB',...
-                   'LearningRate',0.01,...       
-                   'Validation',0.15,...    
-                   'Loss','PPS');           
-```
-
-Given the fitted LogisticRegression model `Estmdl`, we can make prediction with new data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the miss-classification rate (MCR) and PPS as the predictive scores.    
-```matlab
-% Make prediction with new data and compute prediction scores in PPS and MCR
-[Pred,Error] = vbayesPredict(Estmdl,labour_test,...
-                             'YTest',true,...            % There are true response
-                             'Loss',{'PPS','MCR'});      % Compute predictive scores in PPS and MCR
-```
-</div>
+1. [CGVB for Logistic Regression model defined as a LogisticRegression object]({{site.baseurl}}{% link Example-CGVB-Bayesian-Logistics-Regression.md%}) 
+2. [CGVB for Logistic Regression model defined as a function handler](/VBLabDocs/model/custom/#example-handler)
 
 ---
 

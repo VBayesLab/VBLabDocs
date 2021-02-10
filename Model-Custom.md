@@ -23,5 +23,6 @@ VBLab provides several ways for custom-built models that work with VB algorithm 
 ## Define custom models as function handler
 {: #custom-handler}
 
-
+### Example: Define a Logistic Regression model as a function handler.
+{: #example-handler}
 ---

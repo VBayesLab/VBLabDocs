@@ -64,7 +64,7 @@ For time series data, the data can be stored in a row or column 1D array.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'LearningRate',0.001,'LBPlot',false` specifies that the learning rate of the CGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
+**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the CGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
 
 
 
@@ -74,11 +74,12 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Adaptive learning weight 2 |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
+|[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
+|[`'LogLikelihood'`](#LogLikelihood) | Log-likelihood evaluated at the final variational mean|
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
-|[`'MeanInit'`](#MeanInit)|`None`| | Initial values of varitional mean |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
 |[`'SaveParams'`](#SaveParams)|`false`| | Flag to save training parameters or not |
@@ -86,8 +87,9 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'SigInitScale'`](#SigInitScale)|`0.1`| | Constant factor for initialization |
 |[`'StdForInit'`](#StdForInit)|`0.01`| | Standard deviation of normal distribution for initialization |
 |[`'StepAdaptive'`](#StepAdaptive)|`'MaxIter'/2`| $\tau$ | Threshold to start reducing learning rates |
+|[`'TrainingLoss'`](#TrainingLoss)|`PPS`| | Training loss over VB iterations |
 |[`'Validation'`](#Validation)|`0.1`| | Percentage of training data used for validation |
-|[`'ValidationLoss'`](#ValidationLoss)|`PPS`| | Validation loss computed during fitting phase |
+|[`'ValidationLoss'`](#ValidationLoss)|`PPS`| | Validation loss over VB iterations |
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
 
@@ -98,6 +100,8 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 #### Data Type: Double
 <br>
+The adaptive learning rate to update variational parameters in each VB iteration. See [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) for the theoretical explanation of the `'GradWeight1'` argument, which is denoted as $\beta_1$.
+
 Must be a number between $0$ and $1$.
 
 **Default:** `0.9`
@@ -110,11 +114,15 @@ Must be a number between $0$ and $1$.
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight2'</span> - Adaptive learning weight 2</h3></header>
 {: #GradWeight2}
 
-#### Data Type: Cell Array 
+#### Data Type: Double
+<br>
+The adaptive learning rate to update variational parameters in each VB iteration. See [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) for the theoretical explanation of the `'GradWeight2'` argument, which is denoted as $\beta_2$.
 
-**Default:** `{'Normal',[0,1]}`
+Must be a number between $0$ and $1$.
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Default:** `0.9`
+
+**Example:** `'GradWeight2',0.95`
 </div>
 
 <!--GradientMax-->
@@ -122,17 +130,36 @@ Must be a number between $0$ and $1$.
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradientMax'</span> - Gradient clipping threshold</h3></header>
 {: #GradientMax}
 
-#### Data Type: Cell Array 
+#### Data Type: Double | Positive
+<br>
+The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `100`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'GradientMax',10`
 </div>
 
 <!--InitMethod-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitMethod'</span> - Initialization method</h3></header>
 {: #InitMethod}
+
+#### Data Type: string
+
+Intialization method of variational parameters, can be specified as following options:
+- `'Random'`: Initialize variational parameters from a normal distribution with zero mean and a scaled diagnal covariance matrix $\mathcal{N}(0_D, cI_D)$ with $D$ number of variational parameters, $c$ a constant term and $I_D$ an indentity matrix size $D$.
+- `'Custom'`: Initalize variational parameters 
+- `Value`
+
+**Default:** `'Random'`
+
+**Example:** `'InitMethod','Custom'`
+</div>
+
+<!--InitValue-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial values of varitional mean</h3></header>
+{: #InitValue}
 
 #### Data Type: Cell Array 
 
@@ -148,15 +175,27 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: True | False
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `true`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'LBPlot',false`
 </div>
 
 <!--LearningRate-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'LearningRate'</span> - Fixed learning rate</h3></header>
 {: #LearningRate}
+
+#### Data Type: Cell Array 
+
+**Default:** `{'Normal',[0,1]}`
+
+**Example:** `'Prior',{'Normal',[0,10]}`
+</div>
+
+<!--Log-Likelihood-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'LogLikelihood'</span> - Log-likelihood of the final model</h3></header>
+{: #LogLikelihood}
 
 #### Data Type: Cell Array 
 
@@ -181,18 +220,6 @@ Must be a number between $0$ and $1$.
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxPatience'</span> - Maximum patience for early stopping  </h3></header>
 {: #MaxPatience}
-
-#### Data Type: Cell Array 
-
-**Default:** `{'Normal',[0,1]}`
-
-**Example:** `'Prior',{'Normal',[0,10]}`
-</div>
-
-<!--MeanInit-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MeanInit'</span> - Initial values of varitional mean</h3></header>
-{: #MeanInit}
 
 #### Data Type: Cell Array 
 
@@ -278,6 +305,18 @@ Must be a number between $0$ and $1$.
 <!--StepAdaptive-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'StepAdaptive'</span> - Threshold to start reducing learning rates </h3></header>
+{: #StepAdaptive}
+
+#### Data Type: Cell Array 
+
+**Default:** `{'Normal',[0,1]}`
+
+**Example:** `'Prior',{'Normal',[0,10]}`
+</div>
+
+<!--TrainingLoss-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'TrainingLoss'</span> - Training loss over VB iterations </h3></header>
 {: #StepAdaptive}
 
 #### Data Type: Cell Array 
@@ -460,18 +499,3 @@ Given the fitted LogisticRegression model `Estmdl`, we can make prediction with 
 ## See Also
 {: #see-also}
 [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})
-
-|Properties|Data type |Description{: .text-center}|
-|:-------------|:------------------|:------|
-|`ModelName`    |string (r)| Name of the model, which is <samp>'DeepGLM'</samp>|
-|`NumParams`    |integer (+) | Number of model parameters|
-|`Network`      |Array | Neural network structure of DeepGLM models|
-|`Distribution` |string | Neural network structure of DeepGLM models|
-|`Activation`   |string | Neural network structure of DeepGLM models|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters <br> &bull; Currently, users can only use [NAGVAC]({% link VB-NAGVAC.md %}) and [VAFC]({% link VB-VAFC.md %}) techniques to fit a <samp>DeepGLM</samp> model|
-|`Coefficients` * |cell array| &bull; Estimated Mean of weights of Deep Neuron Network <br> &bull; Used to doing point estimation for new test data|
-|`Shrinkage` *    |array| &bull; Array storing estimated values of group Lasso coefficients|
-|`LogLikelihood` * |double (r)| &bull; Array storing PPS values measured on validation data in each iteration during training phase|
-|`PPS` *          |array| &bull; Array storing PPS values measured on validation data in each iteration during training phase|
-|`MSE` *          |array| &bull; Array storing MSE values measured validation data in each iteration during training phase <br> &bull; Only available if responses follow normal or poisson distribution|
-|`Accuracy` *     |array| &bull; Array storing Classification Rate measured on validation data in each iteration during training phase<br> &bull; Only available if responses are binary variable|

@@ -89,7 +89,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'StdForInit'`](#StdForInit)|`0.01`| | Standard deviation of normal distribution for initialization |
 |[`'StepAdaptive'`](#StepAdaptive)|`'MaxIter'/2`| $\tau$ | Threshold to start reducing learning rates |
 |[`'TrainingLoss'`](#TrainingLoss)|`PPS`| | Training loss over VB iterations |
-|[`'Validation'`](#Validation)|`0.1`| | Percentage of training data used for validation |
+|[`'Validation'`](#Validation)|`0.1`| | Subset of training data used for validation |
 |[`'ValidationLoss'`](#ValidationLoss)|`PPS`| | Validation loss over VB iterations |
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
@@ -294,7 +294,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 <br>
 Number of model parameters. 
 - If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify this argument. 
-- If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model with Maltab class](/VBLabDocs/model/custom/#class-model).
+- If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
 
@@ -323,9 +323,9 @@ Flag to save variational parameters in each VB iteration.
 
 #### Data Type: struct
 <br>
-Additional settings that could be use to define custom models as function handler. 
+Additional settings that could be use to define custom models as function handlers. 
 
-The most efficient way to define these additinal as a struct. This struct then will be pass to the custom model as input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handler).
+The most efficient way to define these additinal as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
 
 **Default:** `None`
 
@@ -386,25 +386,43 @@ Must be smaller than `'MaxIter'` or `'MaxEpoch'`.
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'TrainingLoss'</span> - Training loss over VB iterations </h3></header>
 {: #StepAdaptive}
 
-#### Data Type: Cell Array 
+#### Data Type: string | cell array of strings
+<br>
+The VB algorithm uses lowerbound to access the convergence of the training phase. 
 
-**Default:** `{'Normal',[0,1]}`
+However, users can also calculate the predictive scores evaluated on the training data over VB iterations. Users can specify a single metric, defined as a string, or multiple metrics, defined as a cell array of strings. 
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+Available score metrics:
+
+|:---|:----|
+|PPS | Partial Predictive Score|
+|MSE | Mean Squared Errors (for continuos output)|
+|MAE | Mean Absoluted Errors (for continuos output)|
+|CR  | Classification rate (for binary output)|
+
+For the PPS:
+- If the models are specified as function handlers, users have to also specify function handlers to the argument `'LogLikFunc'` to compute the log-likelihood of the custom models. 
+- If the models are specified as class objects, users have to define a method named `logLik()` to compute the log-likelihood of the custom models. 
+
+**Default:** `None`
+
+**Example:** `'TrainingLoss',{'PPS','MSE'}`
 </div>
 
 <!--Validation-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Validation'</span> - Percentage of training data used for validation </h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Validation'</span> - Subset of training data used for validation </h3></header>
 {: #Validation}
 
-#### Data Type: True | False
+#### Data Type: double | Integer
+<br>
 
-This option is only available for cross-sectional (tabular) data. 
 
-**Default:** `{'Normal',[0,1]}`
+**Note:** This option is only available for cross-sectional (tabular) data. 
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Default:** `None`
+
+**Example:** `'Prior',0.1` or `'Prior',1000`
 </div>
 
 <!--ValidationLoss-->
@@ -412,9 +430,23 @@ This option is only available for cross-sectional (tabular) data.
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'ValidationLoss'</span> - Validation loss computed during fitting phase </h3></header>
 {: #ValidationLoss}
 
-#### Data Type: True | False
+#### Data Type: string | cell array of strings
 
-This option is only available for cross-sectional (tabular) data. 
+Calculate the predictive scores evaluated on the validation data over VB iterations. Users can specify a single metric, defined as a string, or multiple metrics, defined as a cell array of strings. 
+
+Available score metrics:
+
+|:---|:----|
+|PPS | Partial Predictive Score|
+|MSE | Mean Squared Errors (for continuos output)|
+|MAE | Mean Absoluted Errors (for continuos output)|
+|CR  | Classification rate (for binary output)|
+
+For the PPS:
+- If the models are specified as function handlers, users have to also specify function handlers to the argument `'LogLikFunc'` to compute the log-likelihood of the custom models. 
+- If the models are specified as class objects, users have to define a method named `logLik()` to compute the log-likelihood of the custom models. 
+
+**Note:** This option is only available for cross-sectional (tabular) data. 
 
 **Default:** `None`
 

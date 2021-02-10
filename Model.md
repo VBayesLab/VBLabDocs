@@ -36,8 +36,8 @@ VBLab provides statistical models that can be used with the supported VB techniq
 ## Custom models
 
 There are two ways to define custome models:
-- Define custom models as Matlab classes with methods to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms.  
-- Define custom function to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms then provide the handle of the function as the input model. 
+- Define custom models as Matlab classes with methods to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms. See [how to define custom models as class objects](/VBLabDocs/model/custom/#class-model).
+- Define custom function to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms then provide the handle of the function as the input model. See [how to define custom models as function handlers](/VBLabDocs/model/custom/#custom-handler).
 
 ---
 

@@ -293,7 +293,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 #### Data Type: Integer | Positive
 <br>
 Number of model parameters. 
-- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify this argument. 
+- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
 - If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
@@ -414,9 +414,9 @@ For the PPS:
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Validation'</span> - Subset of training data used for validation </h3></header>
 {: #Validation}
 
-#### Data Type: double | Integer
+#### Data Type: double between 0 and 1 | Integer
 <br>
-
+Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smnaller than the number of training observations.
 
 **Note:** This option is only available for cross-sectional (tabular) data. 
 
@@ -459,10 +459,12 @@ For the PPS:
 {: #Verbose}
 
 #### Data Type: True | False
+<br>
+By default, the index of the current iteration and lowerbound are shown in every iteration. Set `'Verbose'` to be `false` to turn off these messages. 
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `true`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'Verbose',false`
 </div>
 
 <!--WindowSize-->
@@ -470,11 +472,13 @@ For the PPS:
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'WindowSize'</span> - Rolling window size to smooth the lowerbound </h3></header>
 {: #WindowSize}
 
-#### Data Type: Cell Array 
+#### Data Type: Integer | Positive
+<br>
+Size of moving average window that used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `50`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'WindowSize',100`
 </div>
 
 </div>
@@ -482,56 +486,26 @@ For the PPS:
 ---
 
 ## Output Arguments
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
-{: #cgvb-object}
-
-#### Data type: DeepGLM Object| RECH Object | LogisticRegression Object | Custom Object
-<br>
-<samp>LogisticRegression</samp> is an object of the LogisticRegression class with pre-defined properties and functions.
-
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-### Object Properties
-The LogisticRegression object properties include information about model-specific information, coefficient estimates and fitting method. 
-
-|Properties|Data type |Description{: .text-center}|
-|:-------------|:------------------|:------|
-|`ModelName`    |string (r)| Name of the model, which is <samp>'LogisticRegression'</samp>|
-|`NumParams`    |integer (+) | Number of model parameters|
-|`Cutoff`       |float | Cut-off probabitlity|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters |
-|`Coefficient` * |cell array (r)| &bull; Estimated Mean of model parameters <br> &bull; Used to doing point estimation for new test data|
-|`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
-|`LogLikelihood` * |double (r)| Loglikelihood of the fitted model. |
-|`FittedValue` * |array (r)| Fitted probability|
-
-Notation:
-- \* $\rightarrow$ object properties which are only available when the model is fitted. Default value is `None`.
-- (+) $\rightarrow$ positive number.
-- (r) $\rightarrow$ read-only properties.
-
-</div>
-
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-### Object Functions
-Use the object functions to fit the model, predict responses, and to visualize the prediction.
-
-|[<span style="font-family:monospace">vbayesFit</span>]({% link Model-Predict.md %})| Fit a deepGLM model|
-|[<span style="font-family:monospace">vbayesInit</span>]({% link Model-Plot.md %})| Initialization method of model parameters|
-|[<span style="font-family:monospace">vbayesPredict</span>]({% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
-
-</div>
 
 <!--Post-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - </header>
-#### Data type: VBLab model object | function handler
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
+#### Data type: struct
 <br>
 The statistical models containing unknown parameters, specified as:
 - [VBLab model object](/VBLabDocs/model/#vblab-model).
 - or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+</div>
+
+<!--EstMdl-->
+<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
+{: #cgvb-object}
+
+#### Data type: VBLab model bbject| Custom model Object
+<br>
+
+
 </div>
 
 --- 

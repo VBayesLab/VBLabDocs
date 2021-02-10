@@ -501,7 +501,7 @@ The statistical models containing unknown parameters, specified as:
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
 {: #cgvb-object}
 
-#### Data type: VBLab model bbject| Custom model Object
+#### Data type: VBLab model object| Custom model Object
 <br>
 
 

@@ -169,9 +169,11 @@ The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#al
 #### Data Type: string
 <br>
 Intialization method of variational mean, can be specified as following options:
-- `'Random'`: Initialize variational mean from a normal distribution with zero mean and a diagnal covariance matrix $\mathcal{N}(0_D, \sigma I_D)$ with $D$ number of variational parameters, $\sigma$ a constant term and $I_D$ an indentity matrix size $D$. The constant $\sigma$ can be specified using the [`'StdForInit'`](#StdForInit) argument. 
-- `'Custom'`: Initalize variational parameters using custom method provided by the model object. The model object has to have a method named `initParams()` to inialize variational parameter. 
-- `'Value'`: Initialize variational parameters using values specified by the [`'InitValue'`](#InitValue) argument. 
+
+|:---|:---|
+|`'Random'`| Initialize variational mean from a normal distribution with zero mean and a diagnal covariance matrix $\mathcal{N}(0_D, \sigma I_D)$ with $D$ number of variational parameters, $\sigma$ a constant term and $I_D$ an indentity matrix size $D$. The constant $\sigma$ can be specified using the [`'StdForInit'`](#StdForInit) argument|
+|`'Custom'`| Initalize variational parameters using custom method provided by the model object. The model object has to have a method named `initParams()` to inialize variational parameter|
+|`'Value'`|Initialize variational parameters using values specified by the [`'InitValue'`](#InitValue) argument|
 
 **Note:** The the variational parameters associated with the lower triangular matrix $L$ is set as a diagnal matrix $c I_D$ with $c$ is another contant term which can be specified using the [`'SigInitScale'`](#SigInitScale) argument.  
 
@@ -321,7 +323,9 @@ Flag to save variational parameters in each VB iteration.
 
 #### Data Type: struct
 <br>
-Additional settings that could be use to define custom models as function handler. The most efficient way to define these additinal as a struct. This struct then will be pass to the custom model as input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handler).
+Additional settings that could be use to define custom models as function handler. 
+
+The most efficient way to define these additinal as a struct. This struct then will be pass to the custom model as input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handler).
 
 **Default:** `None`
 
@@ -348,7 +352,7 @@ The constant factor $c$ to scale the initial values for the lower triangular mat
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'StdForInit'</span> - Standard deviation of normal distribution for initialization</h3></header>
 {: #StdForInit}
 
-#### Data Type: Cell Array 
+#### Data Type: double
 <br>
 The constant factor $\sigma$ to scale the convariance matrix of the normal distribution used to initialize the variational mean. 
  
@@ -364,11 +368,17 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'StepAdaptive'</span> - Threshold to start reducing learning rates </h3></header>
 {: #StepAdaptive}
 
-#### Data Type: Cell Array 
+#### Data Type: Integer | Positive 
+<br>
+The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
 
-**Default:** `{'Normal',[0,1]}`
+By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+Must be smaller than `'MaxIter'` or `'MaxEpoch'`. 
+
+**Default:** `'MaxIter'/2` or `'MaxEpoch'/2`
+
+**Example:** `'StepAdaptive',300`
 </div>
 
 <!--TrainingLoss-->

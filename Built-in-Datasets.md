@@ -158,6 +158,8 @@ Given is the attribute name, attribute type, values and a brief description.
 
 This dataset classifies people described by a set of attributes as good or bad credit risks.
 
+The dataset has $1000$ rows and $21$ column. The last column is used as the dependent variable. 
+
 For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/South+German+Credit+%28UPDATE%29). 
 
 ### Attribute Information
@@ -210,8 +212,9 @@ institution = {"Department II, Beuth University of Applied Sciences Berlin.}}
 
 ### Information
 {: .no_toc }
+The Labour Force Participation dataset contains information indicating whether or not the participants (women) are currently in the labour force.
 
-The dataset has $753$ rows and $9$ column. 
+The dataset has $753$ rows and $7$ column. The last column is used as the dependent variable. 
 
 ### Attribute Information
 {: .no_toc }

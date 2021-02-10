@@ -70,6 +70,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
+|[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
 |[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight 1 |
 |[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Adaptive learning weight 2 |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
@@ -77,8 +78,8 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
-|[`'LogLikelihood'`](#LogLikelihood) | Log-likelihood evaluated at the final variational mean|
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
+|[`'MaxEpoch'`](#MaxEpoch)|`None`| | Maximum number of epochs |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
@@ -93,6 +94,27 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
 
+<!--BatchSize-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'BatchSize'</span> - Mini-batch size</h3></header>
+{: #BatchSize}
+
+#### Data Type: Integer | positive  
+<br>
+The size of the mini-batch used in each VB iteration. For numerical stabability of the VB algorithm, `'BatchSize'` should be a large number (e.g. 1000, 5000)
+compared to the mini-batch size in deep learning literature (e.g. 32, 128, 256).
+
+Must be a positive integer equal or smaller than number of observations of training data. 
+
+By default, `'BatchSize'` is set to `None` indicating that all training data is used in each VB iteration. 
+
+**Note:** This option is only available for cross-sectional data. 
+
+**Default:** `None`
+
+**Example:** `'BatchSize',1000`
+</div>
+
 <!--GradWeight1-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Adaptive learning weight 1</h3></header>
@@ -100,7 +122,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 #### Data Type: Double
 <br>
-The adaptive learning rate to update variational parameters in each VB iteration. See [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) for the theoretical explanation of the `'GradWeight1'` argument, which is denoted as $\beta_1$.
+The adaptive learning rate $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
 
 Must be a number between $0$ and $1$.
 
@@ -116,7 +138,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double
 <br>
-The adaptive learning rate to update variational parameters in each VB iteration. See [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) for the theoretical explanation of the `'GradWeight2'` argument, which is denoted as $\beta_2$.
+The adaptive learning rate $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
 
 Must be a number between $0$ and $1$.
 
@@ -145,11 +167,11 @@ The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#al
 {: #InitMethod}
 
 #### Data Type: string
-
+<br>
 Intialization method of variational parameters, can be specified as following options:
-- `'Random'`: Initialize variational parameters from a normal distribution with zero mean and a scaled diagnal covariance matrix $\mathcal{N}(0_D, cI_D)$ with $D$ number of variational parameters, $c$ a constant term and $I_D$ an indentity matrix size $D$.
-- `'Custom'`: Initalize variational parameters 
-- `Value`
+- `'Random'`: Initialize variational parameters from a normal distribution with zero mean and a scaled diagnal covariance matrix $\mathcal{N}(0_D, cI_D)$ with $D$ number of variational parameters, $c$ a constant term and $I_D$ an indentity matrix size $D$. The constant $c$ can be specified using the [`'SigInitScale'`](#SigInitScale) argument. 
+- `'Custom'`: Initalize variational parameters using custom method provided by the model object. The model object has to have a method named `initParams()` to inialize variational parameter. 
+- `'Value'`: Initialize variational parameters using values specified by the [`'InitValue'`](#InitValue) argument. 
 
 **Default:** `'Random'`
 
@@ -161,11 +183,13 @@ Intialization method of variational parameters, can be specified as following op
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial values of varitional mean</h3></header>
 {: #InitValue}
 
-#### Data Type: Cell Array 
+#### Data Type: Column vector 
+<br>
+The column vector of initial values of variational parameters. For example, we can use the point estimation of model parameters from MLE to initialize the VB techniques. 
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `None`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'InitValue',zeros(D,1)`
 </div>
 
 <!--LBPlot-->
@@ -174,6 +198,8 @@ Intialization method of variational parameters, can be specified as following op
 {: #LBPlot}
 
 #### Data Type: True | False
+<br>
+Flag to plot the smoothed lowerbound over iterations to quicly check the convergence of the VB algorithm.  
 
 **Default:** `true`
 
@@ -185,23 +211,15 @@ Intialization method of variational parameters, can be specified as following op
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'LearningRate'</span> - Fixed learning rate</h3></header>
 {: #LearningRate}
 
-#### Data Type: Cell Array 
+#### Data Type: Double | Between 0 and 1
+<br>
+The fixed learning rate $\epsilon_0$ to update the variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
 
-**Default:** `{'Normal',[0,1]}`
+Must be a number between $0$ and $1$.
 
-**Example:** `'Prior',{'Normal',[0,10]}`
-</div>
+**Default:** `0.01`
 
-<!--Log-Likelihood-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'LogLikelihood'</span> - Log-likelihood of the final model</h3></header>
-{: #LogLikelihood}
-
-#### Data Type: Cell Array 
-
-**Default:** `{'Normal',[0,1]}`
-
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'LearningRate',0.001`
 </div>
 
 <!--MaxIter-->
@@ -209,11 +227,30 @@ Intialization method of variational parameters, can be specified as following op
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxIter'</span> - Maximum number of iterations</h3></header>
 {: #MaxIter}
 
-#### Data Type: Cell Array 
+#### Data Type: Integer | Positive
+<br>
+Maximum number of VB iterations for early stopping. If the [`'BatchSize'`](#BatchSize) argument is specified, users have to use the [`'MaxEpoch'`](#MaxEpoch) argument to specify the maximum number of iterations instead. 
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `1000`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'MaxIter',1000`
+</div>
+
+<!--MaxEpoch-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxEpoch'</span> - Maximum number of epochs</h3></header>
+{: #MaxEpoch}
+
+#### Data Type: Integer | Positive
+<br>
+The maximum number of epochs that will be used for training. An epoch is defined as the number of iterations needed for optimization
+algorithm to scan entire training data.
+
+**Note:** This option is only available for cross-sectional data. 
+
+**Default:** `None`
+
+**Example:** `'MaxEpoch',100`
 </div>
 
 <!--MaxPatience-->
@@ -221,7 +258,9 @@ Intialization method of variational parameters, can be specified as following op
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxPatience'</span> - Maximum patience for early stopping  </h3></header>
 {: #MaxPatience}
 
-#### Data Type: Cell Array 
+#### Data Type: Integer | Positive
+<br>
+
 
 **Default:** `{'Normal',[0,1]}`
 

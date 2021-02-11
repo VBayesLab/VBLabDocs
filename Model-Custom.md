@@ -37,7 +37,21 @@ It is not required to use to same name for function and input/output arguments b
 ### Example: Define a Logistic Regression model as a function handler.
 {: #example-handler}
 
+This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. 
 
+Load the LabourForce data as a matrix. The last column is the response variable.
+
+```m
+% Load the LabourForce dataset
+labour = readData('LabourForce',...
+                  'Type','Matrix',...
+                  'Intercept',true);
+```
+Create a LogisticRegression model object by specifying the number of parameters as the input argument. Use the default priors for model coefficients. 
+```m
+% Number of input features
+n_features = size(labour,2)-1;
+```
 
 ---
 

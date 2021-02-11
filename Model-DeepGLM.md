@@ -11,7 +11,7 @@ block_color: GhostWhite
 Create DeepGLM model object 
 {: .fs-6 .fw-300 }
 
-[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

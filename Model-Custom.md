@@ -34,7 +34,7 @@ It is not required to use to same name for function and input/output arguments b
 
 **Note:** If the statistical models are defined as function handlers, users have to specify the number of model parameters explicitly using the `'NumParams'` argument of VB classes
 
-### Example: Define a Logistic Regression model as a function handler.
+### Example: Define a Logistic Regression model as a function handler. [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-handler}
 
 This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
@@ -71,6 +71,9 @@ Post = CGVB(@grad_h_func_logistics,...  % Function handler to define the custom 
             'LBPlot',true);             % Plot the lowerbound when finish
 
 ```
+The output <samp>Post</samp> is a struct storing information about estimation results and the VB algorithm. See the output of [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) for more details.  
+
 We then define the function `grad_h_func_logistics` to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).
 
 ```m
@@ -113,8 +116,9 @@ function [h_func_grad,h_func] = grad_h_func_logistics(data,theta,setting)
     h_func_grad = reshape(h_func_grad,length(h_func_grad),1);
 end    
 ```
-
-**Note:** The 
+**Note:** 
+- The <samp>grad_h_func_logistics()</samp> function can be defined in a separated Matlab script named *grad_h_func_logistics.m* or defined in the same script running the example. For the latter case, the function has to be defined **at the end of the script**. 
+- 
 
 ---
 
@@ -123,7 +127,7 @@ end
 
 This approach is more complicated 
 
-### Example: Define a Linear Regression model as a Matlab class.
+### Example: Define a Linear Regression model as a Matlab class. [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-class}
 
 ---

@@ -7,11 +7,9 @@ permalink: /model/logistics/
 block_color: GhostWhite
 ---
 
-# <samp>LogisticRegression</samp> class
+# <samp>LogisticRegression</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/LogisticRegression.m){: .fs-4 .btn .btn-purple  .float-right}
 Create Logistic Regression model object 
 {: .fs-6 .fw-300 }
-
-[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

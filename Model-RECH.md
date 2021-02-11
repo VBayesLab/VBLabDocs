@@ -7,12 +7,10 @@ permalink: /model/rech/
 block_color: GhostWhite
 ---
 
-# <samp>RECH</samp> class
+# <samp>RECH</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/RECH.m){: .fs-4 .btn .btn-purple  .float-right}
 {: .fs-8 }
 Create a RECH model object 
 {: .fs-6 .fw-300 }
-
-[Tutorial](https://arxiv.org/abs/2010.13061){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

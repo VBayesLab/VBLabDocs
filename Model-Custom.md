@@ -46,19 +46,20 @@ labour = readData('LabourForce',...
                   'Type','Matrix',...
                   'Intercept',true);
 ```
-
+Prepare some variables needed to run the VB algorithm and to define the custom model.
 ```m
 % Number of input features
 n_features = size(labour,2)-1;
 setting.Prior = [0,50];
 ```
+In this example, we use the CGVB technique to fit the custom model on the <samp>labour</samp> data. To run the CGVB technique with the custom model, we need to specify the handler of the function defining the custom model as the first input argument. We also need to explicitly provide the number of model parameters for the `'NumParams'` argument. Finally, we need to pass additional information, e.g. priors, stored in the struct `setting` to the `'Setting'` argument. This `setting` variable then will be passed to the custom function as the input argument.
 
 ```m
 % Run CGVB to obtain VB approximation of the posterior distribution
 Post = CGVB(@grad_h_func_logistics,...  % Function handler to define the custom model
             labour,...                  % Training data    
             'NumParams',num_feature,... % Number of model parameters
-            'Setting',mdl,...           % Additional setting of the custom models
+            'Setting',setting,...       % Additional setting of the custom models
             'LearningRate',0.002,...    % Learning rate
             'NumSample',50,...          % Number of samples to estimate gradient of lowerbound
             'MaxPatience',20,...        % For Early stopping
@@ -71,7 +72,7 @@ Post = CGVB(@grad_h_func_logistics,...  % Function handler to define the custom 
             'LBPlot',true);             % Plot the lowerbound when finish
 
 ```
-The output <samp>Post</samp> is a struct storing information about estimation results and the VB algorithm. See the output of [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+The output `Post` is a struct storing information about estimation results and the VB algorithm. See the output of [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
 [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) for more details.  
 
 We then define the function `grad_h_func_logistics` to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).

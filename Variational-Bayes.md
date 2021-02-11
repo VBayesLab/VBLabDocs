@@ -5,10 +5,9 @@ description: "Gaussian Variational Bayes methods supported by VBLab"
 nav_order: 4
 has_children: true
 permalink: /gvb/
+has_toc: false
 ---
 # **VB classes**
-
-[Tutorial](#tutorial){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [VBLab on GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 VBLab provides several classes to implement VB algorithms discussed in the tutorial paper. 

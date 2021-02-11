@@ -15,14 +15,16 @@ Fit a VBLab supported model
 ## Syntax
 
 ```matlab
-Estmdl = vbayesFit(mdl,data,Name,Value)
-mdl.vbayesFit(data,Name,Value)
+Estmdl = vbayesFit(Mdl,data,Name,Value)
+```
+```matlab
+Mdl.vbayesFit(data,Name,Value)
 ```
 ---
 ## Description
-`mdl = DeepGLM(Network,Name,Value)` returns [DeepGLM model object](#deepglm-object) `mdl` given neural network structure `Network`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify the activation function or distribution of the output. 
+`Estmdl = vbayesFit(Mdl,data,Name,Value)` returns a fitted model object `Estmdl` given the model object `Mdl` and training data `data`. `Name` and `Value` specifie additional options using one or more name-value pair arguments.
 
-đsdsd
+`Mdl.vbayesFit(data,Name,Value)` returns [DeepGLM model object](#deepglm-object) `mdl` given neural network structure `Network`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify the activation function or distribution of the output. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

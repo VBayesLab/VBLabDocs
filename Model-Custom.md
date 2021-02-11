@@ -32,9 +32,11 @@ It is not required to use to same name for function and input/output arguments b
 |`h_func_grad`|  &bull; Gradient vector $\Delta_\theta h(\theta) = \Delta_\theta \text{log}p(y \mid \theta) + \Delta_\theta \text{log} p(\theta)$.<br> &bull; Must be a column vector $1 \times D$ with $D$ the number of model parameters.|
 |`h_func`| &bull; $h(\theta) = \text{log} p(y \mid \theta) + \text{log} p(\theta)$. <br> &bull; Must be a scalar. |
 
-**Note:** If the statistical models are defined as function handlers, users have to specify the number of model parameters explicitly using the `'NumParams'` argument of VB classes
+**Note:** 
+- If the statistical models are defined as function handlers, users have to specify the number of model parameters explicitly using the `'NumParams'` argument of VB classes.
+- This approach is more suitable for simple models. For complicated models, it is advisable to define custom models as Matlab classes, which will be discussed in the next section.  
 
-### Example: Define a Logistic Regression model as a function handler. [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
+### Example: Define a Logistic Regression model as a function handler. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-handler}
 
 This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
@@ -119,16 +121,42 @@ end
 ```
 **Note:** 
 - The <samp>grad_h_func_logistics()</samp> function can be defined in a separated Matlab script named *grad_h_func_logistics.m* or defined in the same script running the example. For the latter case, the function has to be defined **at the end of the script**. 
-- 
+- In some cases, deriving the gradient $\Delta_\theta h(\theta)$ can be troublesome. We can compute it using Matlab's Automatic Differentiation facility, which is a technique for evaluating derivatives numerically and automatically. See [Matlab Automatic Differentiation tutorials](https://mathworks.com/help/deeplearning/ug/deep-learning-with-automatic-differentiation-in-matlab.html).
 
 ---
 
 ## Define custom models as Matlab Class Objects
 {: #class-model}
 
-This approach is more complicated 
+For complicated models, it is more efficient to define the models as Matlab classes. The model-specific information can be stored in classes' properties and methods. The following template is suggested to define the custom models as classes: 
 
-### Example: Define a Linear Regression model as a Matlab class. [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
+```m
+classdef CustomModel
+    
+    % Define model-specific properties
+    properties
+        ModelName      % Model name 
+        NumParam       % Number of parameters
+        Post           % Struct to store training results (maybe not used)   
+    end
+    
+    % Define model-specific methods
+    methods
+        % Constructor. This will be automatically called when users create a CustomModel object
+        function obj = CustomModel(inputArg1,inputArg2)
+            %RECH Construct an instance of this class
+            %   Detailed explanation goes here
+            obj.Property1 = inputArg1 + inputArg2;
+        end
+        
+        % Function to compute gradient of h_theta and h_theta
+        function [h_func_grad, h_func] = hFunctionGrad(obj,data,theta)
+        end  
+    end
+end
+```
+
+### Example: Define a Linear Regression model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
 
 ---

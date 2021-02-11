@@ -6,7 +6,7 @@ nav_order: 2
 permalink: /utilities/traintestsplit
 ---
 
-# <samp>trainTestSplit</samp>
+# <samp>trainTestSplit</samp> [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Utilities/trainTestSplit.m){: .fs-4 .btn .btn-purple .float-right}
 
 Split data to subsets for training and testing
 {: .fs-6 .fw-300}

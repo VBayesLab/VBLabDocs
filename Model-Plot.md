@@ -3,17 +3,15 @@ layout: default
 title: vbayesPlot
 parent: Utilities Reference
 nav_order: 7
-permalink: //utilities/vbayesPlot/
+permalink: /utilities/vbayesPlot/
 block_color: GhostWhite
 ---
 
-# <samp>vbayesPlot</samp> method
+# <samp>vbayesPlot</samp> method [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Utilities/vbayesPlot.m){: .fs-4 .btn .btn-purple  .float-right}
 {: .fs-8 }
 
 Plot analytic figures for VBLab fitted models
 {: .fs-6 .fw-300 }
-
-[Tutorial]({% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

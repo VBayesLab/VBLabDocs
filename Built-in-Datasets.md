@@ -126,7 +126,7 @@ institution = "University of California, Irvine, School of Information and Compu
 
 The data set includes data from a direct marketer who sells his products only via direct mail. He sends catalogs with product characteristics to customers who then order directly from the catalogs. The marketer has developed customer records to learn what makes some customers spend more than others.
 
-The objective is to explain AmountSpent in terms of the provided customer characteristics.
+The objective is to explain AmountSpent in terms of the provided customer characteristics. The dataset has $1000$ rows and $10$ columns. The last column is used as the dependent variable. 
 
 For more information or to download the dataset, please visit the [dataset on Kaggle website](https://www.kaggle.com/yoghurtpatil/direct-marketing). 
 

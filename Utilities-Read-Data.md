@@ -6,7 +6,7 @@ nav_order: 1
 permalink: /utilities/readdata
 ---
 
-# <samp>readData</samp>
+# <samp>readData</samp> [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Utilities/readData.m){: .fs-4 .btn .btn-purple  .float-right}
 {: .fs-8 }
 
 Load built-in datasets

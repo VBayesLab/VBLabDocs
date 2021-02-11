@@ -7,7 +7,7 @@ permalink: /model/deepglm/
 block_color: GhostWhite
 ---
 
-# <samp>DeepGLM</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/DeepGLM.m){: .fs-4 .btn .btn-purple  .float-right}
+# <samp>DeepGLM</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/DeepGLM.m){: .fs-4 .btn .btn-purple .float-right}
 Create DeepGLM model object 
 {: .fs-6 .fw-300 }
 

@@ -12,4 +12,5 @@ block_color: GhostWhite
 
 Sampling posterior distribution using MCMC techniques
 {: .fs-6 .fw-300 }
+
 ---

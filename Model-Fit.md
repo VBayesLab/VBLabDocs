@@ -6,11 +6,9 @@ nav_order: 5
 permalink: /model/vbayesFit/
 block_color: GhostWhite
 ---
-# <samp>vbayesFit</samp> method
+# <samp>vbayesFit</samp> method [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/vbayesFit.m){: .fs-4 .btn .btn-purple  .float-right}
 Fit a VBLab supported model 
 {: .fs-6 .fw-300 }
-
-[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/Tutorial-on-VB){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

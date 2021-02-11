@@ -27,7 +27,7 @@ It is not required to use to same name for function and input/output arguments b
 | Input | Description|
 |:-----|:------|
 |`data`   | &bull; The training data. Denote as $y$ in VB algorithms. <br> &bull; This is also the `data` arguments when calling VB classes such as [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}), [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}).|
-|`theta`  | &bull; Model parameters in each VB iteration. Denote as $\theta$ in VB algorithms. <br> &bull; For GVB, $\theta$ is generated from a multivariate normal distribution. Then if $\theta$ is restricted, e.g. prior distribution is not normal, then a transformation of $\theta$ to original scale, together with the jacobian, have to be provided. |
+|`theta`  | &bull; A column vector of model parameters in each VB iteration. Denote as $\theta$ in VB algorithms. <br> &bull; For GVB, $\theta$ is generated from a multivariate normal distribution. Then if $\theta$ is restricted, e.g. prior distribution is not normal, then a transformation of $\theta$ to original scale, together with the jacobian, have to be provided. |
 |`setting`| &bull; Additional settings of the custom models. <br> &bull; For example, prior distribution or some constant terms to define the models.|
 |`h_func_grad`|  &bull; Gradient vector $\Delta_\theta h(\theta) = \Delta_\theta \text{log}p(y \mid \theta) + \Delta_\theta \text{log} p(\theta)$.<br> &bull; Must be a column vector $1 \times D$ with $D$ the number of model parameters.|
 |`h_func`| &bull; $h(\theta) = \text{log} p(y \mid \theta) + \text{log} p(\theta)$. <br> &bull; Must be a scalar. |
@@ -37,21 +37,84 @@ It is not required to use to same name for function and input/output arguments b
 ### Example: Define a Logistic Regression model as a function handler.
 {: #example-handler}
 
-This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. 
+This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
 
-Load the LabourForce data as a matrix. The last column is the response variable.
-
+First, load the [LabourForce](/VBLabDocs/datasets/#labour-force) data as a matrix. The last column is the response variable. 
 ```m
 % Load the LabourForce dataset
 labour = readData('LabourForce',...
                   'Type','Matrix',...
                   'Intercept',true);
 ```
-Create a LogisticRegression model object by specifying the number of parameters as the input argument. Use the default priors for model coefficients. 
+
 ```m
 % Number of input features
 n_features = size(labour,2)-1;
+setting.Prior = [0,50];
 ```
+
+```m
+% Run CGVB to obtain VB approximation of the posterior distribution
+Post = CGVB(@grad_h_func_logistics,...  % Function handler to define the custom model
+            labour,...                  % Training data    
+            'NumParams',num_feature,... % Number of model parameters
+            'Setting',mdl,...           % Additional setting of the custom models
+            'LearningRate',0.002,...    % Learning rate
+            'NumSample',50,...          % Number of samples to estimate gradient of lowerbound
+            'MaxPatience',20,...        % For Early stopping
+            'MaxIter',5000,...          % Maximum number of iterations
+            'InitMethod','Random',...   % Randomly initialize variational mean
+            'GradWeight1',0.9,...       % Momentum weight 1
+            'GradWeight2',0.9,...       % Momentum weight 2
+            'WindowSize',10,...         % Smoothing window for lowerbound
+            'GradientMax',10,...        % For gradient clipping
+            'LBPlot',true);             % Plot the lowerbound when finish
+
+```
+We then define the function `grad_h_func_logistics` to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).
+
+```m
+%% Define gradient of h function for Logistic regression 
+% theta: Dx1 array
+% h_func: scalar
+% h_func_grad: Dx1 array
+function [h_func_grad,h_func] = grad_h_func_logistics(data,theta,setting)
+
+    % Extract additional settings
+    d = length(theta);
+    sigma2 = setting.Prior(2);
+    
+    % Extract data
+    X = data(:,1:end-1);
+    y = data(:,end));
+    
+    % Compute log likelihood
+    aux = X*theta;
+    llh = y.*aux-log(1+exp(aux));
+    llh = sum(llh);  
+    
+    % Compute gradient of log likelihood
+    ppi       = 1./(1+exp(-aux));
+    llh_grad  = X'*(y-ppi);
+
+    % Compute log prior
+    log_prior =-d/2*log(2*pi)-d/2*log(sigma2)-theta'*theta/sigma2/2;
+    
+    % Compute gradient of log prior
+    log_prior_grad = -theta/sigma2;
+    
+    % Compute h(theta) = log p(y|theta) + log p(theta). Must be a scalar
+    h_func = llh + log_prior;
+    
+    % Compute gradient of the h(theta)
+    h_func_grad = llh_grad + log_prior_grad;
+
+    % h_func_grad must be a Dx1 column
+    h_func_grad = reshape(h_func_grad,length(h_func_grad),1);
+end    
+```
+
+**Note:** The 
 
 ---
 

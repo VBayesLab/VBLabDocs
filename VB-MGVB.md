@@ -9,10 +9,10 @@ permalink: /gvb/mgvb
 # **MGVB**
 {: .fs-8 }
 
-Run the Manifold Gaussian VB (MGVB) method .
+Fit VBLab supported or custom models using the Manifold GVB method
 {: .fs-6 .fw-300 }
 
-[Tutorial](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/VBLab){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial](https://arxiv.org/abs/1908.03097){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/VB/MGVB.m){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

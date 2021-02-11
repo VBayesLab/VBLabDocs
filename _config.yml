@@ -44,7 +44,7 @@ mathjax: true
 # Aux links for the upper right navigation
 aux_links:
   "VBLab on GitHub":
-    - "//github.com/VBayesLab/Tutorial-on-VB"
+    - "//github.com/VBayesLab/VBLab"
 
 # Enable or disable heading anchors
 heading_anchors: true

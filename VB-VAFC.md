@@ -9,10 +9,10 @@ permalink: /gvb/vafc
 # **VAFC**
 {: .fs-8}
 
-Run the VAFC method.
+Fit VBLab supported or custom models using the VAFC method
 {: .fs-6 .fw-300 }
 
-[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB-VAFC.md%}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub](https://github.com/VBayesLab/VBLab){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Tutorial]({{site.baseurl}}{% link Tutorial-FFVB-VAFC.md%}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [GitHub code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/VB/VAFC.m){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

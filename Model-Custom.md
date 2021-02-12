@@ -144,9 +144,6 @@ classdef CustomModel
     methods
         % Constructor. This will be automatically called when users create a CustomModel object
         function obj = CustomModel(inputArg1,inputArg2)
-            %RECH Construct an instance of this class
-            %   Detailed explanation goes here
-            obj.Property1 = inputArg1 + inputArg2;
         end
         
         % Function to compute gradient of h_theta and h_theta
@@ -156,7 +153,7 @@ classdef CustomModel
 end
 ```
 
-### Example: Define a Linear Regression model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple .float-right}
+### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
 
 ---

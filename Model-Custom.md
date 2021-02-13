@@ -128,7 +128,7 @@ end
 ## Define custom models as Matlab Class Objects
 {: #class-model}
 
-For complicated models, it is more efficient to define the models as Matlab classes. The model-specific information can be stored in classes' properties and methods. The following template is suggested to define the custom models as classes: 
+For complicated models, it is more efficient to define the models as Matlab classes as the model-specific information can be conveniently stored in classes' properties and methods. The following template is the minimum requirement to define the custom models as Matlab classes: 
 
 ```m
 classdef CustomModel
@@ -136,7 +136,7 @@ classdef CustomModel
     % Define model-specific properties
     properties
         ModelName      % Model name 
-        NumParam       % Number of parameters
+        NumParams      % Number of parameters
         Post           % Struct to store training results (maybe not used)   
     end
     
@@ -144,6 +144,9 @@ classdef CustomModel
     methods
         % Constructor. This will be automatically called when users create a CustomModel object
         function obj = CustomModel(inputArg1,inputArg2)
+            % Set value for ModelName and NumParams
+            ModelName = ...
+            NumParams = ...
         end
         
         % Function to compute gradient of h_theta and h_theta
@@ -151,6 +154,17 @@ classdef CustomModel
         end  
     end
 end
+```
+The two following properties have to be defined and assigned values within the constructor. 
+
+|:-----|:------|:-------|
+|`ModelName` | string | Name of the custom model  |
+|`NumParams` | Integer| Number of model parameters| 
+
+Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), 
+
+```m
+[grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
 
 ### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple .float-right}

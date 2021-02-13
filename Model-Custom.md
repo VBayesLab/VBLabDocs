@@ -161,6 +161,9 @@ The two following properties have to be defined and assigned values within the c
 |`ModelName` | string | Name of the custom model  |
 |`NumParams` | Integer| Number of model parameters| 
 
+In general, the <samp>hFunctionGrad()</samp> method is defined in the same way and play the same role as the custom function discussed in the previous section. However, there are two main differences between two approaches:
+- First, 
+
 Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), 
 
 ```m

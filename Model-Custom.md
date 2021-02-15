@@ -16,10 +16,16 @@ VBLab provides several ways for custom-built models that work with VB algorithm 
 
 ## Define custom models as function handles
 {: #custom-handler}
-The supported VB algorithms take statistical models and training data as inputs in order to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. These model- and data-specific information can be provided to the VB algorithms as a function handle with some rules. The following template is suggested when users define their statistical models as functions to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms.
+The supported VB algorithms take statistical models and training data as inputs in order to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. These model- and data-specific information can be provided to the VB algorithms as a function handle with some rules. The following template is suggested when users define their statistical models as functions to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms in each iteration of the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms.
 
 ```m
 function [h_func_grad,h_func] = grad_h_func(data,theta,setting)
+end
+```
+For the [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) algorithm, users only need to define the function to compute the $h(\theta)$ term and the following template is suggested 
+```m
+function h_func = h_func(data,theta,setting)
 end
 ```
 It is not required to use exactly same name for function and input/output arguments but the input and outputs arguments have to be defined exactly in the same order. Descriptions for input and output arguments are as follow
@@ -39,7 +45,8 @@ It is not required to use exactly same name for function and input/output argume
 ### Example: Define a Logistic Regression model as a function handle. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_Logistics_Function_Handle.m){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-handler}
 
-This example shows how to define a Logistics Regression model as function handles to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
+This example shows how to define a Logistics Regression model as function handles to run with the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
 
 First, load the [LabourForce](/VBLabDocs/datasets/#labour-force) data as a matrix. The last column is the response variable. 
 ```m
@@ -79,7 +86,7 @@ The output `Post` is a struct storing information about estimation results and t
 We then define the function `grad_h_func_logistics` to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).
 
 ```m
-%% Define gradient of h function for Logistic regression 
+% Define gradient of h function for Logistic regression 
 % theta: Dx1 array
 % h_func: scalar
 % h_func_grad: Dx1 array
@@ -149,7 +156,13 @@ classdef CustomModel
         end
         
         % Function to compute gradient of h_theta and h_theta
+        % For CGVB, VAFC, NAGVAC
         function [h_func_grad, h_func] = hFunctionGrad(obj,data,theta)
+        end  
+
+        % Function to compute h_theta
+        % For MGVB
+        function h_func = hFunction(obj,data,theta)
         end  
     end
 end
@@ -160,9 +173,11 @@ The two following properties have to be defined and assigned values within the c
 |`ModelName` | string | Name of the custom model  |
 |`NumParams` | Integer| Number of model parameters| 
 
-In general, the <samp>hFunctionGrad()</samp> method is defined in the same way and play the same role as the custom function discussed in the previous section. However, there are two main differences between two approaches:
-- First, 
-
+In general, the <samp>hFunctionGrad()</samp> and <samp>hFunction()</samp> methods are defined in the same way and play the same role as the corresponding functions discussed in the previous section. However, there are two main differences between two approaches:
+- First, users have to name the methods to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms exactly as <samp>hFunctionGrad</samp> and <samp>hFunction</samp> while the class name and hence the class constructor name can be defined arbitrarily.
+    - The VB classes such as [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}), [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}), [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) then will call the <samp>hFunctionGrad</samp> method of the provided model object in each VB iteration to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. 
+    - Similarly, the [MGVB]({{site.baseurl}}{%link VB-MGVB.md%}) class will call the <samp>hFunction</samp> method of the provided model object in each VB iteration to compute the $h(\theta)$ term.
+- Second, 
 Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), 
 
 ```m
@@ -184,6 +199,8 @@ classdef VAR1
         NumParams      % Number of parameters
         Post           % Struct to store training results   
         Prior          % Struct to store priors information
+        ParamIdx       % Indexes of model parameters in the vector of variational parameters
+        Gamma          % Fix covarian matrix
     end
     
     % Define model-specific methods
@@ -191,14 +208,60 @@ classdef VAR1
         % Constructor. This will be automatically called when users create a CustomModel object
         function obj = VAR1(NumSeries,NumLags)
             % Set value for ModelName and NumParams
-            ModelName = 'VAR1';
-            NumParams = NumSeries + NumSeries^2; 
-            Prior.mu  = 0;
-            Prior.var = 1;
+            ModelName  = 'VAR1';
+            NumParams  = NumSeries + NumSeries^2; 
+            Prior.mu   = 0;
+            Prior.var  = 1;
+            ParamIdx.c = 1:NumSeries;
+            ParamIdx.A = NumSeries+1:NumParams;
+            Gamma      =  0.1*eye(m);
         end
         
         % Function to compute gradient of h_theta and h_theta
         function [h_func_grad, h_func] = hFunctionGrad(obj,data,theta)
+            % Extract size of data
+            [m,T] = size(y);
+                
+            % Extract model settings
+            pri_mu = setting.prior.mu; 
+            pri_var = setting.prior.var;
+            d = setting.num_params;
+            idx = setting.idx;
+            Gamma = setting.Gamma;
+            Gamma_inv = Gamma^(-1);
+
+            % Extract params from theta
+            c = theta(idx.c);                               % c is a column
+            A = reshape(theta(idx.A),length(c),length(c));  % A is a matrix
+                
+            % Log prior
+            log_prior = -0.5*d*log(2*pi) - 0.5*log(pri_var) - (theta-pri_mu)'*(theta-pri_mu)/(2*pri_var);
+                
+            % Log likelihood
+            log_llh = 0;
+            for t=2:T
+                log_llh = log_llh -0.5*(y(:,t) - A*y(:,t-1)-c)' * Gamma_inv * (y(:,t) - A*y(:,t-1)-c);
+            end  
+            log_llh = log_llh - 0.5*m*(T-1)*log(2*pi) - 0.5*(T-1)*log(det(Gamma));
+
+            % Compute h_theta
+            h_theta = log_prior + log_llh;
+                
+            % Gradient log_prior
+            grad_log_prior = -theta/pri_var;
+                
+            % Gradient log_llh;
+            grad_llh_c = 0;
+            grad_llh_A = 0;
+            for t=2:T
+                grad_llh_c = grad_llh_c + Gamma_inv*(y(:,t) - A*y(:,t-1)-c);
+                grad_llh_A = grad_llh_A + kron(y(:,t-1),Gamma_inv*(y(:,t) - A*y(:,t-1)-c));
+            end
+                
+            grad_llh = [grad_llh_c;grad_llh_A(:)];
+                
+            % Compute Gradient of h_theta
+            grad_h_theta = grad_log_prior + grad_llh;
         end  
     end
 end

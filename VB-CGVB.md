@@ -29,7 +29,7 @@ Post = CGVB(Func,data,Name,Value)
 ## Description
 `EstMdl = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
-`Post = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handler, and data `data`.
+`Post = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handle, and data `data`.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -39,11 +39,13 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
-#### Data type: VBLab model object | function handler
+#### Data type: VBLab model object | custome model object | function handle
 <br>
-The statistical models containing unknown parameters, specified as:
+The statistical models containing unknown parameters, can be specified as:
+
 - [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](http://localhost:4000/VBLabDocs/model/custom/#class-model)
 </div>
 
 <!--data-->

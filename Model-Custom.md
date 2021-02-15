@@ -14,9 +14,9 @@ VBLab provides several ways for custom-built models that work with VB algorithm 
 
 ---
 
-## Define custom models as function handlers
+## Define custom models as function handles
 {: #custom-handler}
-The supported VB algorithms take statistical models and training data as inputs in order to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. These model- and data-specific information can be provided to the VB algorithms as a function handler with some rules. The following template is suggested when users define their statistical models as functions to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms.
+The supported VB algorithms take statistical models and training data as inputs in order to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. These model- and data-specific information can be provided to the VB algorithms as a function handle with some rules. The following template is suggested when users define their statistical models as functions to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms.
 
 ```m
 function [h_func_grad,h_func] = grad_h_func(data,theta,setting)
@@ -33,13 +33,13 @@ It is not required to use to same name for function and input/output arguments b
 |`h_func`| &bull; $h(\theta) = \text{log} p(y \mid \theta) + \text{log} p(\theta)$. <br> &bull; Must be a scalar. |
 
 **Note:** 
-- If the statistical models are defined as function handlers, users have to specify the number of model parameters explicitly using the `'NumParams'` argument of VB classes.
+- If the statistical models are defined as function handles, users have to specify the number of model parameters explicitly using the `'NumParams'` argument of VB classes.
 - This approach is more suitable for simple models. For complicated models, it is advisable to define custom models as Matlab classes, which will be discussed in the next section.  
 
-### Example: Define a Logistic Regression model as a function handler. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple  .float-right}
+### Example: Define a Logistic Regression model as a function handle. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-handler}
 
-This example shows how to define a Logistics Regression model as function handlers to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
+This example shows how to define a Logistics Regression model as function handles to with the VB algorithm supported by the VBLab package. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
 
 First, load the [LabourForce](/VBLabDocs/datasets/#labour-force) data as a matrix. The last column is the response variable. 
 ```m
@@ -54,11 +54,11 @@ Prepare some variables needed to run the VB algorithm and to define the custom m
 n_features = size(labour,2)-1;
 setting.Prior = [0,50];
 ```
-In this example, we use the CGVB technique to fit the custom model on the <samp>labour</samp> data. To run the CGVB technique with the custom model, we need to specify the handler of the function defining the custom model as the first input argument. We also need to explicitly provide the number of model parameters for the `'NumParams'` argument. Finally, we need to pass additional information, e.g. priors, stored in the struct `setting` to the `'Setting'` argument. This `setting` variable then will be passed to the custom function as the input argument.
+In this example, we use the CGVB technique to fit the custom model on the <samp>labour</samp> data. To run the CGVB technique with the custom model, we need to specify the handle of the function defining the custom model as the first input argument. We also need to explicitly provide the number of model parameters for the `'NumParams'` argument. Finally, we need to pass additional information, e.g. priors, stored in the struct `setting` to the `'Setting'` argument. This `setting` variable then will be passed to the custom function as the input argument.
 
 ```m
 % Run CGVB to obtain VB approximation of the posterior distribution
-Post = CGVB(@grad_h_func_logistics,...  % Function handler to define the custom model
+Post = CGVB(@grad_h_func_logistics,...  % Function handle to define the custom model
             labour,...                  % Training data    
             'NumParams',num_feature,... % Number of model parameters
             'Setting',setting,...       % Additional setting of the custom models
@@ -170,7 +170,39 @@ Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link 
 [grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
 
-### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/tree/main/VBLab){: .fs-4 .btn .btn-purple .float-right}
+### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Class.m){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
+
+The Vector Auto-Regressive (VAR) . This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. For the simplicity, we use standard normal distribution for the priors. 
+
+First, 
+```m
+classdef VAR1
+    
+    % Define model-specific properties
+    properties
+        ModelName      % Model name 
+        NumParams      % Number of parameters
+        Post           % Struct to store training results   
+        Prior          % Struct to store priors information
+    end
+    
+    % Define model-specific methods
+    methods
+        % Constructor. This will be automatically called when users create a CustomModel object
+        function obj = VAR1(NumSeries,NumLags)
+            % Set value for ModelName and NumParams
+            ModelName = 'VAR1';
+            NumParams = NumSeries + NumSeries^2; 
+            Prior.mu  = 0;
+            Prior.var = 1;
+        end
+        
+        % Function to compute gradient of h_theta and h_theta
+        function [h_func_grad, h_func] = hFunctionGrad(obj,data,theta)
+        end  
+    end
+end
+```
 
 ---

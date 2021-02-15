@@ -179,7 +179,7 @@ Fit a RECH model to the SP500 index data using [MGVB]({{site.baseurl}}{% link VB
 Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
-% Load the SP500 weekly return data
+% Load the SP500 daily return data
 sp500 = reaDdata('RealizedLibrary',...
                  'Index','SP500',...
                  'Length',1000);

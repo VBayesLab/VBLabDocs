@@ -6,7 +6,7 @@ nav_order: 1
 permalink: /example/cgvb-logistic-3-4
 ---
 
-# **CGVB for Bayesian Logistic Regression model**
+# **CGVB for Bayesian Logistic Regression model** 
 This example implements the [example 3.4](/VBLabDocs/tutorial/example#example3-4) shown in the VB tutorial paper.  
 
 ---

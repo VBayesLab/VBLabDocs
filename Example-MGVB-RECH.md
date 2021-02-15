@@ -6,10 +6,26 @@ nav_order: 3
 permalink: /example/mgvb-rech
 ---
 
-# **MGVB for RECH**  
+# **MGVB for RECH**   [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/MGVB_RECH.m){: .fs-4 .btn .btn-purple .float-right}
 This example showing how to fit a RECH model of Nguyen et al. (2020) on SP500 return data using the MGVB technique of Tran et al. (2020).
 
 ---
+
+Let $y=\{y_t,\ t=1,...,T\}$ be a time series of financial asset returns and $\mathcal F_t$ be the $\sigma$-field of the information up to time $t$. 
+Volatility, defined as the conditional variance $\sigma_t^2:=\text{Var}(y_t|\mathcal F_{t-1})$, is of high interest in the financial sector.
+
+The conditional variance in the RECH models is the sum of two components: the recurrent component modeled by an RNN, and the garch component modeled by a GARCH-type structure. 
+For example, by using the Simple Recurrent Network (SRN) for the recurrent component $\omega_t$ and the standard GARCH(1,1) for the garch component, they obtain the SRN-GARCH specification of the RECH models as:
+
+$$\begin{eqnarray}
+	y_t &=& \sigma_t\epsilon_t,\;\;\epsilon_t\stackrel{iid}{\sim}\mathcal{N}(0,1),\;\;t=1,2,...,T  \\
+	\sigma_t^2 &=& \omega_t+ \alpha y_{t-1}^2 + \beta \sigma_{t-1}^2,\;\;t=2,...,T,\;\; \sigma^2_1=\sigma^2_0  \\
+	\omega_t &=& \beta_0+\beta_1 h_t,\;\; t=2,...,T,\\
+	h_t &=& \phi(v x_t  + wh_{t-1}+b),\;\;t=2,...,T,\;\; \text{with} \;\; h_1 \equiv 0;
+\end{eqnarray}$$
+
+Nguyen et al. (2020) suggest $x_t=(\omega_{t-1},y_{t-1},\sigma^2_{t-1})^\top$. 
+The SRN-GARCH model has 7 parameters: $\theta = (\alpha,\beta,\beta_0,\beta_1,v,w,b)$. 
 
 We model the financial volatility using the SRN-GARCH specification of RECH models. First, load the SP500 daily returns together with realized measures from the [RealizedLibrary](/VBLabDocs/datasets/#realized-library) data using the <samp>readData()</samp> function. To access the model performance, we use the realized measure `rk_parzen` as the proxy to the volatility. See the [list of available realized measures](/VBLabDocs/datasets/#list-assets).
 
@@ -110,3 +126,5 @@ ylim([0,6])
 
 ## Reference
 [1] Nguyen, T.-N., Tran, M.-N., and Kohn, R. (2020). Recurrent conditional heteroskedasticity. arXiv:2010.13061. [Read the paper](https://arxiv.org/abs/2010.13061)
+
+[2] Tran, M.-N., Nguyen, D. H., and Nguyen, D. (2020). Variational Bayes on manifolds. Technical report. arXiv:1908.03097.[Read the paper](https://arxiv.org/abs/1908.03097)

@@ -6,12 +6,11 @@ nav_order: 4
 permalink: /example/cgvb-var1-function-handle
 ---
 
-# **Define a VAR(1) model as a function handle** 
-{: #example-handler-var1}
+## **Define a VAR(1) model as a function handle** [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Function_Handle.m){: .fs-4 .btn .btn-purple .float-right}
 
-This is example shows how to define a VAR(1) model as a function handle to work with VBLab supported VB algorithms. 
+{: #example-handler-var1} 
 
-[Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Function_Handle.m){: .fs-4 .btn .btn-purple}
+This is example shows how to define a VAR(1) model as a function handle to work with VBLab supported VB algorithms.
 
 ---
 

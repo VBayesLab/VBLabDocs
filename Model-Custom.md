@@ -177,9 +177,9 @@ In general, the <samp>hFunctionGrad()</samp> and <samp>hFunction()</samp> method
 - First, users have to name the methods to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms exactly as <samp>hFunctionGrad</samp> and <samp>hFunction</samp> while the class name and hence the class constructor name can be defined arbitrarily.
     - The VB classes such as [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}), [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}), [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) then will call the <samp>hFunctionGrad</samp> method of the provided model object in each VB iteration to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. 
     - Similarly, the [MGVB]({{site.baseurl}}{%link VB-MGVB.md%}) class will call the <samp>hFunction</samp> method of the provided model object in each VB iteration to compute the $h(\theta)$ term.
-- Second, 
-Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), 
+- Second, users can store additional information about the model in class properties and methods and hence don't need to use a struct to do the same task as discussed in the previous section. 
 
+For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) and [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) will run the following code to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of the provided `model`.  
 ```m
 [grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
@@ -187,7 +187,8 @@ Then within the VB iterations of VB classes, e.g. [CGVB]({{site.baseurl}}{%link 
 ### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Class.m){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
 
-The Vector Auto-Regressive (VAR) . This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. For the simplicity, we use standard normal distribution for the priors. 
+This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 
+For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix as discussed in the example of how to define a VAR(1) model. 
 
 First, . See source code of the VAR1 class [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
 ```m

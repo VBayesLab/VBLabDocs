@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CGVB for Bayesian Logistic Regression
+title: CGVB for Bayesian Logistic Regression model object
 parent: Code examples
 nav_order: 1
 permalink: /example/cgvb-logistic-3-4

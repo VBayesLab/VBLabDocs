@@ -72,7 +72,6 @@ Post = CGVB(@grad_h_func_logistics,...  % Function handle to define the custom m
             'WindowSize',10,...         % Smoothing window for lowerbound
             'GradientMax',10,...        % For gradient clipping
             'LBPlot',true);             % Plot the lowerbound when finish
-
 ```
 The output `Post` is a struct storing information about estimation results and the VB algorithm. See the output of [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
 [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) for more details.  
@@ -144,9 +143,9 @@ h(\theta)&=&\log p(\theta)+\log p(y|\theta)\\
 &=&-\frac{d}{2}\log(2\pi)-\frac{d}{2}\log(\sigma_0^2)-\frac{\theta^\top\theta}{2\sigma_0^2}-\frac{m(T-1)}{2}\log(2\pi)-\frac{T-1}{2}\log|\Gamma|\\
 &-&\frac{1}{2} \sum_{t=2}^{T} \left((y_t-Ay_{t-1}-c)^\top \Gamma^{-1} (y_t-A y_{t-1}-c)\right). \end{eqnarray}$$ 
 
-Putting together, we have that
+and the $\nabla_\theta h(\theta)$ term can be written as
 
-$$\begin{eqnarray}
+$$\begin{eqnarray}\tag{2}\label{eqn:var1-2}
 \nabla_\theta h(\theta) = \begin{pmatrix}
 \nabla_c h(\theta)\\
 \nabla_{\text{vec}(A)}h(\theta)
@@ -155,11 +154,13 @@ $$\begin{eqnarray}
 
 with
 
-$$\nabla_c h(\theta) = -\frac{1}{\sigma_0^2}c+\Gamma^{-1}\big(\sum_{t=2}^T (y_t-A y_{t-1}-c)\big) $$
+$$\tag{3}\label{eqn:var1-3}\nabla_c h(\theta) = -\frac{1}{\sigma_0^2}c+\Gamma^{-1}\big(\sum_{t=2}^T (y_t-A y_{t-1}-c)\big) $$
 
 and
 
-$$\nabla_{\text{vec}(A)}h(\theta) = -\frac{1}{\sigma_0^2}\vec(A)+\sum_{t=2}^T y_{t-1}\otimes \big(\Gamma^{-1} (y_t-A y_{t-1}-c)\big).$$
+$$\tag{4}\label{eqn:var1-4}\nabla_{\text{vec}(A)}h(\theta) = -\frac{1}{\sigma_0^2}\vec(A)+\sum_{t=2}^T y_{t-1}\otimes \big(\Gamma^{-1} (y_t-A y_{t-1}-c)\big).$$
+
+Given the equations to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms of the VAR(1) model, we will define a function, following the discussed template, to define the VAR(1) model that can work with VBLab supported VB algorithms. 
 
 ---
 

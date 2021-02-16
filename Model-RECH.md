@@ -155,14 +155,12 @@ Notation:
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
-### Object Functions
-Use the object functions to fit the model, predict responses, and to visualize the prediction.
+### Object Methods
+Use the object methods to initialize model parameters, predict responses, and to visualize the prediction.
 
-|[<span style="font-family:monospace">vbayesFit</span>]({{site.baseurl}}{% link Model-Predict.md %})| Fit a deepGLM model|
 |[<span style="font-family:monospace">vbayesInit</span>]({{site.baseurl}}{% link Model-Plot.md %})| Initialization method of model parameters|
 |[<span style="font-family:monospace">vbayesPredict</span>]({{site.baseurl}}{% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
 |[<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesSimulate</span>]({{site.baseurl}}{% link Model-Plot.md %})| Simulate data from a RECH process |
 
 </div>
 
@@ -213,19 +211,6 @@ Run MGVB to obtain VB approximation of the posterior distribution of model param
                   'GradientMax',100,...
                   'WindowSize',30);
 ```
-Alternatively, we can also run CGVB by calling the [<span style="font-family:monospace">vbayesFit()</span>]({{site.baseurl}}{% link Model-Fit.md %}) method of `mdl` with the same training setting
-```m
-Estmdl = vbayesFit(mdl,sp500_in,...
-                   'FitMethod','MGVB',...
-                   'NumSample',100,...
-                   'LearningRate',0.01,...
-                   'GradWeight',0.4,...
-                   'MaxPatience',50,...
-                   'MaxIter',2500,...
-                   'GradientMax',100,...
-                   'WindowSize',30);       
-```
-
 Given the fitted RECH model `Estmdl`, we can make one-step-ahead forecast given out-of-sample data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the MSE and PPS as the predictive scores.    
 ```matlab
 % Make prediction with new data and compute prediction scores in PPS and MCR

@@ -188,9 +188,7 @@ For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}),
 {: #example-class}
 
 This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 
-For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix as discussed in the example of how to define a VAR(1) model. 
-
-First, . See source code of the VAR1 class [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
+For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix. See source code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
 ```m
 classdef VAR1
     

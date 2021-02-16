@@ -188,7 +188,9 @@ For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}),
 {: #example-class}
 
 This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 
-For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix. See source code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
+For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix. 
+
+First, we defined the <samp>VAR1</samp> class in a separated script named *VAR1.m*. See the Matlab code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
 ```m
 classdef VAR1
     
@@ -205,7 +207,7 @@ classdef VAR1
     % Define model-specific methods
     methods
         % Constructor. This will be automatically called when users create a CustomModel object
-        function obj = VAR1(NumSeries,NumLags)
+        function obj = VAR1(NumSeries,NumObs)
             % Set value for ModelName and NumParams
             ModelName  = 'VAR1';
             NumParams  = NumSeries + NumSeries^2; 
@@ -265,5 +267,58 @@ classdef VAR1
     end
 end
 ```
+
+Given the class <samp>VAR1</samp>, we can run an example of fit the VAR(1) model on a simulation data using CGVB algorithm as following
+```m
+% Setting
+m = 2;   % Number of time series
+T = 100; % Number of observations
+
+% Generate simulation data
+y = randn(m,T);
+
+% Define a VAR(1) model object
+Mdl = VAR1(m,T)
+
+% Run CGVB algorithm to estimate the model
+Post_CGVB_VAR = CGVB(Mdl,y,...
+                     'LearningRate',0.002,...       % Learning rate
+                     'NumSample',50,...             % Number of samples to estimate gradient of lowerbound
+                     'MaxPatience',20,...           % For Early stopping
+                     'MaxIter',5000,...             % Maximum number of iterations
+                     'InitMethod','Random',...      % Randomly initialize parameters using 
+                     'GradWeight1',0.9,...          % Momentum 1
+                     'GradWeight2',0.9,...          % Momentum 2
+                     'WindowSize',10,...            % Smoothing window for lowerbound
+                     'GradientMax',10,...           % For gradient clipping
+                     'LBPlot',false); 
+```
+We can manually plot the variational distribution together with the lowerbound. The convergence of the lowerbound shows that the CGVB works properly in this example.
+```m
+% Plot varitional distribution and of model parameters
+figure
+% Extract variation mean and variance
+mu_vb     = Post_CGVB_VAR.Post.mu;
+sigma2_vb = Post_CGVB_VAR.Post.sigma2;
+
+% Plot the variational distribution of each parameter
+for i=1:mdl.num_params
+    subplot(2,4,i)
+    vbayesPlot('Density',...
+               'Distribution',{'Normal',[mu_vb(i),sigma2_vb(i)]})
+    grid on
+    title(['\theta_',num2str(i)])
+    set(gca,'FontSize',15)
+end
+
+% Plot the smoothed lower bound
+subplot(2,4,7)
+plot(Post_CGVB_VAR.Post.LB_smooth,'LineWidth',2)
+grid on
+title('Lower bound')
+set(gca,'FontSize',15)
+```
+
+<img src="/VBLabDocs/assets/images/Example-VAR1.jpg" class="center"/>
 
 ---

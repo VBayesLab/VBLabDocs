@@ -58,7 +58,7 @@ m = 2;   % Number of time series
 T = 100; % Number of observations
 
 % Generate data
-y = randn(2,100);
+y = randn(m,T);
 ```
 Then, we prepare additional information needed to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms of the VAR(1) model. These information will be stored in a struct named `setting`. The additional information include priors, number of model parameters, indexes of model parameters in the vector or variational mean and the fix values of the covariance matrix $\Gamma$.
 ```m

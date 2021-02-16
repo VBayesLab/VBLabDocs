@@ -21,7 +21,7 @@ data = readData(DataName,Name,Value)
 ```
 ---
 ## Description
-`PostVB = CGVB(Mdl,data,Name,Value)` returns the Bayesian approximation `PostVB` to provided model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`data = readData(Mdl,data,Name,Value)` returns the Bayesian approximation `PostVB` to provided model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

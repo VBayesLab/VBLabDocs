@@ -22,9 +22,7 @@ Pred = vbayesPredict(Mdl,Name,Value)
 ```
 ---
 ## Description
-`Pred = vbayesPredict(Mdl,Name,Value)` returns [DeepGLM model object](#deepglm-object) `mdl` given neural network structure `Network`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify the activation function or distribution of the output. 
-
-đsdsd
+`Pred = vbayesPredict(Mdl,Name,Value)` returns prediction result `Pred` given a fitted model `Mdl`. `Name` and `Value` specifie additional options using one or more name-value pair arguments. For example, users can specify if the true responses are provided to compute predictive scores. The fitted model `Mdl` must have a method named `vbayesPredict` to make predictions.  
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

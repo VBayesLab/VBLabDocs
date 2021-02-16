@@ -29,17 +29,16 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 ---
 
 ## Input Arguments
-<!--Network-->
+<!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Network</span> - Neuron Network structure of the deepGLM model </header>
-#### Data type: 1D Array
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
+#### Data type: VBLab model object | custome model object | function handle
 <br>
-Neuron Network structure of the deepGLM model. `[NumFeatures, L1,...,LM]`:
-<dl>
-<dt><code>Numfeatures</code></dt> <dd>Number of features (columns) of training data.</dd>
-<dt><code>L1,...,LM</code></dt> <dd>Number of hidden nodes in each hidden layer. For example, <code>L1</code> is the number of hidden nodes in the first hidden layer and so on. </dd>
-</dl>
-**Note:** The output layer has always only 1 node.
+The statistical models containing unknown parameters, can be specified as:
+
+- [VBLab model object](/VBLabDocs/model#vblab-model).
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](http://localhost:4000/VBLabDocs/model/custom/#class-model)
 </div>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">

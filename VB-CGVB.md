@@ -520,11 +520,7 @@ Estimation results, specified as a structure with these fields:
 {: #cgvb-object}
 #### Data type: VBLab model object| Custom model Object
 <br>
-If the model object `Mdl` is provided, the output is the same model object whose the property `Post` 
-
-- [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
-- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](http://localhost:4000/VBLabDocs/model/custom/#class-model)
+If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
 
 </div>
 

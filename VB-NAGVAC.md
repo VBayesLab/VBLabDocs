@@ -520,4 +520,4 @@ If the model object `Mdl` is provided, the output `EstMdl` is the model object `
 
 ## See Also
 {: #see-also}
-[VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})
+[VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) $\mid$ [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})

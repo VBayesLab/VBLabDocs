@@ -147,7 +147,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -504,8 +504,8 @@ Estimation results, specified as a structure with these fields:
 | LB_smooth | Smoothed Lower Bound over iterations |
 | lambda | Estimation of variational parameters | 
 | mu | Estimation of variational mean | 
-| B | The factor loading matrix | 
-| C | The  diagonal matrix| 
+| B | The factor loading matrix component of the variational covariance matrix| 
+| C | The diagonal matrix component of the variational covariance matrix| 
 | Sigma | Estimation of the variational covariance matrix | 
 | sigma2 | Diagonal of the variational covariance matrix   | 
 

@@ -78,7 +78,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
 |[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
-|[`'GradWeight'`](#GradWeight)|`0.9`| $\beta_1$ | Adaptive learning weight|
+|[`'GradWeight'`](#GradWeight)|`0.9`| $\alpha_m$ | Momentum weight|
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
@@ -121,36 +121,20 @@ By default, `'BatchSize'` is set to `None` indicating that all training data is 
 **Example:** `'BatchSize',1000`
 </div>
 
-<!--GradWeight1-->
+<!--GradWeight-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Adaptive learning weight 1</h3></header>
-{: #GradWeight1}
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight'</span> - Momentum weight</h3></header>
+{: #GradWeight}
 
 #### Data Type: Double
 <br>
-The adaptive learning rate $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
+The momentum weight $\alpha_m$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9), 
 
 Must be a number between $0$ and $1$.
 
 **Default:** `0.9`
 
-**Example:** `'GradWeight1',0.95`
-</div>
-
-<!--GradWeight2-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight2'</span> - Adaptive learning weight 2</h3></header>
-{: #GradWeight2}
-
-#### Data Type: Double
-<br>
-The adaptive learning rate $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
-
-Must be a number between $0$ and $1$.
-
-**Default:** `0.9`
-
-**Example:** `'GradWeight2',0.95`
+**Example:** `'GradWeight',0.95`
 </div>
 
 <!--GradientMax-->
@@ -160,7 +144,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -223,7 +207,7 @@ Flag to plot the smoothed lowerbound over iterations to quicly check the converg
 
 #### Data Type: Double | Between 0 and 1
 <br>
-The fixed learning rate $\epsilon_0$ to update the variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
+The fixed learning rate $\epsilon_0$ to update the variational parameters in each VB iteration in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9).
 
 Must be a number between $0$ and $1$.
 
@@ -270,7 +254,7 @@ algorithm to scan entire training data.
 
 #### Data Type: Integer | Positive
 <br>
-Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion. This is denoted as $P$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion. This is denoted as $P$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
 
 **Default:** `20`
 
@@ -284,7 +268,7 @@ Number of consecutive times that the validation loss, or lowerbound, is allowed 
 
 #### Data Type: Integer | Positive
 <br>
-Number of Monte Carlo samples needed to estimate the gradient of the lower bound. This is denoted as $S$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Number of Monte Carlo samples needed to estimate the gradient of the lower bound. This is denoted as $S$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
 
 **Default:** `50`
 
@@ -376,7 +360,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
@@ -480,7 +464,7 @@ By default, the index of the current iteration and lowerbound are shown in every
 
 #### Data Type: Integer | Positive
 <br>
-Size of moving average window that used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Size of moving average window that used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
 
 **Default:** `50`
 
@@ -498,19 +482,26 @@ Size of moving average window that used to smooth the lowerbound. Denoted as $t_
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
 #### Data type: struct
 <br>
-The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+Estimation results, specified as a structure with these fields:
+
+| LB | Estimation of the Lower Bound over iterations |
+| LB_smooth | Smoothed Lower Bound over iterations |
+| lambda | Estimation of variational parameters | 
+| mu | Estimation of variational mean | 
+| b | The vector factor loading vector component of the variational covariance matrix| 
+| C | The diagonal matrix component of the variational covariance matrix| 
+| Sigma | Estimation of the variational covariance matrix | 
+| sigma2 | Diagonal of the variational covariance matrix   | 
+
 </div>
 
 <!--EstMdl-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
 {: #cgvb-object}
-
 #### Data type: VBLab model object| Custom model Object
 <br>
-
+If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
 
 </div>
 
@@ -518,8 +509,7 @@ The statistical models containing unknown parameters, specified as:
 
 ## Examples
 
-1. [CGVB for Logistic Regression model defined as a LogisticRegression object]({{site.baseurl}}{% link Example-CGVB-Bayesian-Logistics-Regression.md%}) 
-2. [CGVB for Logistic Regression model defined as a function handler](/VBLabDocs/model/custom/#example-handler)
+1. [NAGVAC for DeepGLM models]({{site.baseurl}}{% link Example-NAGVAC-DeepGLM.md%}) 
 
 ---
 

@@ -494,17 +494,20 @@ Size of moving average window that used to smooth the lowerbound. Denoted as $t_
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
 #### Data type: struct
 <br>
-The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+The struct storing estimation results. 
 </div>
 
 <!--EstMdl-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
 {: #cgvb-object}
-
 #### Data type: VBLab model object| Custom model Object
+<br>
+The statistical models containing unknown parameters, specified as:
+- [VBLab model object](/VBLabDocs/model/#vblab-model).
+- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+
+
 <br>
 
 

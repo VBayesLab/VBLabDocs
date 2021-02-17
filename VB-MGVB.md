@@ -447,7 +447,7 @@ If the model object `Mdl` is provided, the output `EstMdl` is the model object `
 ---
 
 ## Reference
-[2] Tran, M.-N., Nguyen, D. H., and Nguyen, D. (2020). Variational Bayes on manifolds. Technical report. arXiv:1908.03097.[Read the paper](https://arxiv.org/abs/1908.03097)
+[1] Tran, M.-N., Nguyen, D. H., and Nguyen, D. (2020). Variational Bayes on manifolds. Technical report. arXiv:1908.03097.[Read the paper](https://arxiv.org/abs/1908.03097)
 
 ---
 

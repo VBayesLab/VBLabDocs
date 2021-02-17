@@ -514,7 +514,9 @@ If the model object `Mdl` is provided, the output `EstMdl` is the model object `
 ---
 
 ## Reference
+
 [1] Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). Bayesian deep net GLM and GLMM. *Journal of Computational and Graphical Statistics*, 29(1):97-113. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747)
+
 
 ---
 

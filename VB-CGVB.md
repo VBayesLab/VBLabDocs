@@ -59,7 +59,7 @@ See [how to define custom models as function handles](/VBLabDocs/model/custom#cu
 <!--data-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">data</span> - Input data</header>
-#### Data type: table | dataset array
+#### Data type: 2D array | 1D array | table
 <br>
 The data to which the model `Mdl` or `Func` is fitted, specified as a table or matrix. 
 

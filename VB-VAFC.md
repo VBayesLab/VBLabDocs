@@ -28,7 +28,7 @@ Post = VAFC(Func,data,Name,Value)
 ## Description
 `EstMdl = VAFC(Mdl,data,Name,Value)` run the VAFC algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
-`Post = VAFC(Mdl,data,Name,Value)` run the VAFC algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handler, and data `data`.
+`Post = VAFC(Mdl,data,Name,Value)` run the VAFC algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handle, and data `data`.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -37,18 +37,28 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 ## Input Arguments
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
-#### Data type: VBLab model object | function handler
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom model objects</header>
+#### Data type: VBLab model object | custome model object
 <br>
-The statistical models containing unknown parameters, specified as:
+The statistical models containing unknown parameters, can be specified as:
+
 - [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
+</div>
+
+<!--Function handle-->
+<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Func</span> - Function handle of the input model</header>
+#### Data type: function handle
+<br>
+The statistical models containing unknown parameters, specified as a function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms.
+See [how to define custom models as function handles](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">data</span> - Input data</header>
-#### Data type: table | dataset array
+#### Data type: 2D array | 1D array | table
 <br>
 The data to which the model `Mdl` is fit, specified as a table or dataset array. 
 

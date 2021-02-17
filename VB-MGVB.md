@@ -408,9 +408,8 @@ Estimation results, specified as a structure with these fields:
 | LB_smooth | Smoothed Lower Bound over iterations |
 | lambda | Estimation of variational parameters | 
 | mu | Estimation of variational mean | 
-| L | Estimation of the lower triangular matrix of the variational covariance matrix | 
 | Sigma | Estimation of the variational covariance matrix | 
-| sigma2 | Diagonal of the variational covariance matrix   | 
+| sigma2 | Diagonal of the variational covariance matrix | 
 
 </div>
 

@@ -61,9 +61,9 @@ See [how to define custom models as function handles](/VBLabDocs/model/custom#cu
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">data</span> - Input data</header>
 #### Data type: table | dataset array
 <br>
-The data to which the model `Mdl` is fit, specified as a table or dataset array. 
+The data to which the model `Mdl` or `Func` is fitted, specified as a table or matrix. 
 
-For cross-sectional data, `CGVB` takes the last variable as the response variable and the others as the predictor variables.
+For cross-sectional data, <samp>CGVB</samp> takes the last variable as the response variable and the others as the predictor variables.
 
 For time series data, the data can be stored in a row or column 1D array. 
 </div>

@@ -38,14 +38,23 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 ## Input Arguments
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
-#### Data type: VBLab model object | custome model object | function handle
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom model objects</header>
+#### Data type: VBLab model object | custome model object
 <br>
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
 - or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 - or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](http://localhost:4000/VBLabDocs/model/custom/#class-model)
+</div>
+
+<!--Function handle-->
+<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Func</span> - Function handle of the input model</header>
+#### Data type: function handle
+<br>
+The statistical models containing unknown parameters, specified as a function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms.
+See [how to define custom models as function handles](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -494,7 +503,16 @@ Size of moving average window that used to smooth the lowerbound. Denoted as $t_
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
 #### Data type: struct
 <br>
-The struct storing estimation results. 
+Estimation results, specified as a structure with these fields:
+
+| LB | Estimation of the Lower Bound over iterations |
+| LB_smooth | Smoothed Lower Bound over iterations |
+| lambda | Estimation of variational parameters | 
+| mu | Estimation of variational mean | 
+| L | Estimation of the lower triangular matrix of the variational covariance matrix | 
+| Sigma | Estimation of the variational covariance matrix | 
+| sigma2 | Diagonal of the variational covariance matrix   | 
+
 </div>
 
 <!--EstMdl-->
@@ -503,13 +521,11 @@ The struct storing estimation results.
 {: #cgvb-object}
 #### Data type: VBLab model object| Custom model Object
 <br>
-The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+If the model object `Mdl` is provided, the output is the same model object whose the property `Post` 
 
-
-<br>
-
+- [VBLab model object](/VBLabDocs/model#vblab-model).
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](http://localhost:4000/VBLabDocs/model/custom/#class-model)
 
 </div>
 

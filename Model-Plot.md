@@ -115,13 +115,6 @@ The DeepGLM object properties include information about model-specific informati
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
-### Object Functions
-Use the object functions to predict responses and to visualize the prediction.
-
-|[<span style="font-family:monospace">vbayesFit</span>]({% link Model-Predict.md %})| Fit a deepGLM model|
-|[<span style="font-family:monospace">vbayesPredict</span>]({% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
-
 </div>
 
 

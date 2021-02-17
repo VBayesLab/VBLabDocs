@@ -58,7 +58,7 @@ vbayesPlot('Shrinkage',EstMdl.Post.shrinkage,...
 ```
 <img src="/VBLabDocs/assets/images/Example-NAGVAC-DeepGLM-Shrinkage.jpg" class="center"/>
 
-Given the test input, we can make prediction for the output using [<samp>vbayesPredict</samp>]({{site.baseurl}}{% link Model-Predict.md%}) method of the DeepGLM class object. 
+Given the test input, we can make prediction for the output using <samp>vbayesPredict</samp> method of the DeepGLM class object. 
 ```m
 % Make prediction (point estimation) on a test set
 X_test = abalon_test(:,1:end-1);

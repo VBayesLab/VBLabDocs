@@ -158,9 +158,9 @@ Notation:
 ### Object Methods
 Use the object methods to initialize model parameters, predict responses, and to visualize the prediction.
 
-|[<span style="font-family:monospace">vbayesInit</span>]({{site.baseurl}}{% link Model-Plot.md %})| Initialization method of model parameters|
-|[<span style="font-family:monospace">vbayesPredict</span>]({{site.baseurl}}{% link Model-Predict.md %})| Predict responses of fitted DeepGLM models|
-|[<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
+|<span style="font-family:monospace">vbayesInit</span>| Initialization method of model parameters|
+|<span style="font-family:monospace">vbayesPredict</span>| Predict responses of fitted DeepGLM models|
+|<span style="font-family:monospace">vbayesPlot</span>]({{site.baseurl}}{% link Model-Plot.md %})| Plot analytic figures of fitted DeepGLM models|
 
 </div>
 

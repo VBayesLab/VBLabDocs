@@ -498,36 +498,40 @@ Size of moving average window that used to smooth the lowerbound. Denoted as $t_
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
 #### Data type: struct
 <br>
-The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+Estimation results, specified as a structure with these fields:
+
+| LB | Estimation of the Lower Bound over iterations |
+| LB_smooth | Smoothed Lower Bound over iterations |
+| lambda | Estimation of variational parameters | 
+| mu | Estimation of variational mean | 
+| B | The factor loading matrix | 
+| C | The  diagonal matrix| 
+| Sigma | Estimation of the variational covariance matrix | 
+| sigma2 | Diagonal of the variational covariance matrix   | 
+
 </div>
 
 <!--EstMdl-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
 {: #cgvb-object}
-
 #### Data type: VBLab model object| Custom model Object
 <br>
-
+If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
 
 </div>
 
---- 
+---
 
 ## Examples
-
-1. [CGVB for Logistic Regression model defined as a LogisticRegression object]({{site.baseurl}}{% link Example-CGVB-Bayesian-Logistics-Regression.md%}) 
-2. [CGVB for Logistic Regression model defined as a function handler](/VBLabDocs/model/custom/#example-handler)
 
 ---
 
 ## Reference
-[1] Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). Bayesian deep net GLM and GLMM. *Journal of Computational and Graphical Statistics*, 29(1):97-113. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747)
+[1] Ong, V. M.-H., Nott, D. J., and Smith, M. S. (2018). Gaussian variational approximation with a factor covariance structure. *Journal of Computational and Graphical Statistics*, 27(3):465-478. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2017.1390472?journalCode=ucgs20)
 
 ---
 
 ## See Also
 {: #see-also}
-[VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})
+[CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) $\mid$ [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) $\mid$ [MGVB]({{site.baseurl}}{%link VB-MGVB.md%})

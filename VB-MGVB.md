@@ -84,6 +84,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |:------|:------------|:------------|:------------|
 |[`'GradWeight'`](#GradWeight1)|`0.4`| $\alpha_m$ | Momentum weight |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
+|[`'GradientMaxInit'`](#GradientMaxInit)| `None` |  | Gradient clipping threshold for the first iteration|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
@@ -130,6 +131,20 @@ The maximum value of the the gradient to prevent the exploding gradient problem 
 **Default:** `100`
 
 **Example:** `'GradientMax',10`
+</div>
+
+<!--GradientMaxInit-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradientMaxInit'</span> - Gradient clipping threshold</h3></header>
+{: #GradientMaxInit}
+
+#### Data Type: Double | Positive
+<br>
+The maximum value of the the gradient to prevent the exploding gradient problem occurs when the gradient gets too large after the first VB iteration.
+
+**Default:** `None`
+
+**Example:** `'GradientMaxInit',10`
 </div>
 
 <!--InitMethod-->

@@ -82,16 +82,13 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
-|[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
-|[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight 1 |
-|[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Adaptive learning weight 2 |
+|[`'GradWeight'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
-|[`'MaxEpoch'`](#MaxEpoch)|`None`| | Maximum number of epochs |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
@@ -101,62 +98,24 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'StdForInit'`](#StdForInit)|`0.01`| | Standard deviation of normal distribution for initialization |
 |[`'StepAdaptive'`](#StepAdaptive)|`'MaxIter'/2`| $\tau$ | Threshold to start reducing learning rates |
 |[`'TrainingLoss'`](#TrainingLoss)|`PPS`| | Training loss over VB iterations |
-|[`'Validation'`](#Validation)|`0.1`| | Subset of training data used for validation |
-|[`'ValidationLoss'`](#ValidationLoss)|`PPS`| | Validation loss over VB iterations |
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
 
-<!--BatchSize-->
+
+<!--GradWeight-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'BatchSize'</span> - Mini-batch size</h3></header>
-{: #BatchSize}
-
-#### Data Type: Integer | positive  
-<br>
-The size of the mini-batch used in each VB iteration. For numerical stabability of the VB algorithm, `'BatchSize'` should be a large number (e.g. 1000, 5000)
-compared to the mini-batch size in deep learning literature (e.g. 32, 128, 256).
-
-Must be a positive integer equal or smaller than number of observations of training data. 
-
-By default, `'BatchSize'` is set to `None` indicating that all training data is used in each VB iteration. 
-
-**Note:** This option is only available for cross-sectional data. 
-
-**Default:** `None`
-
-**Example:** `'BatchSize',1000`
-</div>
-
-<!--GradWeight1-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Adaptive learning weight 1</h3></header>
-{: #GradWeight1}
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight'</span> - Adaptive learning weight </h3></header>
+{: #GradWeight}
 
 #### Data Type: Double
 <br>
-The adaptive learning rate $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
+The adaptive learning weight.
 
 Must be a number between $0$ and $1$.
 
 **Default:** `0.9`
 
 **Example:** `'GradWeight1',0.95`
-</div>
-
-<!--GradWeight2-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight2'</span> - Adaptive learning weight 2</h3></header>
-{: #GradWeight2}
-
-#### Data Type: Double
-<br>
-The adaptive learning rate $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
-
-Must be a number between $0$ and $1$.
-
-**Default:** `0.9`
-
-**Example:** `'GradWeight2',0.95`
 </div>
 
 <!--GradientMax-->
@@ -166,7 +125,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value of the the gradient to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -229,7 +188,7 @@ Flag to plot the smoothed lowerbound over iterations to quicly check the converg
 
 #### Data Type: Double | Between 0 and 1
 <br>
-The fixed learning rate $\epsilon_0$ to update the variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
+The fixed learning rate to update the variational parameters in each VB iteration.
 
 Must be a number between $0$ and $1$.
 
@@ -252,23 +211,6 @@ Maximum number of VB iterations for early stopping. If the [`'BatchSize'`](#Batc
 **Example:** `'MaxIter',1000`
 </div>
 
-<!--MaxEpoch-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxEpoch'</span> - Maximum number of epochs</h3></header>
-{: #MaxEpoch}
-
-#### Data Type: Integer | Positive
-<br>
-The maximum number of epochs that will be used for training. An epoch is defined as the number of iterations needed for optimization
-algorithm to scan entire training data.
-
-**Note:** This option is only available for cross-sectional data. 
-
-**Default:** `None`
-
-**Example:** `'MaxEpoch',100`
-</div>
-
 <!--MaxPatience-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxPatience'</span> - Maximum patience for early stopping  </h3></header>
@@ -276,7 +218,7 @@ algorithm to scan entire training data.
 
 #### Data Type: Integer | Positive
 <br>
-Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion. This is denoted as $P$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion.
 
 **Default:** `20`
 
@@ -290,7 +232,7 @@ Number of consecutive times that the validation loss, or lowerbound, is allowed 
 
 #### Data Type: Integer | Positive
 <br>
-Number of Monte Carlo samples needed to estimate the gradient of the lower bound. This is denoted as $S$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Number of Monte Carlo samples needed to estimate the gradient of the lower bound.
 
 **Default:** `50`
 
@@ -382,7 +324,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+The iteration to start reducing learning rate.
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
@@ -419,50 +361,6 @@ For the PPS:
 **Default:** `None`
 
 **Example:** `'TrainingLoss',{'PPS','MSE'}`
-</div>
-
-<!--Validation-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Validation'</span> - Subset of training data used for validation </h3></header>
-{: #Validation}
-
-#### Data Type: double between 0 and 1 | Integer
-<br>
-Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smnaller than the number of training observations.
-
-**Note:** This option is only available for cross-sectional (tabular) data. 
-
-**Default:** `None`
-
-**Example:** `'Prior',0.1` or `'Prior',1000`
-</div>
-
-<!--ValidationLoss-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'ValidationLoss'</span> - Validation loss computed during fitting phase </h3></header>
-{: #ValidationLoss}
-
-#### Data Type: string | cell array of strings
-
-Calculate the predictive scores evaluated on the validation data over VB iterations. Users can specify a single metric, defined as a string, or multiple metrics, defined as a cell array of strings. 
-
-Available score metrics:
-
-|:---|:----|
-|PPS | Partial Predictive Score|
-|MSE | Mean Squared Errors (for continuos output)|
-|MAE | Mean Absoluted Errors (for continuos output)|
-|CR  | Classification rate (for binary output)|
-
-For the PPS:
-- If the models are specified as function handlers, users have to also specify function handlers to the argument `'LogLikFunc'` to compute the log-likelihood of the custom models. 
-- If the models are specified as class objects, users have to define a method named `logLik()` to compute the log-likelihood of the custom models. 
-
-**Note:** This option is only available for cross-sectional (tabular) data. 
-
-**Default:** `None`
-
-**Example:** `'ValidationLoss','MSE'`
 </div>
 
 <!--Verbose-->
@@ -504,19 +402,25 @@ Size of moving average window that used to smooth the lowerbound. Denoted as $t_
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Post</span> - Estimation results</header>
 #### Data type: struct
 <br>
-The statistical models containing unknown parameters, specified as:
-- [VBLab model object](/VBLabDocs/model/#vblab-model).
-- or [function handler to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#custom-handler).
+Estimation results, specified as a structure with these fields:
+
+| LB | Estimation of the Lower Bound over iterations |
+| LB_smooth | Smoothed Lower Bound over iterations |
+| lambda | Estimation of variational parameters | 
+| mu | Estimation of variational mean | 
+| L | Estimation of the lower triangular matrix of the variational covariance matrix | 
+| Sigma | Estimation of the variational covariance matrix | 
+| sigma2 | Diagonal of the variational covariance matrix   | 
+
 </div>
 
 <!--EstMdl-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
 {: #cgvb-object}
-
 #### Data type: VBLab model object| Custom model Object
 <br>
-
+If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
 
 </div>
 
@@ -524,13 +428,12 @@ The statistical models containing unknown parameters, specified as:
 
 ## Examples
 
-1. [CGVB for Logistic Regression model defined as a LogisticRegression object]({{site.baseurl}}{% link Example-CGVB-Bayesian-Logistics-Regression.md%}) 
-2. [CGVB for Logistic Regression model defined as a function handler](/VBLabDocs/model/custom/#example-handler)
+1. [MGVB for RECH model defined as a RECH model object]({{site.baseurl}}{% link Example-MGVB-RECH.md%}) 
 
 ---
 
 ## Reference
-[1] Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). Bayesian deep net GLM and GLMM. *Journal of Computational and Graphical Statistics*, 29(1):97-113. [Read the paper](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747)
+[2] Tran, M.-N., Nguyen, D. H., and Nguyen, D. (2020). Variational Bayes on manifolds. Technical report. arXiv:1908.03097.[Read the paper](https://arxiv.org/abs/1908.03097)
 
 ---
 

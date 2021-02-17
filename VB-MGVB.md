@@ -82,7 +82,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
-|[`'GradWeight'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight |
+|[`'GradWeight'`](#GradWeight1)|`0.4`| $\alpha_m$ | Momentum weight |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
@@ -104,18 +104,18 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 <!--GradWeight-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight'</span> - Adaptive learning weight </h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight'</span> - Momentum weight </h3></header>
 {: #GradWeight}
 
 #### Data Type: Double
 <br>
-The adaptive learning weight.
+The momentum weight
 
 Must be a number between $0$ and $1$.
 
-**Default:** `0.9`
+**Default:** `0.4`
 
-**Example:** `'GradWeight1',0.95`
+**Example:** `'GradWeight1',0.5`
 </div>
 
 <!--GradientMax-->
@@ -416,7 +416,7 @@ Estimation results, specified as a structure with these fields:
 <!--EstMdl-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
-{: #cgvb-object}
+{: #mgvb-object}
 #### Data type: VBLab model object| Custom model Object
 <br>
 If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 

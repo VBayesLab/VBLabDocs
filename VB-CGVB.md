@@ -81,8 +81,8 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
 |[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
-|[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight 1 |
-|[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Adaptive learning weight 2 |
+|[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Momentum weight 1 |
+|[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Momentum weight 2 |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
@@ -127,12 +127,12 @@ By default, `'BatchSize'` is set to `None` indicating that all training data is 
 
 <!--GradWeight1-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Adaptive learning weight 1</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Momentum weight 1</h3></header>
 {: #GradWeight1}
 
 #### Data Type: Double
 <br>
-The adaptive learning rate $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
+The momentum weight $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
 
 Must be a number between $0$ and $1$.
 
@@ -148,7 +148,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double
 <br>
-The adaptive learning rate $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
+The momentum weight $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
 
 Must be a number between $0$ and $1$.
 

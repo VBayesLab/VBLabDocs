@@ -62,7 +62,7 @@ See [how to define custom models as function handles](/VBLabDocs/model/custom#cu
 <br>
 The data to which the model `Mdl` is fit, specified as a table or dataset array. 
 
-For cross-sectional data, `CGVB` takes the last variable as the response variable and the others as the predictor variables.
+For cross-sectional data, `VAFC` takes the last variable as the response variable and the others as the predictor variables.
 
 For time series data, the data can be stored in a row or column 1D array. 
 </div>
@@ -80,8 +80,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
 |[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
-|[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Adaptive learning weight 1 |
-|[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Adaptive learning weight 2 |
+|[`'GradWeight'`](#GradWeight)|`0.9`|  | Adaptive learning weight|
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
@@ -90,6 +89,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
 |[`'MaxEpoch'`](#MaxEpoch)|`None`| | Maximum number of epochs |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
+|[`'NumFactor'`](#NumFactor)|`4 `| $f$ | Number of factors of the factor loading matrix |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
 |[`'SaveParams'`](#SaveParams)|`false`| | Flag to save training parameters or not |
@@ -126,34 +126,18 @@ By default, `'BatchSize'` is set to `None` indicating that all training data is 
 
 <!--GradWeight1-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight1'</span> - Adaptive learning weight 1</h3></header>
-{: #GradWeight1}
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight'</span> - Adaptive learning weight 1</h3></header>
+{: #GradWeight}
 
 #### Data Type: Double
 <br>
-The adaptive learning rate $\beta_1$ associated with the $\bar{g}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb), 
+The adaptive learning rate.
 
 Must be a number between $0$ and $1$.
 
 **Default:** `0.9`
 
-**Example:** `'GradWeight1',0.95`
-</div>
-
-<!--GradWeight2-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'GradWeight2'</span> - Adaptive learning weight 2</h3></header>
-{: #GradWeight2}
-
-#### Data Type: Double
-<br>
-The adaptive learning rate $\beta_2$ associated with the $\bar{v}$ component to update variational parameters in each VB iteration in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb).
-
-Must be a number between $0$ and $1$.
-
-**Default:** `0.9`
-
-**Example:** `'GradWeight2',0.95`
+**Example:** `'GradWeight',0.95`
 </div>
 
 <!--GradientMax-->
@@ -273,11 +257,24 @@ algorithm to scan entire training data.
 
 #### Data Type: Integer | Positive
 <br>
-Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion. This is denoted as $P$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
-
+Number of consecutive times that the validation loss, or lowerbound, is allowed to be larger than or equal to the previously smallest loss, or lowerbound, before the training is stopped, used as an early stopping criterion. This is denoted as $P$ in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc)
 **Default:** `20`
 
 **Example:** `'MaxPatience',100`
+</div>
+
+<!--NumFactor-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'NumFactor'</span> - Number of factors </h3></header>
+{: #NumFactor}
+
+#### Data Type: Integer | Positive
+<br>
+Number of factors (columns) of the factor loading matrix discussion in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc)
+
+**Default:** `4`
+
+**Example:** `'NumFactor',10`
 </div>
 
 <!--NumSample-->
@@ -287,7 +284,7 @@ Number of consecutive times that the validation loss, or lowerbound, is allowed 
 
 #### Data Type: Integer | Positive
 <br>
-Number of Monte Carlo samples needed to estimate the gradient of the lower bound. This is denoted as $S$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Number of Monte Carlo samples needed to estimate the gradient of the lower bound. This is denoted as $S$ in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc) 
 
 **Default:** `50`
 
@@ -379,7 +376,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+The iteration to start reducing learning rate, which is denote as $\tau$ in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc)
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 

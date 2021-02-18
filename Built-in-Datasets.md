@@ -309,13 +309,7 @@ List ealized measures of daily volatility that can be used to access the predict
 |:---------------|:----------------------------------------------|
 |bv	             | Bipower Variation (5-min)                     |
 |bv_ss	         | Bipower Variation (5-min Sub-sampled)         |
-|close_price	 | Closing (Last) Price                          |
-|close_time	     | Closing Time                                  |
 |medrv	         | Median Realized Variance (5-min)              |
-|nobs	         | Number of Observations                        |
-|open_price	     | Opening (First) Price                         | 
-|open_time	     | Opening Time                                  | 
-|open_to_close	 | Open to Close Return                          | 
 |rk_parzen	     | Realized Kernel Variance (Non-Flat Parzen)    |
 |rk_th2	Realized | Kernel Variance (Tukey-Hanning(2))            |
 |rk_twoscale	 | Realized Kernel Variance (Two-Scale/Bartlett) |

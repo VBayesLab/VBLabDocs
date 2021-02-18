@@ -93,6 +93,8 @@ Format of the output data. Can be specified as
 <br>
 Flag to normalize numerical variables. Neural network based models such as [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) work more efficient with normalized data.  
 
+**Note:** Only available for cross-sectional (tabular) data
+
 **Default:** `false`
 
 **Example:** `'Normalized',true`
@@ -100,24 +102,26 @@ Flag to normalize numerical variables. Neural network based models such as [Deep
 
 <!--Index-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Index'</span> - Normalization flag</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Index'</span> - Stock index </h3></header>
 
 #### Data Type: string | cell array of strings
 <br>
-Flag to normalize numerical variables. Neural network based models such as [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) work more efficient with normalized data.  
+Stock return indices of the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data. Can be univiariate or multivariate time series.  
 
 **Default:** `None`
 
-**Example:** `'Index','SP500'`
+**Example:** `'Index','SP500'` 
+
+**Example:** `'Index',{'SP500','DJI'}` 
 </div>
 
 <!--Length-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Length'</span> - Normalization flag</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Length'</span> - Number of observations of time series</h3></header>
 
 #### Data Type: Integer | Positive
 <br>
-Flag to normalize numerical variables. Neural network based models such as [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) work more efficient with normalized data.  
+Number of observations of the time series. Only available for the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data.  
 
 **Default:** `None`
 
@@ -126,15 +130,18 @@ Flag to normalize numerical variables. Neural network based models such as [Deep
 
 <!--RealizedMeasure-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'RealizedMeasure'</span> - Normalization flag</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'RealizedMeasure'</span> - Realized measures of stock return volatility</h3></header>
 
 #### Data Type: string | cell array of strings
 <br>
-Flag to normalize numerical variables. Neural network based models such as [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) work more efficient with normalized data.  
+
+Realized measures
 
 **Default:** `None`
 
 **Example:** `'RealizedMeasure','rk_parzen'`
+
+**Example:** `'RealizedMeasure',{'rk_parzen','medrv'}`
 </div>
 
 </div>
@@ -148,26 +155,6 @@ Flag to normalize numerical variables. Neural network based models such as [Deep
 <br>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
---- 
-
-## Examples
-<!--Continuous response-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
-{: #logistic-binary}
-Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({% link VB-CGVB.md %})
-
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
-The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
-
-```matlab
-% Load the LabourForce dataset
-labour = readdata('LabourForce',...
-                  'Type','Matrix',...
-                  'Intercept',true);
-```
 
 </div>
 

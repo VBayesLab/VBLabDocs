@@ -35,7 +35,7 @@ vbayesPlot(type,Name,Value)
 Type of figure to be plotted. Can be specify as:
 - `'Density'` plot a density. The argument `'Distribution'` must be specified.  
 - `'Interval'` plot prediction interval. 
-
+- `'Shrinkage'` plot shrinkage parameters over VB iteration for fitted DeepGLM models.
 </div>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
@@ -48,17 +48,19 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 <!--Distibution-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Distribution'</span> - Distribution of the response variable</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Distribution'</span> - Density distribution to plot</h3></header>
 
 #### Data Type: String 
 <br>
-Distribution of density to be plotted, specified as one of the following:
+Distribution of the density to be plotted, specified as one of the following:
 
-| `'Normal'`   | Normal distribution | mean, variance |
-| `'Beta'`     | Beta distribution   | |
-| `'Gamma'`     | Gamma distribution   | |
-| `'Inverse-Gamma'`     | Inverse-Gamma distribution   | |
-|`'Custom'`| Custom distribution| array of samples|
+|Name               |Description                 |Parameters       |
+|:------------------|:---------------------------|:----------------|
+| `'Normal'`        | Normal distribution        | mean, variance  |
+| `'Beta'`          | Beta distribution          |                 |
+| `'Gamma'`         | Gamma distribution         |                 |
+| `'Inverse-Gamma'` | Inverse-Gamma distribution |                 |
+|`'Custom'`         | Custom distribution        | array of samples|
 
 **Note:** Only available for density plot.
 
@@ -69,7 +71,7 @@ Distribution of density to be plotted, specified as one of the following:
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Ytrue'</span> - True responses</h3></header>
 
-#### Data Type: String 
+#### Data Type: Array 
 <br>
 
 

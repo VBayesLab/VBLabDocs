@@ -36,9 +36,14 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 <br>
 Name of the built-in datasets of the VBLab package. See [list of VBLab built-in datasets]({{site.baseurl}}{%link Built-in-Datasets.md%}). 
 
-|Data Name| Description | Argument |
+|Data Name| Description | Task | Argument |
 |:--------|:----------|:---------|
-|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data |           |
+|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data | Regression|`'Intercept'`,`'Type'`, `'Normalized'`|
+|[`'Cencus'`](/VBLabDocs/datasets/#cencus-data)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
+|[`'DirectMarketing'`](/VBLabDocs/datasets/#direct-marketing)| Regression | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
+|[`'GermanCredit'`](/VBLabDocs/datasets/#german-credit)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
+|[`'LabourForce'`](/VBLabDocs/datasets/#labour-force)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
+|[`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library)| Time-series data | Classification |`'Index'`,`'Length'`, `'RealizedMeasure'`|
 
 </div>
 

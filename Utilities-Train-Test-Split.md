@@ -16,7 +16,7 @@ Split data to subsets for training and testing
 ## Syntax
 
 ```matlab
-PostVB = CGVB(Mdl,data,Name,Value)
+[dataTrain, dataTest] = trainTestSplit(Data,Name,Value)
 ```
 ---
 ## Description

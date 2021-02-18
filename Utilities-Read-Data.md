@@ -149,14 +149,16 @@ Realized measures
 ---
 
 ## Output Arguments
+<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">data </span> - Output dataset </header>
 {: #output-dataset}
 #### Data type: array | table
 <br>
+The dataset stored as an 1D or 2D array or a table. 
 
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
+- For cross-sectional data, the last column of the 2D array or table contains response values. 
+- For time series data, <samp>data</samp> can be 1D (univariate) or 2D (multivariate) array. 
 
 </div>
 
----
 

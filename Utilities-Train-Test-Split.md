@@ -20,7 +20,7 @@ Split data to subsets for training and testing
 ```
 ---
 ## Description
-`[dataTrain, dataTest] = trainTestSplit(data,ratio,Name,Value)` Split arrays or tables `data` into train and test subsets given the split ratio `ratio`. If `data` is a struct, then split data stored in struct fields with the same ratio. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify if data is randomly splitted or not. 
+`[dataTrain, dataTest] = trainTestSplit(data,ratio,Name,Value)` Split arrays or tables `data` into train and test subsets given the split ratio `ratio`. If `data` is a struct whose fields are arrays or tables, then `trainTestSplit` splits data stored in struct fields using the same ratio. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify if data is shuffled before spliting or not. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

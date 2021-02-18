@@ -144,10 +144,8 @@ Flag to normalize numerical variables. Neural network based models such as [Deep
 ## Output Arguments
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">data </span> - Output dataset </header>
 {: #output-dataset}
-
-#### Data type: LogisticRegression Object
+#### Data type: array | table
 <br>
-<samp>LogisticRegression</samp> is an object of the LogisticRegression class with pre-defined properties and functions.
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 

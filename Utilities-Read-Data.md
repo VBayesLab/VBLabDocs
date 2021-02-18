@@ -38,12 +38,12 @@ Name of the built-in datasets of the VBLab package. See [list of VBLab built-in 
 
 |Data Name| Description | Task | Argument |
 |:--------|:----------|:---------|
-|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data | Regression|`'Intercept'`,`'Type'`, `'Normalized'`|
-|[`'Cencus'`](/VBLabDocs/datasets/#cencus-data)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
-|[`'DirectMarketing'`](/VBLabDocs/datasets/#direct-marketing)| Regression | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
-|[`'GermanCredit'`](/VBLabDocs/datasets/#german-credit)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
-|[`'LabourForce'`](/VBLabDocs/datasets/#labour-force)| Cross-sectional data | Classification |`'Intercept'`,`'Type'`, `'Normalized'`|
-|[`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library)| Time-series data | Classification |`'Index'`,`'Length'`, `'RealizedMeasure'`|
+|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data | Regression|`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'Cencus'`](/VBLabDocs/datasets/#cencus-data)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'DirectMarketing'`](/VBLabDocs/datasets/#direct-marketing)| Cross-sectional data | Regression |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'GermanCredit'`](/VBLabDocs/datasets/#german-credit)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'LabourForce'`](/VBLabDocs/datasets/#labour-force)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library)| Time-series data | Regression |`'Index'`,`'Length'`, `'RealizedMeasure'`,`'Type'`|
 
 </div>
 
@@ -57,11 +57,12 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 <!--Intercept-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Intercept'</span> - Prior distribution of model parameters</h3></header>
-
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Intercept'</span> - Adding intercept column</h3></header>
 #### Data Type: true | false
 <br>
-Prior distribution of the model parameters, specified as the comma-separated pair consisting of <samp>'Prior'</samp> and a cell array of distribution name and distribution parameters. Distribution parameters are specified as an array. 
+Flag to add a column of $1$ to the data as intercepts. 
+
+**Note:** Only available for cross-sectional (tabular) data
 
 **Default:** `false`
 
@@ -70,20 +71,23 @@ Prior distribution of the model parameters, specified as the comma-separated pai
 
 <!--Type-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Type'</span> - Cut-off probability</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Type'</span> - Data format</h3></header>
 
-#### Data Type: Float
+#### Data Type: string
 <br>
-The cut-off probability for class assignment. Must be between 0 and 1. 
+Format of the output data. Can be specified as
 
-**Default:** `0.5`
+- `'Matrix'` Data is stored in a 2D array, for cross-sectional data or multivariate time series data, or 1D array, for univaritate time series. For cross-sectional, the last data column contains the response values.  
+- `'Table'` Data is stored in a table. For cross-sectional, the last data column contains the response values. 
 
-**Example:** `'CutOff',0.6`
+**Default:** `Matrix`
+
+**Example:** `'Type',Table`
 </div>
 
 <!--Normalized-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Normalized'</span> - Model description</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Normalized'</span> - Normalization flag</h3></header>
 
 #### Data Type: string
 <br>

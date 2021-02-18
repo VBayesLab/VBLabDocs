@@ -16,7 +16,7 @@ Split data to subsets for training and testing
 ## Syntax
 
 ```matlab
-[dataTrain, dataTest] = trainTestSplit(Data,Name,Value)
+[dataTrain, dataTest] = trainTestSplit(data,Ratio,Name,Value)
 ```
 ---
 ## Description
@@ -27,22 +27,23 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 ---
 
 ## Input Arguments
-<!--model-->
+{: #input-arguments}
+<!--DataName-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
-#### Data type: VBLab model object | function handler
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">DataName</span> - Name of the dataset</header>
+#### Data type: string
 <br>
-Number of model parameters, which is also the number of data features or covariates or independent variables. 
-</div>
+Name of the built-in datasets of the VBLab package. See [list of VBLab built-in datasets]({{site.baseurl}}{%link Built-in-Datasets.md%}). 
 
-<!--data-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">data</span> - VBLab supported or custom models</header>
-#### Data type: Array
-<br>
-`data` is an innovation series with mean 0 and conditional variance characterized by the model specified in `Mdl`.
+|Data Name| Description | Task | Argument |
+|:--------|:----------|:---------|
+|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data | Regression|`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'Cencus'`](/VBLabDocs/datasets/#cencus-data)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'DirectMarketing'`](/VBLabDocs/datasets/#direct-marketing)| Cross-sectional data | Regression |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'GermanCredit'`](/VBLabDocs/datasets/#german-credit)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'LabourForce'`](/VBLabDocs/datasets/#labour-force)| Cross-sectional data | Classification |`'Intercept'`, `'Normalized'`,`'Type'`|
+|[`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library)| Time-series data | Regression |`'Index'`,`'Length'`, `'RealizedMeasure'`,`'Type'`|
 
-The last observation of `data` is the latest observation.
 </div>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
@@ -51,51 +52,95 @@ The last observation of `data` is the latest observation.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'Prior',{'Normal',[0,10]},'CutOff',0.6` specifies that the prior distribution of model parameters is a normal distribution with $0$ mean and $10$ variance, and the cutoff probability is $0.06$.
+**Example:** `'Type','Matrix','Intercept',true` specifies that the output dataset is stored in a 2D array and a column of 1 will be added to the data matrix as intercepts. 
 
-<!--Prior-->
+<!--Intercept-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Prior'</span> - Prior distribution of model parameters</h3></header>
-
-#### Data Type: Cell Array 
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Intercept'</span> - Adding intercept column</h3></header>
+#### Data Type: true | false
 <br>
-Prior distribution of the model parameters, specified as the comma-separated pair consisting of <samp>'Prior'</samp> and a cell array of distribution name and distribution parameters. Distribution parameters are specified as an array. 
+Flag to add a column of $1$ to the data as intercepts. 
 
-|Prior Name|  Description|
-|:-------------|:--------------|:-------------|
-|`'Normal'`|  Normal distribution $\mathcal{N}(\mu,\sigma^2)$ (**default**)     | 
-|`'Gamma'`|  Gamma distribution $\Gamma(\alpha,\beta)$     | 
-|`'Inverse-Gamma'`| Gamma distribution $\Gamma^{-1}(\alpha,\beta)$       | 
+**Note:** Only available for cross-sectional (tabular) data
 
-**Default:** `{'Normal',[0,1]}`
+**Default:** `false`
 
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'Intercept',true`
 </div>
 
-<!--CutOff-->
+<!--Type-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'CutOff'</span> - Cut-off probability</h3></header>
-
-#### Data Type: Float
-<br>
-The cut-off probability for class assignment. Must be between 0 and 1. 
-
-**Default:** `0.5`
-
-**Example:** `'CutOff',0.6`
-</div>
-
-<!--Description-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Description'</span> - Model description</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Type'</span> - Data format</h3></header>
 
 #### Data Type: string
 <br>
-Model description, specified as a string scalar or character vector. Provide additional information about the model. 
+Format of the output data. Can be specified as
 
-**Default:** Empty string
+- `'Matrix'` Data is stored in a 2D array, for cross-sectional data or multivariate time series data, or 1D array, for univaritate time series. For cross-sectional, the last data column contains the response values.  
+- `'Table'` Data is stored in a table. For cross-sectional, the last data column contains the response values. 
 
-**Example:** `'Description','Logistic Regression model with gamma prior'`
+**Default:** `Matrix`
+
+**Example:** `'Type',Table`
+</div>
+
+<!--Normalized-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Normalized'</span> - Normalization flag</h3></header>
+
+#### Data Type: true | false
+<br>
+Flag to normalize numerical variables. Neural network based models such as [DeepGLM]({{site.baseurl}}{%link Model-DeepGLM.md%}) work more efficient with normalized data.  
+
+**Note:** Only available for cross-sectional (tabular) data
+
+**Default:** `false`
+
+**Example:** `'Normalized',true`
+</div>
+
+<!--Index-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Index'</span> - Stock index </h3></header>
+
+#### Data Type: string | cell array of strings
+<br>
+Stock return indices of the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data. Can be univiariate or multivariate time series.  
+
+**Default:** `None`
+
+**Example:** `'Index','SP500'` 
+
+**Example:** `'Index',{'SP500','DJI'}` 
+</div>
+
+<!--Length-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Length'</span> - Number of observations of time series</h3></header>
+
+#### Data Type: Integer | Positive
+<br>
+Number of observations of the time series. Only available for the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data.  
+
+**Default:** `None`
+
+**Example:** `'Length',1000`
+</div>
+
+<!--RealizedMeasure-->
+<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'RealizedMeasure'</span> - Realized measures of stock return volatility</h3></header>
+
+#### Data Type: string | cell array of strings
+<br>
+
+Realized measures
+
+**Default:** `None`
+
+**Example:** `'RealizedMeasure','rk_parzen'`
+
+**Example:** `'RealizedMeasure',{'rk_parzen','medrv'}`
 </div>
 
 </div>
@@ -103,80 +148,14 @@ Model description, specified as a string scalar or character vector. Provide add
 ---
 
 ## Output Arguments
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">mdl</span> - LogisticRegression Object </header>
-{: #logistic-object}
-
-#### Data type: LogisticRegression Object
+<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">data </span> - Output dataset </header>
+{: #output-dataset}
+#### Data type: array | table
 <br>
-<samp>LogisticRegression</samp> is an object of the LogisticRegression class with pre-defined properties and functions.
+The dataset stored as an 1D or 2D array or a table. 
 
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-### Object Properties
-The LogisticRegression object properties include information about model-specific information, coefficient estimates and fitting method. 
-
-|Properties|Data type |Description{: .text-center}|
-|:-------------|:------------------|:------|
-|`ModelName`    |string (r)| Name of the model, which is <samp>'LogisticRegression'</samp>|
-|`NumParams`    |integer (+) | Number of model parameters|
-|`Cutoff`       |float | Cut-off probabitlity|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters |
-|`Coefficient` * |cell array (r)| &bull; Estimated Mean of model parameters <br> &bull; Used to doing point estimation for new test data|
-|`CoefficientVar` * |cell array (r)| Variance of coefficient estimates|
-|`LogLikelihood` * |double (r)| Loglikelihood of the fitted model. |
-|`FittedValue` * |array (r)| Fitted probability|
-
-Notation:
-- \* $\rightarrow$ object properties which are only available when the model is fitted. Default value is `None`.
-- (+) $\rightarrow$ positive number.
-- (r) $\rightarrow$ read-only properties.
+- For cross-sectional data, the last column of the 2D array or table contains response values. 
+- For time series data, <samp>data</samp> can be 1D (univariate) or 2D (multivariate) array. 
 
 </div>
-
---- 
-
-## Examples
-<!--Continuous response-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
-{: #logistic-binary}
-Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({% link VB-CGVB.md %})
-
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({% link Utilities-Read-Data.md%}) function. 
-The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
-```matlab
-% Load the LabourForce dataset
-labour = readdata('LabourForce',...
-                  'Type','Matrix',...
-                  'Intercept',true);
-```
-Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $10$.
-```matlab
-% Number of input features
-n_features = size(marketing,2)-1;
-% Define a LogisticRegression model object
-mdl = LogisticRegression(n_features,...
-                         'Prior',{'Normal',[0,10]});
-```
-Run CGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({% link Utilities-Read-Data.md%}) function to split `labour` to training and test data. 
-```matlab
-% Train/Test split
-[labour_train, labour_test] = trainTestSplit(labour,0.2);
-% Run CGVB to obtain VB approximation of the posterior distribution
-[~,Estmdl] = CGVB(mdl,labour_train,...
-                  'LearningRate',0.01,...    % Use a small learning rate
-                  'Validation',0.15,...      % Use 15% number of observations fpr validation    
-                  'Loss','PPS');             % Use PPS as the predictive metric
-```
-
-Given the fitted LogisticRegression model `Estmdl`, we can make prediction with new data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the miss-classification rate (MCR) and PPS as the predictive scores.    
-```matlab
-% Make prediction with new data and compute prediction scores in PPS and MCR
-[Pred,Error] = vbayesPredict(Estmdl,labour_test,...
-                             'YTest',true,...            % There are true response
-                             'Loss',{'PPS','MCR'});      % Compute predictive scores in PPS and MCR
-```
-</div>
-
----

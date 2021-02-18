@@ -17,7 +17,7 @@ Load built-in datasets
 ## Syntax
 
 ```matlab
-data = readData(DataName,Name,Value)
+data = readData(dataName,Name,Value)
 ```
 ---
 ## Description
@@ -31,7 +31,7 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 {: #input-arguments}
 <!--DataName-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">DataName</span> - Name of the dataset</header>
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">dataName</span> - Name of the dataset</header>
 #### Data type: string
 <br>
 Name of the built-in datasets of the VBLab package. See [list of VBLab built-in datasets]({{site.baseurl}}{%link Built-in-Datasets.md%}). 

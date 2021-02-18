@@ -18,7 +18,7 @@ Plot analytic figures for VBLab fitted models
 ## Syntax
 
 ```matlab
-vbayesPlot(Type,Name,Value)
+vbayesPlot(type,Name,Value)
 ```
 ---
 ## Description
@@ -31,17 +31,15 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 ---
 
 ## Input Arguments
-<!--Network-->
+<!--type-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Network</span> - Neuron Network structure of the deepGLM model </header>
-#### Data type: 1D Array
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">type</span> - Type of plot </header>
+#### Data type: string
 <br>
-Neuron Network structure of the deepGLM model. `[NumFeatures, L1,...,LM]`:
-<dl>
-<dt><code>Numfeatures</code></dt> <dd>Number of features (columns) of training data.</dd>
-<dt><code>L1,...,LM</code></dt> <dd>Number of hidden nodes in each hidden layer. For example, <code>L1</code> is the number of hidden nodes in the first hidden layer and so on. </dd>
-</dl>
-**Note:** The output layer has always only 1 node.
+
+- `'Distribution'`
+- `'Interval'`
+
 </div>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
@@ -82,48 +80,3 @@ Activation function of hidden layers, specified as the comma-separated pair cons
 **Example:** <code style="color:#A020F0">'Activation','relu'</code>
 </div>
 </div>
-
-## Output Arguments
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">mdl</span> - DeepGLM Object </header>
-{: #deepglm-object}
-
-#### Data type: DeepGLM Object
-<br>
-<samp>DeepGLM</samp> is an object of the DeepGLM class with pre-defined properties and functions.
-
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-### Object Properties
-The DeepGLM object properties include information about model-specific information, coefficient estimates and fitting method as following. The * notation indicates properties whic are only available when the model is fitted. The default value for these properties is `None`.
-
-|Properties|Data type |Description {: .text-center}|
-|:-------------|:------------------|:------|
-|`ModelName`    |string (r)| Name of the model, which is <samp>'DeepGLM'</samp>|
-|`NumParams`    |integer (+) | Number of model parameters|
-|`Network`      |Array | Neural network structure of DeepGLM models|
-|`Distribution` |string | Neural network structure of DeepGLM models|
-|`Activation`   |string | Neural network structure of DeepGLM models|
-|`FitMethod` * |string  | &bull; The fittind method used to estimate model paramters <br> &bull; Currently, users can only use [NAGVAC]({% link VB-NAGVAC.md %}) method to fit a <samp>DeepGLM</samp> model|
-|`Coefficients` * |Cell array| &bull; Estimated Mean of weights of Deep Neuron Network <br> &bull; Used to doing point estimation for new test data|
-|`Shrinkage` *    |Array| &bull; Array storing estimated values of group Lasso coefficients|
-|`PPS` *          |Array| &bull; Array storing PPS values measured on validation data in each iteration during training phase|
-|`Shrinkage` *    |Array| Array storing estimated values of group Lasso coefficients|
-|`MSE` *          |Array| &bull; Array storing MSE values measured validation data in each iteration during training phase <br> &bull; Only available if responses follow normal or poisson distribution|
-|`Accuracy` *     |1D Array| &bull; Array storing Classification Rate measured on validation data in each iteration during training phase<br> &bull; Only available if responses are binary variable|
-
-</div>
-
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-
-</div>
-
-
---- 
-
-## Examples
-
-
----
-
-## Reference
-Tran, M.-N., Nguyen, T.-N., Nott, D., and Kohn, R. (2020). [Bayesian deep net GLM and GLMM](https://www.tandfonline.com/doi/abs/10.1080/10618600.2019.1637747). *Journal of Computational and Graphical Statistics*, 29(1):97-113. 

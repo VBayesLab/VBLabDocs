@@ -21,29 +21,25 @@ data = readData(DataName,Name,Value)
 ```
 ---
 ## Description
-`data = readData(Mdl,data,Name,Value)` returns the Bayesian approximation `PostVB` to provided model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`data = readData(DataName,Name,Value)` returns one of the built-in datasets in selected format. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify if the data is stored in a 2D array or a table.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
 ---
 
 ## Input Arguments
-<!--model-->
+{: #input-arguments}
+<!--DataName-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom models</header>
-#### Data type: VBLab model object | function handler
+<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">DataName</span> - Name of the dataset</header>
+#### Data type: string
 <br>
-Number of model parameters, which is also the number of data features or covariates or independent variables. 
-</div>
+Name of the built-in datasets of the VBLab package. See [list of VBLab built-in datasets]({{site.baseurl}}{%link Built-in-Datasets.md%}). 
 
-<!--data-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">data</span> - VBLab supported or custom models</header>
-#### Data type: Array
-<br>
-`data` is an innovation series with mean 0 and conditional variance characterized by the model specified in `Mdl`.
+|Data Name| Description | Argument |
+|:--------|:----------|:---------|
+|[`'Abalon'`](/VBLabDocs/datasets/#abalon)|  Cross-sectional data |           |
 
-The last observation of `data` is the latest observation.
 </div>
 
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
@@ -52,30 +48,24 @@ The last observation of `data` is the latest observation.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'Prior',{'Normal',[0,10]},'CutOff',0.6` specifies that the prior distribution of model parameters is a normal distribution with $0$ mean and $10$ variance, and the cutoff probability is $0.06$.
+**Example:** `'Type','Matrix','Intercept',true` specifies that the output dataset is stored in a 2D array and a column of 1 will be added to the data matrix as intercepts. 
 
-<!--Prior-->
+<!--Intercept-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Prior'</span> - Prior distribution of model parameters</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Intercept'</span> - Prior distribution of model parameters</h3></header>
 
-#### Data Type: Cell Array 
+#### Data Type: true | false
 <br>
 Prior distribution of the model parameters, specified as the comma-separated pair consisting of <samp>'Prior'</samp> and a cell array of distribution name and distribution parameters. Distribution parameters are specified as an array. 
 
-|Prior Name|  Description|
-|:-------------|:--------------|:-------------|
-|`'Normal'`|  Normal distribution $\mathcal{N}(\mu,\sigma^2)$ (**default**)     | 
-|`'Gamma'`|  Gamma distribution $\Gamma(\alpha,\beta)$     | 
-|`'Inverse-Gamma'`| Gamma distribution $\Gamma^{-1}(\alpha,\beta)$       | 
+**Default:** `false`
 
-**Default:** `{'Normal',[0,1]}`
-
-**Example:** `'Prior',{'Normal',[0,10]}`
+**Example:** `'Intercept',true`
 </div>
 
-<!--CutOff-->
+<!--Type-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'CutOff'</span> - Cut-off probability</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Type'</span> - Cut-off probability</h3></header>
 
 #### Data Type: Float
 <br>
@@ -86,9 +76,9 @@ The cut-off probability for class assignment. Must be between 0 and 1.
 **Example:** `'CutOff',0.6`
 </div>
 
-<!--Description-->
+<!--Normalized-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Description'</span> - Model description</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Normalized'</span> - Model description</h3></header>
 
 #### Data Type: string
 <br>

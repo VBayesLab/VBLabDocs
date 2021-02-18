@@ -149,7 +149,7 @@ Use the object methods to initialize model parameters, predict responses, and to
 {: #deepglm-continuous}
 Fit a DeepGLM model to [DirectMarketing](/VBLabDocs/datasets/#direct-marketing) data using [VAFC]({{site.baseurl}}{%link VB-VAFC.md%})
 
-Load the DirectMarketing data using the [<span style="font-family:monospace">reaDdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
+Load the DirectMarketing data using the [<span style="font-family:monospace">readData()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the DirectMarketing dataset

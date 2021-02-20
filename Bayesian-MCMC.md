@@ -15,8 +15,6 @@ Sampling posterior distribution using MCMC techniques
 
 ---
 
----
-
 ## Syntax
 
 ```matlab

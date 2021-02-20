@@ -44,9 +44,9 @@ Type of figure to be plotted. Can be specify as:
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'Distribution','normal','Activation','relu'` specifies that the distribution of the response is normal, and the activation function of hidden layers is the Rectified Linear Unit (ReLU) function.
+**Example:** `'Distribution',{'Normal',[0,0.1]}` specifies that the density to be plotted is a normal distribution with $0$ mean and $0.1$ variance.
 
-<!--Distibution-->
+<!--Distribution-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Distribution'</span> - Density distribution to plot</h3></header>
 

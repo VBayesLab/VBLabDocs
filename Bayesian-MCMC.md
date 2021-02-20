@@ -25,9 +25,9 @@ Post = MCMC(Func,data,Name,Value)
 ```
 ---
 ## Description
-`EstMdl = MCMC(Mdl,data,Name,Value)` run the CGVB algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`EstMdl = MCMC(Mdl,data,Name,Value)` run the MCMC algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments.   
 
-`Post = MCMC(Mdl,data,Name,Value)` run the CGVB algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handle, and data `data`.
+`Post = MCMC(Mdl,data,Name,Value)` run the CGVB algorithm to return the MCMC samples `Post` given the model `Func`, specified as a function handle, and data `data`.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

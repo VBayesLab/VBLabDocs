@@ -172,7 +172,7 @@ Given is the attribute name, attribute type, values and a brief description.
 |status                  | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
 |duration                | integer     |        | Credit duration in months |
 |credit_history          | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
-|purpose                 | categorical | 0-10   | Purpose for which the credit is needed |
+|credit amount           | integer     |        | credit amount in DM$100   |
 |savings                 | categorical | 0-5    | Debtor's savings |
 |employment_duration     | ordinal     | 1-5    | Present employment since |
 |installment_rate        | ordinal     | in %   | Credit installments as a percentage of debtor's disposable income |

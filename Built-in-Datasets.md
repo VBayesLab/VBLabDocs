@@ -185,7 +185,7 @@ Given is the attribute name, attribute type, values and a brief description.
 |14|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
 |15|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
 |16-24|Purpose              | Dummy variables  | 0/1 |  purpose for which the credit is needed (10 categories|
-|20|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
+|25|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
 
 ### Citation
 {: .no_toc }

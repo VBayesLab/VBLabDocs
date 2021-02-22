@@ -167,28 +167,25 @@ For more information or to download the dataset, please visit the [dataset websi
 
 Given is the attribute name, attribute type, values and a brief description. 
 
-|Name                    | Data Type   | Values | Description|
-|:-----------------------|:------------|:-------|:-----------|
-|status                  | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
-|duration                | integer     |        | Credit duration in months |
-|credit_history          | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
-|credit amount           | integer     |        | credit amount in DM$100   |
-|savings                 | categorical | 0-5    | Debtor's savings |
-|employment_duration     | ordinal     | 1-5    | Present employment since |
-|installment_rate        | ordinal     | in %   | Credit installments as a percentage of debtor's disposable income |
-|personal_status_sex     | categorical | 1-5    | Combined information on sex and marital status |
-|other_debtors           | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
-|present_residence       | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
-|Property                | ordinal     | 1-4    |  The debtor's most valuable property, i.e. the highest possible code is used |
-|age                     | integer     |        | age in years  |
-|other_installment_plans | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
-|housing                 | categorical | 1-3    | Type of housing the debtor lives in |
-|number_credits          | integer     |        | Number of credits including the current one the debtor has (or had) at this bank |
-|job                     | ordinal     | 1-4    | Quality of debtor's job |
-|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
-|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
-|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
-|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
+|Order |Name                    | Data Type   | Values | Description|
+|:-----|:-----------------------|:------------|:-------|:-----------|
+|1|status                   | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
+|2|duration                 | integer     |        | Credit duration in months |
+|3|credit_history           | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
+|4|credit amount            | integer     |        | credit amount in DM$100   |
+|5|savings                  | categorical | 0-5    | Debtor's savings |
+|6|employment_duration      | ordinal     | 1-5    | Present employment since |
+|7|personal_status_sex      | categorical | 1-5    | Combined information on sex and marital status |
+|8|present_residence        | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
+|9|Property                 | ordinal     | 1-4    |  The debtor's most valuable property, i.e. the highest possible code is used |
+|10|age                     | integer     |        | age in years  |
+|11|other_installment_plans | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
+|12|number_credits          | integer     |        | Number of credits including the current one the debtor has (or had) at this bank |
+|13|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
+|14|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
+|15|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
+|16-24|Purpose              | Dummy variables  | 0/1 |  purpose for which the credit is needed (10 categories|
+|20|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
 
 ### Citation
 {: .no_toc }

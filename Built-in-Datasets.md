@@ -66,58 +66,6 @@ institution = "University of California, Irvine, School of Information and Compu
 
 ---
 
-## Cencus data
-
-### Information
-{: .no_toc }
-
-This data set contains weighted census data extracted from the 1994 and 1995 Current Population Surveys conducted by the U.S. Census Bureau. The data contains 41 demographic and employment related variables.
-
-The instance weight indicates the number of people in the population that each record represents due to stratified sampling. To do real analysis and derive conclusions, this field must be used. This attribute should *not* be used in the classifiers.
-
-One instance per line with comma delimited fields. There are 199523 instances in the data file and 99762 in the test file.
-
-The data was split into train/test in approximately 2/3, 1/3 proportions.
-
-For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/Census-Income+(KDD)). 
-
-### Attribute Information
-{: .no_toc }
-
-|Name           | Data Type   | Values | Description|
-|:--------------|:------------|:-------|:-----------|
-|age            | continuous  | 1-4    | Age |
-|workclass      | categorical |        | Class of worker |
-|fnlwgt         | categorical | 0-4    | Industry code |
-|education      | categorical | 0-10   | Occupation code |
-|marital-status | categorical | 0-5    | Adjusted gross income |
-|occupation     | ordinal     | 1-5    | Education  |
-|relationship   | ordinal     | in %   | Wage per hour |
-|race           | categorical | 1-5    | Enrolled in edu inst last wk |
-|sex            | categorical | 1-3    | Is there another debtor or a guarantor for the credit? |
-|capital-gain   | ordinal     | 1-4    | Length of time (in years) the debtor lives in the present residence |
-|capital-loss   | ordinal     | 1-4    | The debtor's most valuable property, i.e. the highest possible code is used |
-|hours-per-week | integer     |        | age in years  |
-|native-country | categorical | 1-3    | Installment plans from providers other than the credit-giving bank |
-
-### Citation
-{: .no_toc }
-
-Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
-
-**Or bibtex entry** :
-
-```yaml
-@misc{Dua:2019 ,
-author = "Dua, Dheeru and Graff, Casey",
-year = "2017",
-title = "{UCI} Machine Learning Repository",
-url = "http://archive.ics.uci.edu/ml",
-institution = "University of California, Irvine, School of Information and Computer Sciences" }
-```
-
----
-
 ## DirectMarketing data
 {: #direct-marketing}
 
@@ -160,7 +108,7 @@ This dataset classifies people described by a set of attributes as good or bad c
 
 The dataset has $1000$ rows and $21$ column. The last column is used as the dependent variable. 
 
-For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/South+German+Credit+%28UPDATE%29). 
+For more information or to download the dataset, please visit the [dataset website](https://archive.ics.uci.edu/ml/datasets/statlog+(german+credit+data)). 
 
 ### Attribute Information
 {: .no_toc }
@@ -172,7 +120,7 @@ Given is the attribute name, attribute type, values and a brief description.
 |1|status                   | ordinal     | 1-4    | Status of the debtor's checking account with the bank |
 |2|duration                 | integer     |        | Credit duration in months |
 |3|credit_history           | categorical | 0-4    | History of compliance with previous or concurrent credit contracts |
-|4|credit amount            | integer     |        | credit amount in DM$100   |
+|4|credit_amount            | integer     |        | credit amount in DM$100   |
 |5|savings                  | categorical | 0-5    | Debtor's savings |
 |6|employment_duration      | ordinal     | 1-5    | Present employment since |
 |7|personal_status_sex      | categorical | 1-5    | Combined information on sex and marital status |
@@ -184,7 +132,15 @@ Given is the attribute name, attribute type, values and a brief description.
 |13|people_liable           | integer     |        | Number of persons who financially depend on the debtor (i.e., are entitled to maintenance)|
 |14|telephone               | binary      | yes/no | Is there a telephone landline registered on the debtor's name|
 |15|foreign_worker          | binary      | yes/no | Is the debtor a foreign worker?|
-|16-24|Purpose              | Dummy variables  | 0/1 |  purpose for which the credit is needed (10 categories|
+|16|purpose_1               | binary      | 0/1    |  Purpose for which the credit is needed |
+|17|purpose_2               | binary      | 0/1    |  Purpose for which the credit is needed |
+|18|other_debtors_1         | binary      | 0/1    |  Is there another debtor or a guarantor for the credit? (none)|
+|19|other_debtors_2         | binary      | 0/1    |  Is there another debtor or a guarantor for the credit? (co-applicant)|
+|20|housing_1               | binary      | 0/1    |  Type of housing the debtor lives in (rent)|
+|21|housing_2               | binary      | 0/1    |  Type of housing the debtor lives in (own)|
+|22|jobs_1                  | binary      | 0/1    |  Quality of debtor's job (unemployed/ unskilled - non-resident)|
+|23|jobs_2                  | binary      | 0/1    |  Quality of debtor's job (unskilled - resident)|
+|24|jobs_3                  | binary      | 0/1    |  Quality of debtor's job (skilled employee / official)|
 |25|credit_risk             | binary      | yes/no | Has the credit contract been complied with (good) or not (bad)?|
 
 ### Citation

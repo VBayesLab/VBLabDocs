@@ -39,7 +39,6 @@ EstMdl = NAGVAC(Mdl,abalon_train,...
                 'MaxPatience',100,...       % Maximum patience
                 'WindowSize',100,...        % Rolling window size to smooth the lowerbound
                 'MaxIter',5000,...          % Maximum number of iterations    
-                'InitMethod','Random',...   % Initialization method
                 'GradientMax',100,...       % Gradient clipping threshold
                 'LBPlot',true);             % Plot the lowerbound when finish
 ```

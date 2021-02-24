@@ -87,7 +87,6 @@ Post_CGVB_VAR = CGVB(@grad_h_theta_VAR1,y,...
                      'NumSample',50,...             % Number of samples to estimate gradient of lowerbound
                      'MaxPatience',20,...           % For Early stopping
                      'MaxIter',5000,...             % Maximum number of iterations
-                     'InitMethod','Random',...      % Randomly initialize parameters using 
                      'GradWeight1',0.9,...          % Momentum 1
                      'GradWeight2',0.9,...          % Momentum 2
                      'WindowSize',10,...            % Smoothing window for lowerbound

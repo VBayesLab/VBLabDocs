@@ -34,7 +34,6 @@ Estmdl = CGVB(Mdl,labour,...
               'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
               'MaxPatience',20,...      % For Early stopping
               'MaxIter',5000,...        % Maximum number of iterations
-              'InitMethod','Random',... % Randomly initialize variational mean
               'GradWeight1',0.9,...     % Momentum weight 1
               'GradWeight2',0.9,...     % Momentum weight 2
               'WindowSize',10,...       % Smoothing window for lowerbound

@@ -104,15 +104,14 @@ Flag to normalize numerical variables. Neural network based models such as [Deep
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Index'</span> - Stock index </h3></header>
 
-#### Data Type: string | cell array of strings
+#### Data Type: string 
 <br>
-Stock return indices of the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data. Can be univiariate or multivariate time series.  
+Stock return indices of the [`'RealizedLibrary'`](/VBLabDocs/datasets/#realized-library) data.  
 
 **Default:** `None`
 
 **Example:** `'Index','SP500'` 
-
-**Example:** `'Index',{'SP500','DJI'}` 
+ 
 </div>
 
 <!--Length-->

@@ -84,7 +84,6 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Momentum weight 1 |
 |[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Momentum weight 2 |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
-|[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
@@ -171,6 +170,7 @@ The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#al
 **Example:** `'GradientMax',10`
 </div>
 
+{% comment %} 
 <!--InitMethod-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitMethod'</span> - Initialization method</h3></header>
@@ -191,6 +191,7 @@ Intialization method of variational mean, can be specified as following options:
 
 **Example:** `'InitMethod','Custom'`
 </div>
+{% endcomment %}
 
 <!--InitValue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">

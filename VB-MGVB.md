@@ -85,7 +85,6 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'GradWeight'`](#GradWeight1)|`0.4`| $\alpha_m$ | Momentum weight |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'GradientMaxInit'`](#GradientMaxInit)| `None` |  | Gradient clipping threshold for the first iteration|
-|[`'InitMethod'`](#InitMethod)|`'Random'`| |Initialization method |
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
@@ -147,6 +146,7 @@ The maximum value of the the gradient to prevent the exploding gradient problem 
 **Example:** `'GradientMaxInit',10`
 </div>
 
+{% comment %} 
 <!--InitMethod-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitMethod'</span> - Initialization method</h3></header>
@@ -167,6 +167,7 @@ Intialization method of variational mean, can be specified as following options:
 
 **Example:** `'InitMethod','Custom'`
 </div>
+{% endcomment %}
 
 <!--InitValue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">

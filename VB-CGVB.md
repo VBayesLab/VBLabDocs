@@ -20,16 +20,11 @@ Fit VBLab supported or custom models using the CGVB algorithm
 ## Syntax
 
 ```matlab
-EstMdl = CGVB(Mdl,data,Name,Value)
-```
-```matlab
-Post = CGVB(Func,data,Name,Value)
+Post = CGVB(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`EstMdl = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
-
-`Post = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handle, and data `data`.
+`Post = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -39,21 +34,13 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom model objects</header>
-#### Data type: VBLab model object | custome model object
+#### Data type: VBLab model object | custome model object | function handle
 <br>
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
 - or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-</div>
-
-<!--Function handle-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Func</span> - Function handle of the input model</header>
-#### Data type: function handle
-<br>
-The statistical models containing unknown parameters, specified as a function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms.
-See [how to define custom models as function handles](/VBLabDocs/model/custom#custom-handler).
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -80,7 +67,6 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
-|[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
 |[`'GradWeight1'`](#GradWeight1)|`0.9`| $\beta_1$ | Momentum weight 1 |
 |[`'GradWeight2'`](#GradWeight2)|`0.9`| $\beta_1$ | Momentum weight 2 |
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
@@ -88,7 +74,6 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
-|[`'MaxEpoch'`](#MaxEpoch)|`None`| | Maximum number of epochs |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
@@ -102,27 +87,6 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'ValidationLoss'`](#ValidationLoss)|`PPS`| | Validation loss over VB iterations |
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
-
-<!--BatchSize-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'BatchSize'</span> - Mini-batch size</h3></header>
-{: #BatchSize}
-
-#### Data Type: Integer | positive  
-<br>
-The size of the mini-batch used in each VB iteration. For numerical stabability of the VB algorithm, `'BatchSize'` should be a large number (e.g. 1000, 5000)
-compared to the mini-batch size in deep learning literature (e.g. 32, 128, 256).
-
-Must be a positive integer equal or smaller than number of observations of training data. 
-
-By default, `'BatchSize'` is set to `None` indicating that all training data is used in each VB iteration. 
-
-**Note:** This option is only available for cross-sectional data. 
-
-**Default:** `None`
-
-**Example:** `'BatchSize',1000`
-</div>
 
 <!--GradWeight1-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
@@ -249,23 +213,6 @@ Maximum number of VB iterations for early stopping. If the [`'BatchSize'`](#Batc
 **Default:** `1000`
 
 **Example:** `'MaxIter',1000`
-</div>
-
-<!--MaxEpoch-->
-<div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxEpoch'</span> - Maximum number of epochs</h3></header>
-{: #MaxEpoch}
-
-#### Data Type: Integer | Positive
-<br>
-The maximum number of epochs that will be used for training. An epoch is defined as the number of iterations needed for optimization
-algorithm to scan entire training data.
-
-**Note:** This option is only available for cross-sectional data. 
-
-**Default:** `None`
-
-**Example:** `'MaxEpoch',100`
 </div>
 
 <!--MaxPatience-->
@@ -512,16 +459,6 @@ Estimation results, specified as a structure with these fields:
 | L | Estimation of the lower triangular matrix of the variational covariance matrix | 
 | Sigma | Estimation of the variational covariance matrix | 
 | sigma2 | Diagonal of the variational covariance matrix   | 
-
-</div>
-
-<!--EstMdl-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
-{: #cgvb-object}
-#### Data type: VBLab model object| Custom model Object
-<br>
-If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
 
 </div>
 

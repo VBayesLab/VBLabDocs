@@ -447,7 +447,7 @@ Post_CGVB = MGVB(Mdl,labour,...
                  'NumSample',100,...       % Number of samples to estimate gradient of lowerbound 
                  'MaxPatience',50,...      % For Early stopping
                  'MaxIter',2000,...        % Maximum number of iterations
-                 'GradWeight',0.4,...      % Momentum weigth
+                 'GradWeight',0.4,...      % Momentum weight
                  'WindowSize',30,...       % Smoothing window for lowerbound
                  'SigInitScale',0.04,...   % Std of normal distribution for initializing  
                  'StepAdaptive',500,...    % For adaptive learning rate   

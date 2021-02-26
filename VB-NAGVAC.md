@@ -21,9 +21,6 @@ Fit VBLab supported or custom models using the NAGVAC method
 ```matlab
 EstMdl = NAGVAC(Mdl,data,Name,Value)
 ```
-```matlab
-Post = NAGVAC(Func,data,Name,Value)
-```
 ---
 ## Description
 `EstMdl = NAGVAC(Mdl,data,Name,Value)` run the NAGVAC algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 

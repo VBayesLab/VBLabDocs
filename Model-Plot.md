@@ -34,7 +34,7 @@ vbayesPlot(type,Name,Value)
 <br>
 Type of figure to be plotted. Can be specify as:
 - `'Density'` plot a density. The argument `'Distribution'` must be specified.  
-- `'Interval'` plot prediction interval. 
+- `'Interval'` plot prediction interval. We the argument `'Ytrue'` to specify true responses, if available.
 - `'Shrinkage'` plot shrinkage parameters over VB iteration for fitted DeepGLM models.
 </div>
 
@@ -70,10 +70,9 @@ Distribution of the density to be plotted, specified as one of the following:
 <!--Ytrue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'Ytrue'</span> - True responses</h3></header>
-
 #### Data Type: Array 
 <br>
+The true responses can be provided to access the the predictive performance of a fitted models. 
 
-**Example:** <code style="color:#A020F0">'Ytrue',yTest</code>
-</div>
-</div>
+**Example:** <code style="color:#A020F0">'Ytrue',yTest</code> with `yTest` is a array of test responses. 
+

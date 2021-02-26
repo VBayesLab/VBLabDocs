@@ -459,7 +459,6 @@ The plot of lowerbound shows that the CGVB algorithm converges well. However, th
 
 <img src="/VBLabDocs/assets/images/Example-MGVB-Logistics.jpg" class="center"/>
 
-
 ---
 
 ## Reference

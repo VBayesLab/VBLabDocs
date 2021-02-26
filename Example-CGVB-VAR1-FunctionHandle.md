@@ -95,33 +95,33 @@ Post_CGVB_VAR = CGVB(@grad_h_theta_VAR1,y,...
 ```
 Finally, we need to define the function <samp>grad_h_theta_VAR1</samp> using the template discussed in [how to define models as function handles](http://localhost:4000/VBLabDocs/model/custom/#custom-handler). The <samp>grad_h_theta_VAR1</samp> can be defined in a seperated script named *grad_h_theta_VAR1* or at the end of the example script.
 ```m
-function [grad_h_theta,h_theta] = grad_h_theta_VAR1(y,theta,setting)
-% Compute the gradient of h_lambda function w.r.t. coefficient vector theta.
-% Also returns the value of h_lambda function
-% Input: y is a m x T matrix with
-%            m: number of time series
-%            T: length of time series, number of observations
-% Output: grad_h_theta is a dx1 column with d is the number of variational parameters
-%         h_theta is a scalar
+%% Function to compute the gradient of h(theta) and h(theta). This can be defined in a separated file
+% Input: 
+%       y: mxT matrix with M number of time series and T lenght of each time series
+%       theta: Dx1 array of model parameters
+%       setting: struct of additional information to compute gradient h(theta)
+% Output:
+%       grad_h_theta: Dx1 array of gradient of h(theta)
+%       h_theta: h(theta) is scalar
+function [grad_h_theta,h_theta] = grad_h_func_VAR1(y,theta,setting)
 
     % Extract size of data
     [m,T] = size(y);
-        
+    
     % Extract model settings
-    pri_mu = setting.prior.mu; 
-    pri_var = setting.prior.var;
+    prior_params = setting.Prior;
     d = setting.num_params;
     idx = setting.idx;
     Gamma = setting.Gamma;
     Gamma_inv = Gamma^(-1);
 
-    % Extract params from theta
-    c = theta(idx.c);                               % c is a column
-    A = reshape(theta(idx.A),length(c),length(c));  % A is a matrix
-        
+   % Extract params from theta
+    c = theta(idx.c);                               % c is a Dx1 colum
+    A = reshape(theta(idx.A),length(c),length(c));  % A is a DxD matrix
+    
     % Log prior
-    log_prior = -0.5*d*log(2*pi) - 0.5*log(pri_var) - (theta-pri_mu)'*(theta-pri_mu)/(2*pri_var);
-        
+    log_prior = Normal.logPdfFnc(theta,prior_params);
+    
     % Log likelihood
     log_llh = 0;
     for t=2:T
@@ -129,26 +129,29 @@ function [grad_h_theta,h_theta] = grad_h_theta_VAR1(y,theta,setting)
     end  
     log_llh = log_llh - 0.5*m*(T-1)*log(2*pi) - 0.5*(T-1)*log(det(Gamma));
 
-    % Compute h_theta
+    % h(theta)
     h_theta = log_prior + log_llh;
-        
-    % Gradient log_prior
-    grad_log_prior = -theta/pri_var;
-        
-    % Gradient log_llh;
+    
+    % Gradient of log prior
+    grad_log_prior = Normal.GradlogPdfFnc(theta,prior_params);
+    
+    % Gradient of log likelihood;
     grad_llh_c = 0;
     grad_llh_A = 0;
     for t=2:T
         grad_llh_c = grad_llh_c + Gamma_inv*(y(:,t) - A*y(:,t-1)-c);
         grad_llh_A = grad_llh_A + kron(y(:,t-1),Gamma_inv*(y(:,t) - A*y(:,t-1)-c));
     end
-        
+    
     grad_llh = [grad_llh_c;grad_llh_A(:)];
-        
-    % Compute Gradient of h_theta
+    
+    % Gradient h(theta)
     grad_h_theta = grad_log_prior + grad_llh;
-
-end 
+    
+    % Make sure grad_h_theta is a column
+    grad_h_theta = reshape(grad_h_theta,d,1);
+    
+end    
 ```
 We can manually plot the variational distribution together with the lowerbound. The convergence of the lowerbound shows that the CGVB works properly in this example.
 ```m

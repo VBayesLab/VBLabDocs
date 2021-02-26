@@ -96,8 +96,9 @@ Given the MCMC samples of the posterior density of model paramters, we can compa
 ```m  
 % Compare densities by CGVB and MCMC
 % Get posterior mean and trace plot for a parameter to check the mixing 
-[mcmc_mean,mcmc_std,mcmc_chain] = Post_MCMC.getParamsMean('BurnInRate',0.4,... % Burn-in rate
-                                                          'PlotTrace',1);      % Trace plot of theta 1
+[mcmc_mean,mcmc_std,mcmc_chain] = Post_MCMC.getParamsMean('BurnInRate',0.2,...         % Throw away 20% samples
+                                                          'PlotTrace',1:n_features,... % Trace plot for all parameters
+                                                          'SubPlot',[2,4]);            % Dimension of subplots
 
 % Plot density
 fontsize  = 20;
@@ -111,7 +112,7 @@ figure
 for i = 1:numparams
     subplot(3,3,i)
     xx = mcmc_mean(i)-4*mcmc_std(i):0.002:mcmc_mean(i)+4*mcmc_std(i);
-    yy_mcmc = ksdensity(mcmc_chain(:,i),xx);    
+    yy_mcmc = ksdensity(mcmc_chain(:,i),xx,'Bandwidth',0.022);  
     yy_vb = normpdf(xx,mu_vb(i),sqrt(sigma2_vb(i)));    
     plot(xx,yy_mcmc,'-k',xx,yy_vb,'--b','LineWidth',1.5)
     line([theta_init(i) theta_init(i)],ylim,'LineWidth',1.5,'Color','r')    
@@ -123,7 +124,11 @@ subplot(3,3,9)
 plot(Estmdl_2.Post.LB_smooth,'LineWidth',1.5)
 title('Lower bound','FontSize', fontsize)
 ```
+The trace plots of MCMC samples of model parameters shows that the MCMC algorithm works properly. 
+
 <img src="/VBLabDocs/assets/images/Example3-4-trace.JPG" class="center"/>
+
+The plots of variational densities and true posterior densities show that the CGVB algorithm works efficiently in this example.  
 
 <img src="/VBLabDocs/assets/images/Example3-4-code.JPG" class="center"/>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

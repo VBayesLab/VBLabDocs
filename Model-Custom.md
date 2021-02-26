@@ -45,8 +45,8 @@ It is not required to use exactly same name for function and input/output argume
 ### Example: Define a Logistic Regression model as a function handle. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_Logistics_Function_Handle.m){: .fs-4 .btn .btn-purple  .float-right}
 {: #example-handler}
 
-This example shows how to define a Logistics Regression model as function handles to run with the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
-[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistics Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
+This example shows how to define a Logistic Regression model as function handles to run with the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistic Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
 
 First, load the [LabourForce](/VBLabDocs/datasets/#labour-force) data as a matrix. The last column is the response variable. 
 ```m
@@ -127,7 +127,7 @@ end
 ```
 **Note:** 
 - The <samp>grad_h_func_logistics()</samp> function can be defined in a separated Matlab script named *grad_h_func_logistics.m* or defined in the same script running the example. For the latter case, the function has to be defined **at the end of the script**. 
-- In some cases, deriving the gradient $\Delta_\theta h(\theta)$ can be troublesome. We can compute it using Matlab's Automatic Differentiation facility, which is a technique for evaluating derivatives numerically and automatically. See [Matlab Automatic Differentiation tutorials](https://mathworks.com/help/deeplearning/ug/deep-learning-with-automatic-differentiation-in-matlab.html).
+- In some cases, deriving the gradient $\Delta_\theta h(\theta)$ can be troublesome. We can compute it using Matlab's Automatic Differentiation facility, which is a technique for evaluating derivatives numerically and automatically. See [Matlab Automatic Differentiation tutorials](https://mathworks.com/help/deeplearning/ug/deep-learning-with-automatic-differentiation-in-matlab.html). See example [define a Logistic Regression model as function handle using Matlab AutoDiff]({{site.baseurl}}{%link Example-CGVB-Bayesian-Logistics-Regression-AutoDiff.md%})
 
 ---
 

@@ -506,8 +506,9 @@ n_features = size(labour,2)-1;
 
 % Create a Logistic Regression model object
 Mdl = LogisticRegression(n_features,...
-					    'Prior',{'Normal',[0,50]});
+                        'Prior',{'Normal',[0,50]});
 ```
+Run NAGVAC to obtain VB approximation of the posterior distribution of model parameters. We use $200$ samples to estimate the gradient of lowerbound. 
 
 ```m                          
 %% Run NAGVAC with random initialization
@@ -519,7 +520,10 @@ Post_NAGVAC = NAGVAC(Mdl,labour,...
                     'GradientMax',200,...     % For gradient clipping    
                     'WindowSize',50, ...      % Smoothing window for lowerbound
                     'LBPlot',true);           % Dont plot the lowerbound when finish
-             
+```
+Given the estimation results, we can plot the variational distribution together with the lowerbound to check the performance of the NAGVAC algorithm.
+
+```m
 %% Plot variational distributions and lowerbound 
 figure
 % Extract variation mean and variance
@@ -542,6 +546,7 @@ grid on
 title('Lower bound')
 set(gca,'FontSize',15)   
 ```
+The plot of lowerbound shows that the NAGVAC algorithm works properly.
 
 <img src="/VBLabDocs/assets/images/Example-NAGVAC-Logistics-Lowerbound.jpg" class="center"/>
 

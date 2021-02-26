@@ -184,7 +184,7 @@ For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}),
 [grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
 
-### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Class.m){: .fs-4 .btn .btn-purple .float-right}
+### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/VAFC_Logistics_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
 
 This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 
@@ -193,79 +193,79 @@ For the detailed discussion of mathematical derivations and model properties, se
 First, we defined the <samp>VAR1</samp> class in a separated script named *VAR1.m*. See the Matlab code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
 ```m
 classdef VAR1
+    %VAR1 Class to model the VAR(1) model
     
-    % Define model-specific properties
-    properties
+    properties 
         ModelName      % Model name 
         NumParams      % Number of parameters
-        Post           % Struct to store training results   
-        Prior          % Struct to store priors information
+        Prior          % Prior object
         ParamIdx       % Indexes of model parameters in the vector of variational parameters
         Gamma          % Fix covarian matrix
     end
     
-    % Define model-specific methods
     methods
-        % Constructor. This will be automatically called when users create a CustomModel object
-        function obj = VAR1(NumSeries,NumObs)
+        % Constructor. This will be automatically called when users create a VAR1 object
+        function obj = VAR1(NumSeries)
             % Set value for ModelName and NumParams
-            ModelName  = 'VAR1';
-            NumParams  = NumSeries + NumSeries^2; 
-            Prior.mu   = 0;
-            Prior.var  = 1;
-            ParamIdx.c = 1:NumSeries;
-            ParamIdx.A = NumSeries+1:NumParams;
-            Gamma      =  0.1*eye(m);
+            obj.ModelName  = 'VAR1';                 
+            obj.NumParams  = NumSeries + NumSeries^2; 
+            obj.Prior      = [0,1]; % Use a normal distribution for prior
+            obj.ParamIdx.c = 1:NumSeries;
+            obj.ParamIdx.A = NumSeries+1:obj.NumParams;
+            obj.Gamma      =  0.1*eye(NumSeries);
         end
         
         % Function to compute gradient of h_theta and h_theta
-        function [h_func_grad, h_func] = hFunctionGrad(obj,data,theta)
+        function [h_func_grad, h_func] = hFunctionGrad(obj,y,theta)
             % Extract size of data
             [m,T] = size(y);
                 
-            % Extract model settings
-            pri_mu = setting.prior.mu; 
-            pri_var = setting.prior.var;
-            d = setting.num_params;
-            idx = setting.idx;
-            Gamma = setting.Gamma;
-            Gamma_inv = Gamma^(-1);
+            % Extract model properties
+            prior_params = obj.Prior;
+            d = obj.NumParams;
+            idx = obj.ParamIdx;
+            gamma = obj.Gamma;
+            gamma_inv = gamma^(-1);
 
             % Extract params from theta
             c = theta(idx.c);                               % c is a column
             A = reshape(theta(idx.A),length(c),length(c));  % A is a matrix
                 
             % Log prior
-            log_prior = -0.5*d*log(2*pi) - 0.5*log(pri_var) - (theta-pri_mu)'*(theta-pri_mu)/(2*pri_var);
+            log_prior = Normal.logPdfFnc(theta,prior_params);
                 
             % Log likelihood
             log_llh = 0;
             for t=2:T
-                log_llh = log_llh -0.5*(y(:,t) - A*y(:,t-1)-c)' * Gamma_inv * (y(:,t) - A*y(:,t-1)-c);
+                log_llh = log_llh -0.5*(y(:,t) - A*y(:,t-1)-c)' * gamma_inv * (y(:,t) - A*y(:,t-1)-c);
             end  
-            log_llh = log_llh - 0.5*m*(T-1)*log(2*pi) - 0.5*(T-1)*log(det(Gamma));
+            log_llh = log_llh - 0.5*m*(T-1)*log(2*pi) - 0.5*(T-1)*log(det(gamma));
 
             % Compute h_theta
-            h_theta = log_prior + log_llh;
+            h_func = log_prior + log_llh;
                 
             % Gradient log_prior
-            grad_log_prior = -theta/pri_var;
+            grad_log_prior = Normal.GradlogPdfFnc(theta,prior_params);
                 
             % Gradient log_llh;
             grad_llh_c = 0;
             grad_llh_A = 0;
             for t=2:T
-                grad_llh_c = grad_llh_c + Gamma_inv*(y(:,t) - A*y(:,t-1)-c);
-                grad_llh_A = grad_llh_A + kron(y(:,t-1),Gamma_inv*(y(:,t) - A*y(:,t-1)-c));
+                grad_llh_c = grad_llh_c + gamma_inv*(y(:,t) - A*y(:,t-1)-c);
+                grad_llh_A = grad_llh_A + kron(y(:,t-1),gamma_inv*(y(:,t) - A*y(:,t-1)-c));
             end
                 
             grad_llh = [grad_llh_c;grad_llh_A(:)];
                 
             % Compute Gradient of h_theta
-            grad_h_theta = grad_log_prior + grad_llh;
+            h_func_grad = grad_log_prior + grad_llh;
+            
+            % Make sure grad_h_theta is a column
+            h_func_grad = reshape(h_func_grad,d,1);
         end  
     end
 end
+
 ```
 
 Given the class <samp>VAR1</samp>, we can run an example of fit the VAR(1) model on a simulation data using CGVB algorithm as following
@@ -277,35 +277,33 @@ T = 100; % Number of observations
 % Generate simulation data
 y = randn(m,T);
 
-% Define a VAR(1) model object
-Mdl = VAR1(m,T)
+% Create a VAR1 model object
+Mdl = VAR1(m);
 
-% Run CGVB algorithm to estimate the model
-Post_CGVB_VAR = CGVB(Mdl,y,...
-                     'LearningRate',0.002,...       % Learning rate
-                     'NumSample',50,...             % Number of samples to estimate gradient of lowerbound
-                     'MaxPatience',20,...           % For Early stopping
-                     'MaxIter',5000,...             % Maximum number of iterations
-                     'InitMethod','Random',...      % Randomly initialize parameters using 
-                     'GradWeight1',0.9,...          % Momentum 1
-                     'GradWeight2',0.9,...          % Momentum 2
-                     'WindowSize',10,...            % Smoothing window for lowerbound
-                     'GradientMax',10,...           % For gradient clipping
-                     'LBPlot',false); 
+%% Run CGVB to fit the VAR1 model object
+Post_CGVB_VAR1 = CGVB(Mdl,y,...
+                      'LearningRate',0.002,...       % Learning rate
+                      'NumSample',50,...             % Number of samples to estimate gradient of lowerbound
+                      'MaxPatience',20,...           % For Early stopping
+                      'MaxIter',5000,...             % Maximum number of iterations
+                      'GradWeight1',0.9,...          % Momentum 1
+                      'GradWeight2',0.9,...          % Momentum 2
+                      'WindowSize',10,...            % Smoothing window for lowerbound
+                      'GradientMax',10,...           % For gradient clipping
+                      'LBPlot',false); 
 ```
 We can manually plot the variational distribution together with the lowerbound. The convergence of the lowerbound shows that the CGVB works properly in this example.
 ```m
-% Plot varitional distribution and of model parameters
+%% Plot variational distributions and lowerbound 
 figure
 % Extract variation mean and variance
-mu_vb     = Post_CGVB_VAR.Post.mu;
-sigma2_vb = Post_CGVB_VAR.Post.sigma2;
+mu_vb     = Post_CGVB_VAR1.Post.mu;
+sigma2_vb = Post_CGVB_VAR1.Post.sigma2;
 
 % Plot the variational distribution of each parameter
-for i=1:mdl.num_params
+for i=1:Post_CGVB_VAR1.Model.NumParams
     subplot(2,4,i)
-    vbayesPlot('Density',...
-               'Distribution',{'Normal',[mu_vb(i),sigma2_vb(i)]})
+    vbayesPlot('Density',{'Normal',[mu_vb(i),sigma2_vb(i)]})
     grid on
     title(['\theta_',num2str(i)])
     set(gca,'FontSize',15)
@@ -313,10 +311,10 @@ end
 
 % Plot the smoothed lower bound
 subplot(2,4,7)
-plot(Post_CGVB_VAR.Post.LB_smooth,'LineWidth',2)
+plot(Post_CGVB_VAR1.Post.LB_smooth,'LineWidth',2)
 grid on
 title('Lower bound')
-set(gca,'FontSize',15)
+set(gca,'FontSize',15)        
 ```
 
 <img src="/VBLabDocs/assets/images/Example-VAR1.jpg" class="center"/>

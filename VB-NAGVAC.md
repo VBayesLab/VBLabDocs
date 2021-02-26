@@ -19,13 +19,11 @@ Fit VBLab supported or custom models using the NAGVAC method
 ## Syntax
 
 ```matlab
-EstMdl = NAGVAC(Mdl,data,Name,Value)
+Post = NAGVAC(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`EstMdl = NAGVAC(Mdl,data,Name,Value)` run the NAGVAC algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
-
-`Post = NAGVAC(Mdl,data,Name,Value)` run the NAGVAC algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handler, and data `data`.
+`EstMdl = NAGVAC(Mdl,data,Name,Value)` run the NAGVAC algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -35,21 +33,13 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom model objects</header>
-#### Data type: VBLab model object | custome model object
+#### Data type: VBLab model object | custome model object | function handle
 <br>
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
 - or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-</div>
-
-<!--Function handle-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Func</span> - Function handle of the input model</header>
-#### Data type: function handle
-<br>
-The statistical models containing unknown parameters, specified as a function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms.
-See [how to define custom models as function handles](/VBLabDocs/model/custom#custom-handler).
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -74,14 +64,12 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
-|[`'BatchSize'`](#BatchSize)|`None`|  | Mini-batch size for stochastic gradient descent|
 |[`'GradWeight'`](#GradWeight)|`0.9`| $\alpha_m$ | Momentum weight|
 |[`'GradientMax'`](#GradientMax)| `10` | $\ell_\text{threshold}$ | Gradient clipping threshold|
 |[`'InitValue'`](#InitValue)|`None`| | Initial values of varitional mean |
 |[`'LBPlot'`](#LBPlot)|`true`| | Flag to plot the lowerbound or not |
 |[`'LearningRate'`](#LearningRate)|`0.01`| $\epsilon_0$  | Fixed learning rate|
 |[`'MaxIter'`](#MaxIter)|`1000`| | Maximum number of iterations |
-|[`'MaxEpoch'`](#MaxEpoch)|`None`| | Maximum number of epochs |
 |[`'MaxPatience'`](#MaxPatience)|`20` | $P$ | Maximum patience for early stopping |
 |[`'NumSample'`](#NumSample)|`50`| $S$ | Monte Carlo samples to estimate the lowerbound |
 |[`'NumParams'`](#NumParams)|`None`| | Number of model parameters |
@@ -96,6 +84,7 @@ Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the 
 |[`'Verbose'`](#Verbose)|`true`| | Flag to show real-time fitting information or not |
 |[`'WindowSize'`](#WindowSize)|`50`| | Rolling window size to smooth the lowerbound |
 
+{% comment %} 
 <!--BatchSize-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'BatchSize'</span> - Mini-batch size</h3></header>
@@ -116,6 +105,7 @@ By default, `'BatchSize'` is set to `None` indicating that all training data is 
 
 **Example:** `'BatchSize',1000`
 </div>
+{% endcomment %}
 
 <!--GradWeight-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
@@ -228,6 +218,7 @@ Maximum number of VB iterations for early stopping. If the [`'BatchSize'`](#Batc
 **Example:** `'MaxIter',1000`
 </div>
 
+{% comment %} 
 <!--MaxEpoch-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
 <header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'MaxEpoch'</span> - Maximum number of epochs</h3></header>
@@ -244,6 +235,7 @@ algorithm to scan entire training data.
 
 **Example:** `'MaxEpoch',100`
 </div>
+{% endcomment %}
 
 <!--MaxPatience-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
@@ -491,23 +483,67 @@ Estimation results, specified as a structure with these fields:
 | Sigma | Estimation of the variational covariance matrix | 
 | sigma2 | Diagonal of the variational covariance matrix   | 
 
-</div>
-
-<!--EstMdl-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
-{: #cgvb-object}
-#### Data type: VBLab model object| Custom model Object
-<br>
-If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
-
-</div>
-
 --- 
 
-## Examples
+## Examples [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/NAGVAC_Logistics_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
+{: #examples}
 
-1. [NAGVAC for DeepGLM models]({{site.baseurl}}{% link Example-NAGVAC-DeepGLM.md%}) 
+This example shows how to use NAGVAC to fit a logistic regression model on the [LabourForce](/VBLabDocs/datasets/#labour-force) dataset. First, Load the LabourForce data as a matrix. The last column is the response variable.
+
+```m
+% Random seed to reproduce results 
+rng(2020)
+
+% Load LabourForce data. 
+labour = readData('LabourForce',...     % Dataset name
+                  'Type','Matrix',...   % Store data as a 2D array (default)
+                  'Intercept', true);   % Add column of intercept (default)
+```
+Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $50$.
+```m
+% Compute number of features
+n_features = size(labour,2)-1;
+
+% Create a Logistic Regression model object
+Mdl = LogisticRegression(n_features,...
+					    'Prior',{'Normal',[0,50]});
+```
+
+```m                          
+%% Run NAGVAC with random initialization
+Post_NAGVAC = NAGVAC(Mdl,labour,...
+                    'NumSample',200,...       % Number of samples to estimate gradient of lowerbound
+                    'LearningRate',0.005,...  % Learning rate
+                    'MaxPatience',20,...      % For Early stopping
+                    'MaxIter',10000,...       % Maximum number of iterations
+                    'GradientMax',200,...     % For gradient clipping    
+                    'WindowSize',50, ...      % Smoothing window for lowerbound
+                    'LBPlot',true);           % Dont plot the lowerbound when finish
+             
+%% Plot variational distributions and lowerbound 
+figure
+% Extract variation mean and variance
+mu_vb     = Post_NAGVAC.Post.mu;
+sigma2_vb = Post_NAGVAC.Post.sigma2;
+
+% Plot the variational distribution for the first 8 parameters
+for i=1:n_features
+    subplot(3,3,i)
+    vbayesPlot('Density',{'Normal',[mu_vb(i),sigma2_vb(i)]})
+    grid on
+    title(['\theta_',num2str(i)])
+    set(gca,'FontSize',15)
+end
+
+% Plot the smoothed lower bound
+subplot(3,3,9)
+plot(Post_NAGVAC.Post.LB_smooth,'LineWidth',2)
+grid on
+title('Lower bound')
+set(gca,'FontSize',15)   
+```
+
+<img src="/VBLabDocs/assets/images/Example-NAGVAC-Logistics-Lowerbound.jpg" class="center"/>
 
 ---
 

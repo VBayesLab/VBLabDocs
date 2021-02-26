@@ -74,7 +74,6 @@ Distribution of the density to be plotted, specified as one of the following:
 #### Data Type: Array 
 <br>
 
-
-**Example:** <code style="color:#A020F0">'Activation','relu'</code>
+**Example:** <code style="color:#A020F0">'Ytrue',yTest</code>
 </div>
 </div>

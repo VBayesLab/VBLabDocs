@@ -23,7 +23,7 @@ data = readData(dataName,Name,Value)
 ## Description
 `data = readData(DataName,Name,Value)` returns one of the built-in datasets in selected format. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify if the data is stored in a 2D array or a table.
 
-See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
+See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments)
 
 ---
 

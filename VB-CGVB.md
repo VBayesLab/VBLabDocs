@@ -465,6 +465,7 @@ Estimation results, specified as a structure with these fields:
 --- 
 
 ## Examples
+{: #examples}
 
 1. [CGVB for Logistic Regression model defined as a LogisticRegression object]({{site.baseurl}}{% link Example-CGVB-Bayesian-Logistics-Regression.md%}) 
 2. [CGVB for Logistic Regression model defined as a function handler](/VBLabDocs/model/custom/#example-handler)

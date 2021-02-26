@@ -19,16 +19,12 @@ Fit VBLab supported or custom models using the Manifold GVB method
 ## Syntax
 
 ```matlab
-EstMdl = MGVB(Mdl,data,Name,Value)
+Post = MGVB(Mdl,data,Name,Value)
 ```
-```matlab
-Post = MGVB(Func,data,Name,Value)
-```
+
 ---
 ## Description
-`EstMdl = MGVB(Mdl,data,Name,Value)` run the MGVB algorithm to return the fitted model `EstMdl` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or user-defined model object. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
-
-`Post = MGVB(Mdl,data,Name,Value)` run the MGVB algorithm to return the Bayesian approximation `Post` given the model `Func`, specified as a function handle, and data `data`.
+`Post = MGVB(Mdl,data,Name,Value)`  run the MGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -38,24 +34,13 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 <!--model-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 <header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Mdl</span> - VBLab supported or custom model objects</header>
-#### Data type: VBLab model object | custome model object
+#### Data type: VBLab model object | custome model object | function handle
 <br>
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
 - or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-</div>
-
-<!--Function handle-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;color:Tomato">Func</span> - Function handle of the input model</header>
-#### Data type: function handle
-<br>
-The statistical models containing unknown parameters, specified as a function handle to compute the $h(\theta)$ term.
-See [how to define custom models as function handles](/VBLabDocs/model/custom#custom-handler).
-
-**Note:** The MGVB algorithm requires only $h(\theta)$ term of the statistical models to run the VB iterations. 
-
+- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -427,23 +412,53 @@ Estimation results, specified as a structure with these fields:
 | Sigma | Estimation of the variational covariance matrix | 
 | sigma2 | Diagonal of the variational covariance matrix | 
 
-</div>
-
-<!--EstMdl-->
-<div class="code-example" markdown="1" style="background-color:White;padding:20px;">
-<header style="font-weight:bold;font-size:20px"><span style="font-family:monospace;font-size:20px;font-weight:bold;color:Tomato">EstMdl</span> - Model Object </header>
-{: #mgvb-object}
-#### Data type: VBLab model object| Custom model Object
-<br>
-If the model object `Mdl` is provided, the output `EstMdl` is the model object `Mdl` with the estimation results are stored in the object property `Post`. The `Post` property is a struct with fields discussed previously. 
-
-</div>
-
 --- 
 
-## Examples
+## Examples [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/MGVB_Logistics_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
+{: #examples}
 
-1. [MGVB for RECH model defined as a RECH model object]({{site.baseurl}}{% link Example-MGVB-RECH.md%}) 
+This example shows how to use MGVB to fit a logistic regression model on the [LabourForce](/VBLabDocs/datasets/#labour-force) dataset. First, Load the LabourForce data as a matrix. The last column is the response variable.
+
+```m
+% Random seed to reproduce results 
+rng(2020)
+
+% Load the LabourForce dataset
+labour = readData('LabourForce',...     % Dataset name
+                  'Type','Matrix',...   % Store data as a 2D array (default)
+                  'Intercept', true);   % Add column of intercept (default)
+```
+Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $50$.
+
+```m
+% Compute number of features
+n_features = size(labour,2)-1;
+
+% Create a Logistic Regression model object
+Mdl = LogisticRegression(n_features,...
+                         'Prior',{'Normal',[0,50]});
+```
+Run MGVB to obtain VB approximation of the posterior distribution of model parameters.
+```m         
+% Run Cholesky GVB to approximate the posterior distribution of model 
+% using a multivariate normal density
+Post_CGVB = MGVB(Mdl,labour,...
+                 'LearningRate',0.001,...  % Learning rate
+                 'NumSample',100,...       % Number of samples to estimate gradient of lowerbound 
+                 'MaxPatience',50,...      % For Early stopping
+                 'MaxIter',2000,...        % Maximum number of iterations
+                 'GradWeight',0.4,...      % Momentum weigth
+                 'WindowSize',30,...       % Smoothing window for lowerbound
+                 'SigInitScale',0.04,...   % Std of normal distribution for initializing  
+                 'StepAdaptive',500,...    % For adaptive learning rate   
+                 'GradientMax',100,...     % For gradient clipping     
+                 'LBPlot',true);           % Plot the smoothed lowerbound at the end
+```
+
+The plot of lowerbound shows that the CGVB algorithm converges well. However, the algorithm can converge better by increasing the number of iterations, patience or learning rate. 
+
+<img src="/VBLabDocs/assets/images/Example-MGVB-Logistics.jpg" class="center"/>
+
 
 ---
 

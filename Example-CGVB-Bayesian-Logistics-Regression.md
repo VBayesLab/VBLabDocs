@@ -126,7 +126,7 @@ title('Lower bound','FontSize', fontsize)
 ```
 The trace plots of MCMC samples of model parameters shows that the MCMC algorithm works properly. 
 
-<img src="/VBLabDocs/assets/images/Example3-4-trace.JPG" class="center"/>
+<img src="/VBLabDocs/assets/images/Example3-4-trace.jpg" class="center"/>
 
 The plots of variational densities and true posterior densities show that the CGVB algorithm works efficiently in this example.  
 

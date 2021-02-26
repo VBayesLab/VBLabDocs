@@ -14,63 +14,98 @@ This example implements the [example 3.4](/VBLabDocs/tutorial/example#example3-4
 Load the LabourForce data as a matrix. The last column is the response variable.
 
 ```m
+% Random seed to reproduce results 
+rng(2020)
+
 % Load the LabourForce dataset
 labour = readData('LabourForce',...
                   'Type','Matrix',...
                   'Intercept',true);
 ```
-Create a LogisticRegression model object by specifying the number of parameters as the input argument. Use the default priors for model coefficients. 
+Create a LogisticRegression model object by specifying the number of parameters as the input argument. Use normal distribution with zero mean and $50$ variance priors for model coefficients. 
 ```m
 % Number of input features
 n_features = size(labour,2)-1;
 % Define a LogisticRegression model object
-Mdl = LogisticRegression(n_features);
+Mdl = LogisticRegression(n_features,...
+                         'Prior',{'Normal',[0,50]});
 ```
-Run CGVB to obtain VB approximation of the posterior distribution of model parameters. 
+Run CGVB to obtain VB approximation of the posterior distribution of model parameters. By default, the algorithm will initialize the variational parameters using a normal distribution with a small variance. 
 ```m
-% Run CGVB to obtain VB approximation of the posterior distribution
-Estmdl = CGVB(Mdl,labour,...
-              'LearningRate',0.002,...  % Learning rate
-              'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
-              'MaxPatience',20,...      % For Early stopping
-              'MaxIter',5000,...        % Maximum number of iterations
-              'GradWeight1',0.9,...     % Momentum weight 1
-              'GradWeight2',0.9,...     % Momentum weight 2
-              'WindowSize',10,...       % Smoothing window for lowerbound
-              'GradientMax',10,...      % For gradient clipping
-              'LBPlot',true);           % Plot the lowerbound when finish
+%% Run Cholesky GVB with random initialization
+Estmdl_1  = CGVB(Mdl,labour,...
+                'LearningRate',0.002,...  % Learning rate
+                'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
+                'MaxPatience',20,...      % For Early stopping
+                'MaxIter',5000,...        % Maximum number of iterations
+                'GradWeight1',0.9,...     % Momentum weight 1
+                'GradWeight2',0.9,...     % Momentum weight 2
+                'WindowSize',10,...       % Smoothing window for lowerbound
+                'StepAdaptive',500,...    % For adaptive learning rate
+                'GradientMax',10,...      % For gradient clipping    
+                'LBPlot',false);          % Dont plot the lowerbound when finish
 ```
-The plot of lowerbound shows that the CGVB algorithm converges well. 
+Or we can manually specify initial values for variational mean. A convenient choice is to use MLE estimation of model parameters, if available. 
+
+```m
+%% Run Cholesky GVB with MLE initialization
+% Random seed to reproduce results 
+rng(2020)
+
+theta_init = Mdl.initParams('MLE',labour); 
+Estmdl_2  = CGVB(Mdl,labour,...
+                'MeanInit',theta_init,... % Initial values of variational mean
+                'LearningRate',0.002,...  % Learning rate
+                'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
+                'MaxPatience',20,...      % For Early stopping
+                'MaxIter',5000,...        % Maximum number of iterations
+                'GradWeight1',0.9,...     % Momentum weight 1
+                'GradWeight2',0.9,...     % Momentum weight 2
+                'WindowSize',10,...       % Smoothing window for lowerbound
+                'StepAdaptive',500,...    % For adaptive learning rate
+                'GradientMax',10,...      % For gradient clipping    
+                'LBPlot',false);          % Dont plot the lowerbound when finish
+```
+We then can compare the covergence of the lowerbound in two cases.
+```m
+% Compare convergence of lowerbound in 2 cases 
+figure
+hold on
+grid on
+plot(Estmdl_1.Post.LB_smooth,'-r','LineWidth',2)
+plot(Estmdl_2.Post.LB_smooth,'--b','LineWidth',2)
+title('Lowerbound')
+legend('Random Initialization','MLE Initialization' )
+```
+
+The plot of lowerbound shows that the CGVB algorithm converges well. The algorithm converge much faster when we use MLE estimates as starting points. This example shows that choosing initial values for variational parameters is very important for VB methods in general.  
 
 <img src="/VBLabDocs/assets/images/example3-4-lowerbound.jpg" class="center"/>
 
 We can check how close of the variational distribution to the true posterior densities of model paramters. We run MCMC to obtain samples of model parameters from theirs posterior distribution. 
 
 ```m
-% Run MCMC
+% It is useful to compare the approximate posterior density to the true density obtain by MCMC
 Post_MCMC = MCMC(Mdl,labour,...
-                 'NumMCMC',50000);    % Number of samples (MCMC iterations)
+                 'NumMCMC',50000,...         % Number of MCMC iterations
+                 'ParamsInit',theta_init,... % Using MLE estimates as initial values
+                 'Verbose',100);             % Display sampling information after each 100 iterations
 ```
 Given the MCMC samples of the posterior density of model paramters, we can compare the true and approximate posterior distribution.
 
 ```m  
-% Compare VB and MCMC
+% Compare densities by CGVB and MCMC
 % Get posterior mean and trace plot for a parameter to check the mixing 
-[mcmc_mean,mcmc_std,mcmc_chain] = Post_MCMC.getParamsMean('BurnInRate',0.4,...
-                                                          'PlotTrace',1);
+[mcmc_mean,mcmc_std,mcmc_chain] = Post_MCMC.getParamsMean('BurnInRate',0.4,... % Burn-in rate
+                                                          'PlotTrace',1);      % Trace plot of theta 1
 
 % Plot density
 fontsize  = 20;
-numparams = Mdl.ParamNum;
+numparams = Estmdl_2.Model.NumParams;
 
 % Extract variation mean and variance
-mu_vb     = Estmdl.Post.mu;
-sigma2_vb = Estmdl.Post.sigma2;
-
-% Compute MLE estimation
-X = labour(:,1:end-1);
-y = labour(:,end)
-[mu_mle,~,stats] = glmfit(X,y,'binomial','constant','off'); 
+mu_vb     = Estmdl_2.Post.mu;
+sigma2_vb = Estmdl_2.Post.sigma2;
 
 figure
 for i = 1:numparams
@@ -79,14 +114,16 @@ for i = 1:numparams
     yy_mcmc = ksdensity(mcmc_chain(:,i),xx);    
     yy_vb = normpdf(xx,mu_vb(i),sqrt(sigma2_vb(i)));    
     plot(xx,yy_mcmc,'-k',xx,yy_vb,'--b','LineWidth',1.5)
-    line([mu_mle(i) mu_mle(i)],ylim,'LineWidth',1.5,'Color','r')    
+    line([theta_init(i) theta_init(i)],ylim,'LineWidth',1.5,'Color','r')    
     str = ['\theta_', num2str(i)];   
     title(str,'FontSize', fontsize)
     legend('MCMC','VB')
 end
 subplot(3,3,9)
-plot(Estmdl.Post.LB_smooth,'LineWidth',1.5)
+plot(Estmdl_2.Post.LB_smooth,'LineWidth',1.5)
 title('Lower bound','FontSize', fontsize)
 ```
+<img src="/VBLabDocs/assets/images/Example3-4-trace.JPG" class="center"/>
+
 <img src="/VBLabDocs/assets/images/Example3-4-code.JPG" class="center"/>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

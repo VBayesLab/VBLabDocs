@@ -7,7 +7,7 @@ permalink: /model/deepglm/
 block_color: GhostWhite
 ---
 
-# <samp>DeepGLM</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/DeepGLM.m){: .fs-4 .btn .btn-purple .float-right}
+# <samp>DeepGLM</samp> class 
 Create DeepGLM model object 
 {: .fs-6 .fw-300 }
 
@@ -142,6 +142,11 @@ Use the object methods to initialize model parameters, predict responses, and to
 --- 
 
 ## Examples
+{: #examples}
+
+To be updated...
+
+{% comment %} 
 <!--Continuous response-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
@@ -225,7 +230,7 @@ Make prediction with the test data. Given the true labels, we can compute the mi
                            'Loss',{'PPS','MCR'});      % Compute predictive scores in PPS and MCR
 ```
 </div>
-
+{% endcomment %}
 ---
 
 ## Reference

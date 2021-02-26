@@ -184,7 +184,7 @@ For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}),
 [grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
 
-### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/VAFC_Logistics_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
+### Example: Define a VAR(1) model as a Matlab class. [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_VAR1_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
 {: #example-class}
 
 This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 

@@ -7,7 +7,7 @@ permalink: /model/rech/
 block_color: GhostWhite
 ---
 
-# <samp>RECH</samp> class [Github code](https://github.com/VBayesLab/VBLab/blob/main/VBLab/Models/RECH.m){: .fs-4 .btn .btn-purple  .float-right}
+# <samp>RECH</samp> class
 {: .fs-8 }
 Create a RECH model object 
 {: .fs-6 .fw-300 }
@@ -166,11 +166,16 @@ Use the object methods to initialize model parameters, predict responses, and to
 --- 
 
 ## Examples
+{: #examples}
+
+To be updated...
+
+{% comment %} 
 <!--SP500-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
 ## <span style="font-weight:bold;font-size:20px">Fit a RECH model to stock index data</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
-{: #logistic-binary}
+{: #rech-sp500}
 Fit a RECH model to the SP500 index data using [MGVB]({{site.baseurl}}{% link VB-MGVB.md %})
 
 Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
@@ -219,7 +224,7 @@ Given the fitted RECH model `Estmdl`, we can make one-step-ahead forecast given 
                              'Loss',{'PPS','MSE'});   % Compute predictive scores in PPS and MSE
 ```
 </div>
-
+{% endcomment %}
 ---
 
 ## Reference

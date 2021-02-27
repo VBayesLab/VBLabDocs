@@ -201,7 +201,7 @@ set(gca,'FontSize',15)
 
 The plot of lowerbound shows that the CGVB algorithm works properly.
 
-<img src="/VBLabDocs/assets/images/Example-NAGVAC-Logistics-Lowerbound.jpg" class="center"/>
+<img src="/VBLabDocs/assets/images/Example3-4-code-simple.jpg" class="center"/>
 
 </div>
 

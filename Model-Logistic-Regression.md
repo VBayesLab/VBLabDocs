@@ -139,7 +139,7 @@ Use the object methods to initialize model parameters, predict responses, and to
 <!--Continuous response-->
 <div class="code-example" markdown="1" style="background-color:White;padding:20px;">
 
-## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/Tutorial-on-VB){: .fs-4 .btn .btn-purple  .float-right}
+## <span style="font-weight:bold;font-size:20px">Fit a LogisticRegression model for binary response</span> [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/CGVB_Logistics_Model_Object_Simple.m){: .fs-4 .btn .btn-purple  .float-right}
 {: #logistic-binary}
 Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({{site.baseurl}}{% link VB-CGVB.md %})
 

@@ -26,7 +26,7 @@ Key features:
 
 ### Install VBLab package
 
-1. Download or clone the VBLab package on [VBLab Github Page](https://github.com/VBayesLab/Tutorial-on-VB)
+1. Download or clone the VBLab package on [VBLab Github Page](https://github.com/VBayesLab/VBLab)
 2. Add the VBLab package, with all subfolders, to the Matlab search path. See [How to add or remove folders to Matlab search path](https://au.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html)
 
 ### How to start

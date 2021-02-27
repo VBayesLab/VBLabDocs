@@ -5,7 +5,7 @@
 layout: default
 title: VBLab Home
 nav_order: 1
-description: "Official documentation for the VBLab package"
+description: "Official documentation of VBLab"
 permalink: /
 ---
 

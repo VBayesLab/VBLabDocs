@@ -143,13 +143,13 @@ Use the object methods to initialize model parameters, predict responses, and to
 {: #logistic-binary}
 Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({{site.baseurl}}{% link VB-CGVB.md %})
 
-Load the LabourForce data using the [<span style="font-family:monospace">readdata()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
+Load the LabourForce data using the [<span style="font-family:monospace">readData()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
 The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the LabourForce dataset
-labour = readdata('LabourForce',...
-                  'Type','Matrix',...
-                  'Intercept',true);
+labour = readData('LabourForce',...    % Dataset name
+                  'Type','Matrix',...  % Store data as a 2D array (default)
+                  'Intercept',true);   % Add column of intercept (default)
 ```
 Create a LogisticRegression model object by specifying the number of parameters as the input argument. Change the variance of the normal prior to $10$.
 ```matlab
@@ -159,23 +159,50 @@ n_features = size(labour,2)-1;
 Mdl = LogisticRegression(n_features,...
                          'Prior',{'Normal',[0,10]});
 ```
-Run CGVB to obtain VB approximation of the posterior distribution of model parameters. Use [<span style="font-family:monospace">trainTestSplit()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function to split `labour` to training and test data. 
+Run CGVB to obtain VB approximation of the posterior distribution of model parameters.
 ```matlab
-% Train/Test split
-[labour_train, labour_test] = trainTestSplit(labour,0.2);
-% Run CGVB to obtain VB approximation of the posterior distribution
-Estmdl = CGVB(Mdl,labour_train,...
-              'LearningRate',0.01,...    % Use a small learning rate
-              'Validation',0.15,...      % Use 15% number of observations fpr validation    
-              'Loss','PPS');             % Use PPS as the predictive metric
+%% Run Cholesky GVB with random initialization
+Post_CGVB = CGVB(Mdl,labour,...
+                'LearningRate',0.002,...  % Learning rate
+                'NumSample',50,...        % Number of samples to estimate gradient of lowerbound
+                'MaxPatience',20,...      % For Early stopping
+                'MaxIter',5000,...        % Maximum number of iterations
+                'GradWeight1',0.9,...     % Momentum weight 1
+                'GradWeight2',0.9,...     % Momentum weight 2
+                'WindowSize',10,...       % Smoothing window for lowerbound
+                'StepAdaptive',500,...    % For adaptive learning rate
+                'GradientMax',10,...      % For gradient clipping    
+                'LBPlot',false);          % Dont plot the lowerbound when finish
 ```
-Given the fitted LogisticRegression model `Estmdl`, we can make prediction with new data. Set `'YTest'` to `true` to indicate that the last column of test data contains true responses. Use `'Loss'` argument to specify predictive scores we want to compute. Given the true labels, we can compute the miss-classification rate (MCR) and PPS as the predictive scores.    
+Given the estimation results, we can plot the variational distribution together with the lowerbound to check the performance of the CGVB algorithm.
 ```matlab
-% Make prediction with new data and compute prediction scores in PPS and MCR
-[Pred,Error] = vbayesPredict(Estmdl,labour_test,...
-                             'YTest',true,...            % There are true response
-                             'Loss',{'PPS','MCR'});      % Compute predictive scores in PPS and MCR
+% Plot variational distributions and lowerbound 
+figure
+% Extract variation mean and variance
+mu_vb     = Post_CGVB.Post.mu;
+sigma2_vb = Post_CGVB.Post.sigma2;
+
+% Plot the variational distribution for the first 8 parameters
+for i=1:8
+    subplot(3,3,i)
+    vbayesPlot('Density',{'Normal',[mu_vb(i),sigma2_vb(i)]})
+    grid on
+    title(['\theta_',num2str(i)])
+    set(gca,'FontSize',15)
+end
+
+% Plot the smoothed lower bound
+subplot(3,3,9)
+plot(Post_CGVB.Post.LB_smooth,'LineWidth',2)
+grid on
+title('Lower bound')
+set(gca,'FontSize',15)
 ```
+
+The plot of lowerbound shows that the CGVB algorithm works properly.
+
+<img src="/VBLabDocs/assets/images/Example-NAGVAC-Logistics-Lowerbound.jpg" class="center"/>
+
 </div>
 
 ---

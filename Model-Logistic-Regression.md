@@ -183,7 +183,7 @@ mu_vb     = Post_CGVB.Post.mu;
 sigma2_vb = Post_CGVB.Post.sigma2;
 
 % Plot the variational distribution for the first 8 parameters
-for i=1:8
+for i=1:n_features
     subplot(3,3,i)
     vbayesPlot('Density',{'Normal',[mu_vb(i),sigma2_vb(i)]})
     grid on

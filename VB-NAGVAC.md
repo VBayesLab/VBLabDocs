@@ -23,7 +23,7 @@ Post = NAGVAC(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`EstMdl = NAGVAC(Mdl,data,Name,Value)` run the NAGVAC algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`EstMdl = NAGVAC(Mdl,data,Name,Value)` runs the NAGVAC algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom model. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -60,7 +60,7 @@ For time series data, the data can be stored in a row or column 1D array.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the CGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
+**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the NAGVAC algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
 
 |Name   | Default Value |Notation|Description |
 |:------|:------------|:------------|:------------|
@@ -130,7 +130,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value to prevent the exploding gradient problem that occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -273,7 +273,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 #### Data Type: Integer | Positive
 <br>
 Number of model parameters. 
-- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
+- If the handle of the function calculating the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
 - If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
@@ -305,7 +305,7 @@ Flag to save variational parameters in each VB iteration.
 <br>
 Additional settings that could be use to define custom models as function handlers. 
 
-The most efficient way to define these additinal as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
+The most efficient way is to define these additional setting as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
 
 **Default:** `None`
 
@@ -350,7 +350,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
+The iteration to start reducing learning rate, which is denoted as $\tau$ in [Algorithm 9](/VBLabDocs/tutorial/ffvb/vafc#algorithm-9). 
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
@@ -396,7 +396,7 @@ For the PPS:
 
 #### Data Type: double between 0 and 1 | Integer
 <br>
-Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smnaller than the number of training observations.
+Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smaller than the number of training observations.
 
 **Note:** This option is only available for cross-sectional (tabular) data. 
 

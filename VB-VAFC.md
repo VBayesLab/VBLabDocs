@@ -23,7 +23,7 @@ Post = VAFC(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`Post = VAFC(Mdl,data,Name,Value)` run the VAFC algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`Post = VAFC(Mdl,data,Name,Value)` runs the VAFC algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom model. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -38,8 +38,8 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
+- or [function handle to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->

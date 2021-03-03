@@ -24,7 +24,7 @@ Post = CGVB(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`Post = CGVB(Mdl,data,Name,Value)` runs the CGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`Post = CGVB(Mdl,data,Name,Value)` runs the CGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom model. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -374,7 +374,7 @@ For the PPS:
 
 #### Data Type: double between 0 and 1 | Integer
 <br>
-Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smnaller than the number of training observations.
+Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smaller than the number of training observations.
 
 **Note:** This option is only available for cross-sectional (tabular) data. 
 

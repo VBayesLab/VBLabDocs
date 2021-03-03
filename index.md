@@ -41,7 +41,7 @@ Key features:
 
 - **Trong-Nghia Nguyen**, PhD candidate, The University of Sydney Business School. ([Google scholar](https://scholar.google.com.vn/citations?user=4fEGoI8AAAAJ&hl=en), [Research gate](https://www.researchgate.net/profile/Nghia_Nguyen79), [LinkedIn](https://www.linkedin.com/in/nguyen-nghia-458b3097/))
 - **Minh-Ngoc Tran**, Associate Professor, The University of Sydney Business School. ([Google scholar](https://scholar.google.com/citations?user=98A6Dq8AAAAJ&hl=en), [Research gate](https://www.researchgate.net/profile/Minh-Ngoc-Tran), [Home Page](https://sites.google.com/site/mntran26/home))
-- **Viet-Hung Dao**, PhD Candidate, The University of New South Wales Business School. ([Home Page](https://acems.org.au/our-people/hung-dao))
+- **Viet-Hung Dao**, PhD Candidate, The University of New South Wales Business School. ([Google scholar](https://scholar.google.com/citations?user=D7SJexgAAAAJ&hl=en&authuser=1&fbclid=IwAR2kh8zpH5Qx2ihhuG8jyBJueoe6N8Te0nttHNAim1v0orC_bnddIcmcXLw), [Research gate](https://www.researchgate.net/profile/Hung-Dao-3), [Home Page](https://acems.org.au/our-people/hung-dao))
 
 --- 
 

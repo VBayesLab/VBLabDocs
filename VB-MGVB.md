@@ -24,7 +24,7 @@ Post = MGVB(Mdl,data,Name,Value)
 
 ---
 ## Description
-`Post = MGVB(Mdl,data,Name,Value)`  run the MGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`Post = MGVB(Mdl,data,Name,Value)` runs the MGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom model. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -39,8 +39,8 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
+- or [function handle to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -61,7 +61,7 @@ For time series data, the data can be stored in a row or column 1D array.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the CGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
+**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the MGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
 
 
 
@@ -110,7 +110,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of the the gradient to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value of the the gradient to prevent the exploding gradient problem that occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -124,7 +124,7 @@ The maximum value of the the gradient to prevent the exploding gradient problem 
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of the the gradient to prevent the exploding gradient problem occurs when the gradient gets too large after the first VB iteration.
+The maximum value of the the gradient to prevent the exploding gradient problem that occurs when the gradient gets too large after the first VB iteration.
 
 **Default:** `None`
 
@@ -156,7 +156,7 @@ Intialization method of variational mean, can be specified as following options:
 
 <!--InitValue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial values of varitional mean</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial value of varitional mean</h3></header>
 {: #InitValue}
 
 #### Data Type: Column vector 
@@ -248,7 +248,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 #### Data Type: Integer | Positive
 <br>
 Number of model parameters. 
-- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
+- If the handle of the function calculating the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
 - If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
@@ -280,7 +280,7 @@ Flag to save variational parameters in each VB iteration.
 <br>
 Additional settings that could be use to define custom models as function handlers. 
 
-The most efficient way to define these additinal as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
+It is the most efficient to define these additional setting as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
 
 **Default:** `None`
 
@@ -385,7 +385,7 @@ By default, the index of the current iteration and lowerbound are shown in every
 
 #### Data Type: Integer | Positive
 <br>
-Size of moving average window that used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Size of moving average window that is used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
 
 **Default:** `50`
 
@@ -440,9 +440,9 @@ Mdl = LogisticRegression(n_features,...
 ```
 Run MGVB to obtain VB approximation of the posterior distribution of model parameters.
 ```m         
-% Run Cholesky GVB to approximate the posterior distribution of model 
+% Run MGVB to approximate the posterior distribution of model 
 % using a multivariate normal density
-Post_CGVB = MGVB(Mdl,labour,...
+Post_MGVB = MGVB(Mdl,labour,...
                  'LearningRate',0.001,...  % Learning rate
                  'NumSample',100,...       % Number of samples to estimate gradient of lowerbound 
                  'MaxPatience',50,...      % For Early stopping
@@ -455,7 +455,7 @@ Post_CGVB = MGVB(Mdl,labour,...
                  'LBPlot',true);           % Plot the smoothed lowerbound at the end
 ```
 
-The plot of lowerbound shows that the CGVB algorithm converges well. However, the algorithm can converge better by increasing the number of iterations, patience or learning rate. 
+The plot of lowerbound shows that the MGVB algorithm converges well. However, the algorithm can converge better by increasing the number of iterations, patience or learning rate. 
 
 <img src="/VBLabDocs/assets/images/Example-MGVB-Logistics.jpg" class="center"/>
 

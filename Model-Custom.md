@@ -16,7 +16,7 @@ VBLab provides several ways for custom-built models that work with VB algorithm 
 
 ## Define custom models as function handles
 {: #custom-handler}
-The supported VB algorithms take statistical models and training data as inputs in order to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. These model- and data-specific information can be provided to the VB algorithms as a function handle with some rules. The following template is suggested when users define their statistical models as functions to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms in each iteration of the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
+The supported VB algorithms take statistical models and training data as inputs in order to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms. This model- and data-specific information can be provided to the VB algorithms as a function handle with some rules. The following template is suggested when users define their statistical models as functions to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms in each iteration of the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
 [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms.
 
 ```m
@@ -28,7 +28,7 @@ For the [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) algorithm, users only need 
 function h_func = h_func(data,theta,setting)
 end
 ```
-It is not required to use exactly same name for function and input/output arguments but the input and outputs arguments have to be defined exactly in the same order. Descriptions for input and output arguments are as follow
+It is not required to use exactly the same name for function and input/output arguments but the input and outputs arguments have to be defined exactly in the same order. Descriptions for input and output arguments are as follows
 
 | Input | Description|
 |:-----|:------|
@@ -83,7 +83,7 @@ Post = CGVB(@grad_h_func_logistics,...  % Function handle to define the custom m
 The output `Post` is a struct storing information about estimation results and the VB algorithm. See the output of [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
 [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) for more details.  
 
-We then define the function `grad_h_func_logistics` to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).
+We then define the function `grad_h_func_logistics` to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms using their mathematical derivation shown in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4).
 
 ```m
 % Define gradient of h function for Logistic regression 
@@ -127,7 +127,7 @@ end
 ```
 **Note:** 
 - The <samp>grad_h_func_logistics()</samp> function can be defined in a separated Matlab script named *grad_h_func_logistics.m* or defined in the same script running the example. For the latter case, the function has to be defined **at the end of the script**. 
-- In some cases, deriving the gradient $\Delta_\theta h(\theta)$ can be troublesome. We can compute it using Matlab's Automatic Differentiation facility, which is a technique for evaluating derivatives numerically and automatically. See [Matlab Automatic Differentiation tutorials](https://mathworks.com/help/deeplearning/ug/deep-learning-with-automatic-differentiation-in-matlab.html). See example [define a Logistic Regression model as function handle using Matlab AutoDiff]({{site.baseurl}}{%link Example-CGVB-Bayesian-Logistics-Regression-AutoDiff.md%})
+- In some cases, deriving the gradient $\nabla_\theta h(\theta)$ can be troublesome. We can compute it using Matlab's Automatic Differentiation facility, which is a technique for evaluating derivatives numerically and automatically. See [Matlab Automatic Differentiation tutorials](https://mathworks.com/help/deeplearning/ug/deep-learning-with-automatic-differentiation-in-matlab.html). See example [define a Logistic Regression model as function handle using Matlab AutoDiff]({{site.baseurl}}{%link Example-CGVB-Bayesian-Logistics-Regression-AutoDiff.md%})
 
 ---
 
@@ -174,12 +174,12 @@ The two following properties have to be defined and assigned values within the c
 |`NumParams` | Integer| Number of model parameters| 
 
 In general, the <samp>hFunctionGrad()</samp> and <samp>hFunction()</samp> methods are defined in the same way and play the same role as the corresponding functions discussed in the previous section. However, there are two main differences between two approaches:
-- First, users have to name the methods to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms exactly as <samp>hFunctionGrad</samp> and <samp>hFunction</samp> while the class name and hence the class constructor name can be defined arbitrarily.
-    - The VB classes such as [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}), [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}), [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) then will call the <samp>hFunctionGrad</samp> method of the provided model object in each VB iteration to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms. 
+- First, users have to name the methods to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms exactly as <samp>hFunctionGrad</samp> and <samp>hFunction</samp> while the class name and hence the class constructor name can be defined arbitrarily.
+    - The VB classes such as [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}), [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}), [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) then will call the <samp>hFunctionGrad</samp> method of the provided model object in each VB iteration to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms. 
     - Similarly, the [MGVB]({{site.baseurl}}{%link VB-MGVB.md%}) class will call the <samp>hFunction</samp> method of the provided model object in each VB iteration to compute the $h(\theta)$ term.
 - Second, users can store additional information about the model in class properties and methods and hence don't need to use a struct to do the same task as discussed in the previous section. 
 
-For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) and [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) will run the following code to compute the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of the provided `model`.  
+For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}), [VAFC]({{site.baseurl}}{%link VB-VAFC.md%}) and [NAGVAC]({{site.baseurl}}{%link VB-NAGVAC.md%}) will run the following code to compute the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms of the provided `model`.  
 ```m
 [grad_h_theta,h_theta] = model.hFunctionGrad(data,theta); 
 ```
@@ -190,7 +190,7 @@ For example, the VB classes such as [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}),
 This example shows how to define a VAR(1) model using Matlab class and fit the model on a simulation data using [CGVB]({{site.baseurl}}{%link VB-CGVB.md%}) algorithm. 
 For the detailed discussion of mathematical derivations and model properties, see the example of [how to define a VAR(1) model as a function handle]({{site.baseurl}}{% link Example-CGVB-VAR1-FunctionHandle.md%}). We use standard normal distribution for the priors and a constant covariance matrix. 
 
-First, we defined the <samp>VAR1</samp> class in a separated script named *VAR1.m*. See the Matlab code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
+First, we define the <samp>VAR1</samp> class in a separated script named *VAR1.m*. See the Matlab code of the VAR1 class defined in this example [here](https://github.com/VBayesLab/VBLab/blob/main/Example/VAR1.m).
 ```m
 classdef VAR1
     %VAR1 Class to model the VAR(1) model

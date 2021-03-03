@@ -21,7 +21,7 @@ Mdl = RECH(Specs,Name,Value)
 ```
 ---
 ## Description
-`Mdl = RECH(Specs,Name,Value)` returns RECH model object `Mdl` given particular specification `Specs`. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify different choices of priors for model parameters.
+`Mdl = RECH(Specs,Name,Value)` returns RECH model object `Mdl` given particular specification `Specs`. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, users can specify different choices of priors for model parameters.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 

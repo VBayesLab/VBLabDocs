@@ -20,7 +20,7 @@ Mdl = LogisticRegression(NumFeatures,Name,Value)
 ```
 ---
 ## Description
-`mdl = LogisticRegression(NumFeatures,Name,Value)` returns LogisticRegression model object `Mdl` given number of model parameters `NumFeatures`. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, users can specify different choices of priors for model parameters.
+`mdl = LogisticRegression(NumFeatures,Name,Value)` returns LogisticRegression model object `Mdl` given number of model parameters `NumFeatures`. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, users can specify different choices of priors for model parameters.
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -144,7 +144,7 @@ Use the object methods to initialize model parameters, predict responses, and to
 Fit a LogisticRegression model to [LabourForce](/VBLabDocs/datasets/#labour-force) data using [CGVB]({{site.baseurl}}{% link VB-CGVB.md %})
 
 Load the LabourForce data using the [<span style="font-family:monospace">readData()</span>]({{site.baseurl}}{% link Utilities-Read-Data.md%}) function. 
-The data is a matrix with the last column is the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
+The data is a matrix with the last column being the response variable. Set the `'Intercept'` argument to be `true` to add a column of 1 to the data matrix as intercepts.  
 ```matlab
 % Load the LabourForce dataset
 labour = readData('LabourForce',...    % Dataset name

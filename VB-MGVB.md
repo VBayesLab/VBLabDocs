@@ -294,7 +294,7 @@ It is the most efficient to define these additional setting as a struct. This st
 
 #### Data Type: double
 <br>
-The constant factor $c$ to scale the initial values for the lower triangular matrix $L$.  
+The constant factor $c$ to scale the initial values.
 
 **Default:** `0.1`
 

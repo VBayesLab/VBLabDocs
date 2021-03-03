@@ -60,8 +60,7 @@ For time series data, the data can be stored in a row or column 1D array.
 
 Specify optional comma-separated pairs of `Name,Value` arguments. `Name` is the argument name and `Value` is the corresponding value. `Name` must appear inside quotes. You can specify several name and value pair arguments in any order as `Name1,Value1,...,NameN,ValueN`.
 
-**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the CGVB algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
-
+**Example:** `'LearningRate',0.001,'LBPlot',true` specifies that the learning rate of the VAFC algorithm is set to be $0.001$ and the plot of the covergence of the lowerbound is shown at the end of the algorithm.  
 
 
 |Name   | Default Value |Notation|Description |
@@ -111,7 +110,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value to prevent the exploding gradient problem that occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -143,7 +142,7 @@ Intialization method of variational mean, can be specified as following options:
 
 <!--InitValue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial values of varitional mean</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial value of varitional mean</h3></header>
 {: #InitValue}
 
 #### Data Type: Column vector 
@@ -267,7 +266,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 #### Data Type: Integer | Positive
 <br>
 Number of model parameters. 
-- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
+- If the handle of the function calculating the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
 - If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
@@ -299,7 +298,7 @@ Flag to save variational parameters in each VB iteration.
 <br>
 Additional settings that could be use to define custom models as function handlers. 
 
-The most efficient way to define these additinal as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
+The most efficient way is to define these additional setting as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
 
 **Default:** `None`
 
@@ -313,7 +312,7 @@ The most efficient way to define these additinal as a struct. This struct then w
 
 #### Data Type: double
 <br>
-The constant factor $c$ to scale the initial values for the lower triangular matrix $L$.  
+The constant factor $c$ to scale the initial values.
 
 **Default:** `0.1`
 
@@ -344,7 +343,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc)
+The iteration to start reducing learning rate, which is denoted as $\tau$ in the [VAFC section](/VBLabDocs/tutorial/ffvb/vafc#vafc)
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
@@ -390,7 +389,7 @@ For the PPS:
 
 #### Data Type: double between 0 and 1 | Integer
 <br>
-Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smnaller than the number of training observations.
+Number of observations of training data are used as validation data. The number of observations can be specified as a percentage (a number between 0 and 1) of training data or an integer smaller than the number of training observations.
 
 **Note:** This option is only available for cross-sectional (tabular) data. 
 
@@ -483,7 +482,7 @@ Estimation results, specified as a structure with these fields:
 ## Examples [Github code](https://github.com/VBayesLab/VBLab/blob/main/Example/VAFC_Logistics_Model_Object.m){: .fs-4 .btn .btn-purple .float-right}
 {: #examples}
 
-This example shows how to use MGVB to fit a logistic regression model on the [GermanCredit](/VBLabDocs/datasets/#german-credit) dataset. First, Load the GermantCredit data as a matrix. The last column is the response variable.
+This example shows how to use VAFC to fit a logistic regression model on the [GermanCredit](/VBLabDocs/datasets/#german-credit) dataset. First, Load the GermantCredit data as a matrix. The last column is the response variable.
 
 ```m
 % Random seed to reproduce results 
@@ -505,7 +504,7 @@ Mdl = LogisticRegression(n_features);
 ```
 Run VAFC to obtain VB approximation of the posterior distribution of model parameters. We use $10$ factors for the loading matrix of the variational covariance matrix. 
 ```m                          
-%% Run Cholesky GVB with random initialization
+%% Run VAFC with random initialization
 Post_VAFC = VAFC(Mdl,credit,...
                  'NumFactor',10, ...      % Number of factors of the loading matrix
                  'NumSample',50,...       % Number of samples to estimate gradient of lowerbound

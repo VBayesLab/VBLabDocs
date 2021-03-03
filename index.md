@@ -53,10 +53,12 @@ M.-N. Tran, T.-N. Nguyen and V.-H. Dao (2021). [A practical tutorial on Variatio
 
 **Or bibtex entry** :
 ```yaml
-@TECHREPORT{Tran:2021,
-	AUTHOR = "M.-N. Tran, T.-N. Nguyen and V.-H. Dao",
-	TITLE = "A practical tutorial on Variational Bayes",
-	YEAR = {2021},
-	NOTE = {DOI: 10.13140/RG.2.2.20173.59360},
+@misc{tran:2021,
+      title={A practical tutorial on Variational Bayes}, 
+      author={Minh-Ngoc Tran and Trong-Nghia Nguyen and Viet-Hung Dao},
+      year={2021},
+      eprint={2103.01327},
+      archivePrefix={arXiv},
+      primaryClass={stat.CO}
 }
 ```

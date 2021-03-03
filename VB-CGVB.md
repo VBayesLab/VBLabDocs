@@ -24,7 +24,7 @@ Post = CGVB(Mdl,data,Name,Value)
 ```
 ---
 ## Description
-`Post = CGVB(Mdl,data,Name,Value)` run the CGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specifies additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
+`Post = CGVB(Mdl,data,Name,Value)` runs the CGVB algorithm to return the estimation results `Post` given the model `Mdl` and data `data`. The model `Mdl` can be a VBLab supported or custom models. The custom models can be defined as class objects or function handles. `Name` and `Value` specify additional options using one or more name-value pair arguments. For example, you can specify how many samples used to estimate the lower bound. 
 
 See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), [Examples](#examples)
 
@@ -39,8 +39,8 @@ See: [Input Arguments](#input-arguments), [Output Argument](#output-arguments), 
 The statistical models containing unknown parameters, can be specified as:
 
 - [VBLab model object](/VBLabDocs/model#vblab-model).
-- or [custom model object including method to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
-- or [function handle to compute the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
+- or [custom model object including method to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom/#class-model)
+- or [function handle to compute the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms](/VBLabDocs/model/custom#custom-handler).
 </div>
 
 <!--data-->
@@ -127,7 +127,7 @@ Must be a number between $0$ and $1$.
 
 #### Data Type: Double | Positive
 <br>
-The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
+The maximum value of $\bar{g}$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb) to prevent the exploding gradient problem that occurs when the gradient gets too large, thus making the optimization for the model parameters (e.g., using gradient descent) highly unstable.
 
 **Default:** `100`
 
@@ -159,7 +159,7 @@ Intialization method of variational mean, can be specified as following options:
 
 <!--InitValue-->
 <div class="code-example" markdown="1" style="background-color:{{page.block_color}};padding:20px;">
-<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial values of varitional mean</h3></header>
+<header><h3><span style="color:#A020F0;font-weight:bold;font-family:monospace">'InitValue'</span> - Initial value of varitional mean</h3></header>
 {: #InitValue}
 
 #### Data Type: Column vector 
@@ -251,7 +251,7 @@ Number of Monte Carlo samples needed to estimate the gradient of the lower bound
 #### Data Type: Integer | Positive
 <br>
 Number of model parameters. 
-- If the handle of the function calculating the $h(\theta)$ and $\Delta_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
+- If the handle of the function calculating the $h(\theta)$ and $\nabla_\theta h(\theta)$ terms is provided, users have to specify a value for this argument. 
 - If a model object is specified, users have to set the number of parameters using the `NumParams` property of the model class. See [how to define a custom model as a Maltab class object](/VBLabDocs/model/custom/#class-model).
 
 **Default:** `None`
@@ -281,9 +281,9 @@ Flag to save variational parameters in each VB iteration.
 
 #### Data Type: struct
 <br>
-Additional settings that could be use to define custom models as function handlers. 
+Additional settings that could be used to define custom models as function handlers. 
 
-The most efficient way to define these additinal as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
+It's the most efficient o define these additional setting as a struct. This struct then will be passed to the function handlers as an input. See [how to define custom model as function handler](/VBLabDocs/model/custom/#custom-handlers).
 
 **Default:** `None`
 
@@ -328,7 +328,7 @@ Only specify this argument when the argument [`'InitMethod'`](#InitMethod) is se
 
 #### Data Type: Integer | Positive 
 <br>
-The iteration to start reducing learning rate, which is denote as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+The iteration to start reducing learning rate, which is denoted as $\tau$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
 
 By default, this is set as `'MaxIter'/2` or `'MaxEpoch'/2`. 
 
@@ -432,7 +432,7 @@ By default, the index of the current iteration and lowerbound are shown in every
 
 #### Data Type: Integer | Positive
 <br>
-Size of moving average window that used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
+Size of moving average window that is used to smooth the lowerbound. Denoted as $t_W$ in [Algorithm 7](/VBLabDocs/tutorial/ffvb/cgvb#algorithm-7-cholesky-gvb). 
 
 **Default:** `50`
 

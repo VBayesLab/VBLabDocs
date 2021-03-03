@@ -35,7 +35,7 @@ It is not required to use exactly the same name for function and input/output ar
 |`data`   | &bull; The training data. Denote as $y$ in VB algorithms. <br> &bull; This is also the `data` arguments when calling VB classes such as [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}), [VAFC]({{site.baseurl}}{% link VB-VAFC.md %}), [MGVB]({{site.baseurl}}{% link VB-MGVB.md%}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}).|
 |`theta`  | &bull; A column vector of model parameters in each VB iteration. Denote as $\theta$ in VB algorithms. <br> &bull; For GVB, $\theta$ is generated from a multivariate normal distribution. Then if $\theta$ is restricted, e.g. prior distribution is not normal, then a transformation of $\theta$ to original scale, together with the jacobian, have to be provided. |
 |`setting`| &bull; Additional settings of the custom models. <br> &bull; For example, prior distribution or some constant terms to define the models.|
-|`h_func_grad`|  &bull; Gradient vector $\Delta_\theta h(\theta) = \Delta_\theta \text{log}p(y \mid \theta) + \Delta_\theta \text{log} p(\theta)$.<br> &bull; Must be a column vector $1 \times D$ with $D$ the number of model parameters.|
+|`h_func_grad`|  &bull; Gradient vector $\nabla_\theta h(\theta) = \nabla_\theta \text{log}p(y \mid \theta) + \nabla_\theta \text{log} p(\theta)$.<br> &bull; Must be a column vector $1 \times D$ with $D$ the number of model parameters.|
 |`h_func`| &bull; $h(\theta) = \text{log} p(y \mid \theta) + \text{log} p(\theta)$. <br> &bull; Must be a scalar. |
 
 **Note:** 
@@ -46,7 +46,7 @@ It is not required to use exactly the same name for function and input/output ar
 {: #example-handler}
 
 This example shows how to define a Logistic Regression model as function handles to run with the [CGVB]({{site.baseurl}}{% link VB-CGVB.md %}),
-[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms. See mathematical derivation of the $\Delta_\theta h(\theta)$ and $h(\theta)$ terms of Logistic Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
+[VAFC]({{site.baseurl}}{% link VB-VAFC.md %}) and [NAGVAC]({{site.baseurl}}{% link VB-NAGVAC.md %}) algorithms. See mathematical derivation of the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms of Logistic Regression model in [the tutorial example 3.4](/VBLabDocs/tutorial/example#example3-4). 
 
 First, load the [LabourForce](/VBLabDocs/datasets/#labour-force) data as a matrix. The last column is the response variable. 
 ```m

@@ -22,7 +22,7 @@ labour = readData('LabourForce',...
                   'Type','Matrix',...
                   'Intercept',true);
 ```
-Prepare some variables needed to run the VB algorithm and to define the custom model.
+Prepare variables needed to run the VB algorithm and to define the custom model.
 ```m
 % Number of input features
 n_features = size(labour,2)-1;
@@ -87,7 +87,7 @@ function [h_func_grad,h_func] = grad_h_func_logistic_AD(data,theta,setting)
     h_func_grad = dlgradient(h_func,theta);    
 end
 ```
-Finally, we define the function <samp>grad_h_func_logistics</samp> to call the function containing the <samp>dlgradient()</samp> function using the [<samp>dlfeval()</samp>](https://au.mathworks.com/help/deeplearning/ref/dlfeval.html) function. We have to explicitly convert the model parameters from Matlab ordinary array to [<samp>dlarray</samp>](https://au.mathworks.com/help/deeplearning/ref/dlarray.html) array data type. After obtain the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms, we have to convert the two variable back to Matlab ordinary array using the [<samp>extractdata()</samp>](https://au.mathworks.com/help/deeplearning/ref/dlarray.extractdata.html) function.
+Finally, we define the function <samp>grad_h_func_logistics</samp> to call the function containing the <samp>dlgradient()</samp> function using the [<samp>dlfeval()</samp>](https://au.mathworks.com/help/deeplearning/ref/dlfeval.html) function. We have to explicitly convert the model parameters from Matlab ordinary array to [<samp>dlarray</samp>](https://au.mathworks.com/help/deeplearning/ref/dlarray.html) array data type. After obtain the $\nabla_\theta h(\theta)$ and $h(\theta)$ terms, we have to convert these two variables back to Matlab ordinary array using the [<samp>extractdata()</samp>](https://au.mathworks.com/help/deeplearning/ref/dlarray.extractdata.html) function.
 ```m
 %% Define function to compute gradient of h function for Logistic regression 
 % Input:

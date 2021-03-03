@@ -49,7 +49,7 @@ Key features:
 
 If you use VBLab in a scientific publication, we would appreciate citations to the following paper:
 
-M.-N. Tran, T.-N. Nguyen and V.-H. Dao (2021). [A practical tutorial on Variational Bayes](https://www.researchgate.net/publication/340006729_A_practical_tutorial_on_Variational_Bayes). *Technical Report*.
+M.-N. Tran, T.-N. Nguyen and V.-H. Dao (2021). [A practical tutorial on Variational Bayes](https://arxiv.org/abs/2103.01327). *arXiv2103.01327*.
 
 **Or bibtex entry** :
 ```yaml

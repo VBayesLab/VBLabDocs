@@ -78,11 +78,11 @@ title('Lowerbound')
 legend('Random Initialization','MLE Initialization' )
 ```
 
-The plot of lowerbound shows that the CGVB algorithm converges well. The algorithm converge much faster when we use MLE estimates as starting points. This example shows that choosing initial values for variational parameters is very important for VB methods in general.  
+The plot of lowerbound shows that the CGVB algorithm converges well. The algorithm converges much faster when we use MLE estimates as starting points. This example shows that choosing initial values for variational parameters is very important for VB methods in general.  
 
 <img src="/VBLabDocs/assets/images/example3-4-lowerbound.jpg" class="center"/>
 
-We can check how close of the variational distribution to the true posterior densities of model paramters. We run MCMC to obtain samples of model parameters from theirs posterior distribution. 
+We can check how close the variational distribution is to the true posterior densities of model paramters. We run MCMC to obtain samples of model parameters from their posterior distribution. 
 
 ```m
 % It is useful to compare the approximate posterior density to the true density obtain by MCMC
